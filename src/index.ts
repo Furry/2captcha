@@ -1,0 +1,1 @@
+export { _2captcha } from "./structs/2captcha"
