@@ -2,6 +2,10 @@
     A file fill of generic utility functions.
 */
 
+/**
+ * Changes 0 and 1 falsy/truthy values into a boolean.
+ * @param input boolean or number
+ */
 export function castBool(input: boolean | number): 0 | 1 {
     if (input == false) return 0
     if (input == true) return 1
@@ -9,6 +13,10 @@ export function castBool(input: boolean | number): 0 | 1 {
     else return input
 }
 
+/**
+ * Constructs uri parameters from an object
+ * @param input The input object
+ */
 export function objectToURI(input: {[key: string]: string | number | boolean} | any): string {
     let res = "?"
     const keys = Object.keys(input)
@@ -19,6 +27,10 @@ export function objectToURI(input: {[key: string]: string | number | boolean} | 
     return res
 }
 
+/**
+ * Returns a promise that resolves after x ms
+ * @param ms time to sleep for
+ */
 export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
