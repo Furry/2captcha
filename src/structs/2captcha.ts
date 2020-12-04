@@ -20,6 +20,13 @@ interface UserRecaptchaExtra extends BaseSolve {
     proxytype?: string
 }
 
+interface UserHCaptchaExtra extends BaseSolve {
+    header_acao?: boolean,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string
+}
+
 interface UserImageCaptchaExtra extends BaseSolve {
     phrase?: 0 | 1,
     regsense?: 0 | 1,
@@ -116,6 +123,44 @@ export default class _2captcha extends EventEmitter {
             pageurl: pageurl,
             action: "get",
             method: "userrecaptcha",
+            ...this.defaultPayload
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+    /**
+     * Solves a google Recaptcha, returning the result as a string.
+     * 
+     * @param sitekey The hcaptcha site key
+     * @param pageurl The URL the captcha appears on
+     * @param extra Extra options
+     */
+    public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<string> {
+        //'extra' is user defined, and the default contents should be overridden by it.
+        const payload = {
+            invisible: false,
+            header_acao: false,
+            soft_id: 7215953,
+            ...extra,
+            sitekey: sitekey,
+            pageurl: pageurl,
+            action: "get",
+            method: "hcaptcha",
             ...this.defaultPayload
         }
 

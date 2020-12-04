@@ -24,10 +24,15 @@ Currently, the project is *very* young, only supporting a barebones promise 2cap
 ## Features
 
 - Promise based 2captcha solving
-- Promise based image captcha solving
 - Uses node-fetch, a light weight http library
 - Fluent typings & TS support
 - Account Interaction
+
+Currently supports:
+
+- google-recaptcha (v2 / v3),
+- hcaptcha,
+- base64 image captchas 
 
 ## Planned Features
 
