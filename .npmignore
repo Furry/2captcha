@@ -1,0 +1,10 @@
+# Directories
+src/
+node_modules/
+tests/
+tsconfig.json/
+
+# Files
+.yarn.lock
+.gitignore
+readme.md
