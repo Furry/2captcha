@@ -7,4 +7,5 @@ tsconfig.json/
 # Files
 .yarn.lock
 .gitignore
+download.jpg
 readme.md

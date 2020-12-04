@@ -28,6 +28,14 @@ export class APIError extends Error {
                 this.code = 6
                 this.message = "You have already reported this captcha!"
             }; break;
+            case "ERROR_IMAGE_TYPE_NOT_SUPPORTED": {
+                this.code = 7
+                this.message = "The image type is not supported. Please validate it's a valid image you're passing through."
+            }; break;
+            case "ERROR_ZERO_CAPTCHA_FILESIZE": {
+                this.code = 8
+                this.message = "The image has no size, and is not valid. Please verify it."
+            }; break;
             default: {
                 console.log(err)
                 this.code = 0

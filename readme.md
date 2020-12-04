@@ -24,13 +24,16 @@ Currently, the project is *very* young, only supporting a barebones promise 2cap
 ## Features
 
 - Promise based 2captcha solving
+- Promise based image captcha solving
 - Uses node-fetch, a light weight http library
 - Fluent typings & TS support
+- Account Interaction
 
 ## Planned Features
 
-- Account Interaction
-- Base64 image support
+- ~~Account Interaction~~
+- ~~Base64 image support~~
+- Documentation Site
 - Built-in Rate-Limit handling
 - Proxy support
 - Invalid-Captcha reporting support
@@ -47,10 +50,13 @@ yarn add 2captcha
 
 ## Usage
 
+
+Recaptcha,
 ```js
+const Captcha = require("2captcha")
 
 // A new 'solver' instance with our API key
-const solver = new Captcha.solver("<Your Captcha Token>")
+const solver = new Captcha.solver("<Your ReCaptcha Token>")
 
 /* Example ReCaptcha Website */
 solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
@@ -60,7 +66,21 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
     // Logs a solved Captcha Key
     console.log(res)
 })
+```
 
+Image,
+```js
+const Captcha = require("2captcha")
+const fs = require("fs")
+
+const solver = new Captcha.solver("<Your ReCaptcha Token>")
+
+// Read from a file as base64 text
+solver.recaptcha(fs.readFileSync("./captcha.png", "base64"))
+.then((res) => {
+    // Logs the image text
+    console.log(res)
+})
 ```
 
 ## Commit Guidelines

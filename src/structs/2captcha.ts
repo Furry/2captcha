@@ -20,6 +20,18 @@ interface UserRecaptchaExtra extends BaseSolve {
     proxytype?: string
 }
 
+interface UserImageCaptchaExtra extends BaseSolve {
+    phrase?: 0 | 1,
+    regsense?: 0 | 1,
+    numeric?: 0 | 1 | 2 | 3 | 4,
+    calc?: 0 | 1,
+    min_len?: 0 | string, // 1..20
+    max_len?: 0 | string, // 1..20
+    language?: 0 | 1 | 2,
+    lang?: string,
+
+}
+
 export default class _2captcha extends EventEmitter {
     apikey: string
     pollingFrequency: number
@@ -33,6 +45,31 @@ export default class _2captcha extends EventEmitter {
     get res() { return "https://2captcha.com/res.php"}
     get defaultPayload() { return { key: this.apikey, json: 1 } }
 
+    /**
+     * Returns the remaining account balance
+     */
+    public async balance(): Promise<number> {
+        const res = await fetch(this.res + utils.objectToURI({
+            ...this.defaultPayload,
+            action: "getbalance"
+        }))
+        const result = await res.text()
+
+        try {
+            const data = JSON.parse(result)
+            if (data.status == 1) {
+                return parseFloat(data.request)
+            }
+            throw new APIError(data.request)
+        } catch {
+            throw new APIError(result)
+        }
+    }
+
+    /**
+     * Polls for  a captcha, finding out if it's been completed
+     * @param id Captcha ID
+     */
     public async pollResponse(id: string): Promise<string> {
         const payload = {
             ...this.defaultPayload,
@@ -61,6 +98,13 @@ export default class _2captcha extends EventEmitter {
         }
     }
 
+    /**
+     * Solves a google Recaptcha, returning the result as a string.
+     * 
+     * @param googlekey The google captcha key
+     * @param pageurl The URL the captcha appears on
+     * @param extra Extra options
+     */
     public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<string> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
@@ -79,7 +123,39 @@ export default class _2captcha extends EventEmitter {
         const result = await response.text()
 
         let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
 
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+    /**
+     * Solves a image-based captcha.
+     * @param base64image Base64 image data for the captcha
+     * @param extra Extra properties to pass to 2captcha
+     * 
+     * @example
+     * const res = await imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
+     */
+    public async imageCaptcha(base64image: string, extra: UserImageCaptchaExtra = { }) /*: Promise<string> */ {
+        const payload = {
+            soft_id: 7215953,
+            ...extra,
+            ...this.defaultPayload,
+            method: "base64"
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload), { body: JSON.stringify({ "body": base64image }) , method: "post" })
+        const result = await response.text()
+
+        let data;
         try {
             data = JSON.parse(result)
         } catch {
