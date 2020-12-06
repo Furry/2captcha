@@ -27,6 +27,8 @@ Currently, the project is *very* young, only supporting a barebones promise 2cap
 - Uses node-fetch, a light weight http library
 - Fluent typings & TS support
 - Account Interaction
+- Invalid Captcha reporting
+- Proxy Support
 
 Currently supports:
 
@@ -40,8 +42,8 @@ Currently supports:
 - ~~Base64 image support~~
 - Documentation Site
 - Built-in Rate-Limit handling
-- Proxy support
-- Invalid-Captcha reporting support
+- ~~Proxy support~~
+- ~~Invalid-Captcha reporting support~~
 - And many other things.
 
 ## Install
