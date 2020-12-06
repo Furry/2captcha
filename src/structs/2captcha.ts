@@ -36,7 +36,11 @@ interface UserImageCaptchaExtra extends BaseSolve {
     max_len?: 0 | string, // 1..20
     language?: 0 | 1 | 2,
     lang?: string,
+}
 
+interface CaptchaAnswer {
+    data: string,
+    id: string
 }
 
 export default class _2captcha extends EventEmitter {
@@ -77,7 +81,7 @@ export default class _2captcha extends EventEmitter {
      * Polls for  a captcha, finding out if it's been completed
      * @param id Captcha ID
      */
-    public async pollResponse(id: string): Promise<string> {
+    public async pollResponse(id: string): Promise<CaptchaAnswer> {
         const payload = {
             ...this.defaultPayload,
             action: "get",
@@ -92,7 +96,7 @@ export default class _2captcha extends EventEmitter {
         try {
             const data = JSON.parse(result)
             if (data.status == 1) {
-                return data.request
+                return { data: data.request, id: id }
             }
             switch (data.request) {
                 case "CAPCHA_NOT_READY": return this.pollResponse(id);
@@ -112,7 +116,7 @@ export default class _2captcha extends EventEmitter {
      * @param pageurl The URL the captcha appears on
      * @param extra Extra options
      */
-    public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<string> {
+    public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             invisible: false,
@@ -150,7 +154,7 @@ export default class _2captcha extends EventEmitter {
      * @param pageurl The URL the captcha appears on
      * @param extra Extra options
      */
-    public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<string> {
+    public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             invisible: false,
