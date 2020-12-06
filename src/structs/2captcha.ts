@@ -58,6 +58,9 @@ export default class _2captcha extends EventEmitter {
 
     /**
      * Returns the remaining account balance
+     * 
+     * @throws APIError
+     *
      */
     public async balance(): Promise<number> {
         const res = await fetch(this.res + utils.objectToURI({
@@ -80,6 +83,9 @@ export default class _2captcha extends EventEmitter {
     /**
      * Polls for  a captcha, finding out if it's been completed
      * @param id Captcha ID
+     * 
+     * @throws APIError
+     * 
      */
     public async pollResponse(id: string): Promise<CaptchaAnswer> {
         const payload = {
@@ -115,6 +121,9 @@ export default class _2captcha extends EventEmitter {
      * @param googlekey The google captcha key
      * @param pageurl The URL the captcha appears on
      * @param extra Extra options
+     * 
+     * @throws APIError
+     * 
      */
     public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
@@ -153,6 +162,9 @@ export default class _2captcha extends EventEmitter {
      * @param sitekey The hcaptcha site key
      * @param pageurl The URL the captcha appears on
      * @param extra Extra options
+     * 
+     * @throws APIError
+     * 
      */
     public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
@@ -190,6 +202,8 @@ export default class _2captcha extends EventEmitter {
      * @param base64image Base64 image data for the captcha
      * @param extra Extra properties to pass to 2captcha
      * 
+     * @throws APIError
+     * 
      * @example
      * const res = await imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
      */
@@ -222,6 +236,9 @@ export default class _2captcha extends EventEmitter {
      * Report an unsuccessful solve
      * 
      * @param id The id of the captcha
+     * 
+     * @throws APIError
+     * 
      */
     public async report(id: string): Promise<void> {
         const payload = {
