@@ -216,6 +216,34 @@ export default class _2captcha extends EventEmitter {
         } else {
             throw new APIError(data.request)
         }
+    }
 
+    /**
+     * Report an unsuccessful solve
+     * 
+     * @param id The id of the captcha
+     */
+    public async report(id: string): Promise<void> {
+        const payload = {
+            id: id,
+            action: "reportbad",
+            ...this.defaultPayload
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.request == "OK_REPORT_RECORDED") {
+            return
+        } else {
+            throw new APIError(data.request)
+        }
     }
 }
