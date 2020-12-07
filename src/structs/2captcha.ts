@@ -38,8 +38,13 @@ interface UserImageCaptchaExtra extends BaseSolve {
     lang?: string,
 }
 
+/**
+ * An object containing the data and ID of the captcha solution.
+ */
 interface CaptchaAnswer {
+    /** The solution to the captcha */
     data: string,
+    /** The ID of the captcha solve */
     id: string
 }
 
