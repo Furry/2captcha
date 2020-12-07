@@ -38,8 +38,12 @@ interface UserImageCaptchaExtra extends BaseSolve {
     lang?: string,
 }
 
+
 /**
- * An object containing the data and ID of the captcha solution.
+ * An object containing properties of the captcha solution.
+ * @typedef {Object} CaptchaAnswer
+ * @param {string} data The solution to the captcha
+ * @param {string} id The captcha ID
  */
 interface CaptchaAnswer {
     /** The solution to the captcha */
@@ -48,24 +52,39 @@ interface CaptchaAnswer {
     id: string
 }
 
-export class _2captcha extends EventEmitter {
-    apikey: string
-    pollingFrequency: number
+/**
+ * The main 2captcha class, housing all API calls and api interactions.
+ */
+export class Solver extends EventEmitter {
+    public apikey: string
+    public pollingFrequency: number
+
+    /**
+     * The constructor for the 2captcha Solver class.
+     * 
+     * @param apikey {string} The API key to use
+     * @param pollingFrequency {number} The frequency to poll for requests
+     */
     constructor(apikey: string, pollingFrequency: number = 5000) {
         super()
         this.apikey = apikey
         this.pollingFrequency = pollingFrequency
     }
 
-    get in() { return "https://2captcha.com/in.php" }
-    get res() { return "https://2captcha.com/res.php"}
-    get defaultPayload() { return { key: this.apikey, json: 1 } }
+    private get in() { return "https://2captcha.com/in.php" }
+    private get res() { return "https://2captcha.com/res.php"}
+    private get defaultPayload() { return { key: this.apikey, json: 1 } }
 
     /**
-     * Returns the remaining account balance
+     * Returns the remaining account balance.
      * 
+     * @return {Promise<Number>} Remaining balance
      * @throws APIError
-     *
+     * @example
+     * Solver.balance()
+     * .then((res) => {
+     *   console.log(res)
+     * })
      */
     public async balance(): Promise<number> {
         const res = await fetch(this.res + utils.objectToURI({
@@ -86,13 +105,15 @@ export class _2captcha extends EventEmitter {
     }
 
     /**
+     * @private
+     * 
      * Polls for  a captcha, finding out if it's been completed
-     * @param id Captcha ID
+     * @param {string} id Captcha ID
      * 
+     * @returns {Promise<CaptchaAnswer>}
      * @throws APIError
-     * 
      */
-    public async pollResponse(id: string): Promise<CaptchaAnswer> {
+    private async pollResponse(id: string): Promise<CaptchaAnswer> {
         const payload = {
             ...this.defaultPayload,
             action: "get",
@@ -123,12 +144,17 @@ export class _2captcha extends EventEmitter {
     /**
      * Solves a google Recaptcha, returning the result as a string.
      * 
-     * @param googlekey The google captcha key
-     * @param pageurl The URL the captcha appears on
-     * @param extra Extra options
+     * @param {string} googlekey The google captcha key
+     * @param {string} pageurl The URL the captcha appears on
+     * @param {object} extra Extra options
      * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
-     * 
+     * @example
+     * solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
+     * .then((res) => {
+     *   console.log(res)
+     * })
      */
     public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
@@ -164,12 +190,17 @@ export class _2captcha extends EventEmitter {
     /**
      * Solves a google Recaptcha, returning the result as a string.
      * 
-     * @param sitekey The hcaptcha site key
-     * @param pageurl The URL the captcha appears on
-     * @param extra Extra options
+     * @param {string} sitekey The hcaptcha site key
+     * @param {string} pageurl The URL the captcha appears on
+     * @param {object} extra Extra options
      * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
-     * 
+     * @example
+     * solver.recaptcha("37f92ac1-4956-457e-83cd-723423af613f", "https://www.tokyobitcoiner.com/hcaptcha")
+     * .then((res) => {
+     *   console.log(res)
+     * })
      */
     public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
@@ -204,15 +235,18 @@ export class _2captcha extends EventEmitter {
 
     /**
      * Solves a image-based captcha.
-     * @param base64image Base64 image data for the captcha
-     * @param extra Extra properties to pass to 2captcha
+     * @param {string} base64image Base64 image data for the captcha
+     * @param {object} extra Extra properties to pass to 2captcha
      * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
-     * 
      * @example
-     * const res = await imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
+     * imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
+     * .then((res) => {
+     *   console.log(res)
+     * })
      */
-    public async imageCaptcha(base64image: string, extra: UserImageCaptchaExtra = { }) /*: Promise<string> */ {
+    public async imageCaptcha(base64image: string, extra: UserImageCaptchaExtra = { }): Promise<CaptchaAnswer> {
         const payload = {
             soft_id: 7215953,
             ...extra,
@@ -240,10 +274,12 @@ export class _2captcha extends EventEmitter {
     /**
      * Report an unsuccessful solve
      * 
-     * @param id The id of the captcha
+     * @param {string} id The id of the captcha solve
      * 
+     * @returns {Promise<void>} Resolves on completion
      * @throws APIError
-     * 
+     * @example
+     * report("55316")
      */
     public async report(id: string): Promise<void> {
         const payload = {

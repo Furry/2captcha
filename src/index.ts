@@ -1,1 +1,1 @@
-export { _2captcha as solver } from "./structs/2captcha"
+export { Solver } from "./structs/2captcha"

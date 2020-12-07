@@ -1,0 +1,16 @@
+{
+    "templates": {
+        "applicationName": "2Captcha",
+        "source": {
+            "include": [
+                "./dist/"
+            ]
+        },
+        "opts": {
+            "encoding": "utf8",
+            "recurse": true,
+            "destionation": "./docs",
+            "template": "./node_modules/jaguarjs-jsdoc"
+        }
+    }
+}

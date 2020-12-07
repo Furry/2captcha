@@ -14,12 +14,14 @@
     "recaptcha"
   ],
   "scripts": {
-    "go": "tsc && node ./dist/index.js"
+    "go": "tsc && node ./dist/index.js",
+    "docgen": "tsc && jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.7"
+    "@types/node-fetch": "^2.5.7",
+    "jaguarjs-jsdoc": "^1.1.0"
   }
 }
