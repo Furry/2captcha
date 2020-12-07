@@ -48,7 +48,7 @@ interface CaptchaAnswer {
     id: string
 }
 
-export default class _2captcha extends EventEmitter {
+export class _2captcha extends EventEmitter {
     apikey: string
     pollingFrequency: number
     constructor(apikey: string, pollingFrequency: number = 5000) {

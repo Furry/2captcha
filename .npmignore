@@ -3,6 +3,7 @@ src/
 node_modules/
 tests/
 tsconfig.json/
+out/
 
 # Files
 .yarn.lock
