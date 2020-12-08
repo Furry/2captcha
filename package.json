@@ -1,6 +1,6 @@
 {
   "name": "2captcha",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "dist/index.js",
   "repository": "https://github.com/furry/2captcha",
   "license": "MIT",
