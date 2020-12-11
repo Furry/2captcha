@@ -19,8 +19,6 @@
 ## Motive
 2captcha is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
-Currently, the project is *very* young, only supporting a barebones promise 2captcha solver, and light error handling, but updates will be constant.
-
 ## Features
 
 - Promise based 2captcha solving
