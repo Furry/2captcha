@@ -4,6 +4,7 @@
 
 /**
  * Changes 0 and 1 falsy/truthy values into a boolean.
+ * @private
  * @param input boolean or number
  */
 export function castBool(input: boolean | number): 0 | 1 {
@@ -15,6 +16,7 @@ export function castBool(input: boolean | number): 0 | 1 {
 
 /**
  * Constructs uri parameters from an object
+ * @private
  * @param input The input object
  */
 export function objectToURI(input: {[key: string]: string | number | boolean} | any): string {
@@ -29,6 +31,7 @@ export function objectToURI(input: {[key: string]: string | number | boolean} | 
 
 /**
  * Returns a promise that resolves after x ms
+ * @private
  * @param ms time to sleep for
  */
 export function sleep(ms: number) {
