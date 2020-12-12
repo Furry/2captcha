@@ -38,7 +38,7 @@ Currently supports:
 
 - ~~Account Interaction~~
 - ~~Base64 image support~~
-- Documentation Site
+- ~~Documentation Site~~
 - Built-in Rate-Limit handling
 - ~~Proxy support~~
 - ~~Invalid-Captcha reporting support~~
