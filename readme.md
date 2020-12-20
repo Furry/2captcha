@@ -4,7 +4,7 @@
     </h1>
 
 
-<a href="https://discord.gg/S8sw2ud">
+<a href="https://discord.gg/tamVs2Ujrf">
     <img src="https://discordapp.com/api/guilds/769020183540400128/widget.png?style=banner2" alt="Discord Banner 2"/>
 </a>
 
@@ -38,7 +38,7 @@ Currently supports:
 
 - ~~Account Interaction~~
 - ~~Base64 image support~~
-- Documentation Site
+- ~~Documentation Site~~
 - Built-in Rate-Limit handling
 - ~~Proxy support~~
 - ~~Invalid-Captcha reporting support~~
