@@ -125,19 +125,20 @@ export class Solver extends EventEmitter {
         const res = await fetch(this.res + utils.objectToURI(payload))
         const result = await res.text()
 
+        let data;
         try {
-            const data = JSON.parse(result)
+            data = JSON.parse(result)
             if (data.status == 1) {
                 return { data: data.request, id: id }
             }
-            switch (data.request) {
-                case "CAPCHA_NOT_READY": return this.pollResponse(id);
-                default: {
-                    throw new APIError(data.request)
-                }
-            }
         } catch {
             throw new APIError(result)
+        }
+        switch (data.request) {
+            case "CAPCHA_NOT_READY": return this.pollResponse(id);
+            default: {
+                throw new APIError(data.request)
+            }
         }
     }
 
