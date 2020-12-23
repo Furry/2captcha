@@ -18,6 +18,7 @@
 A wrapper around the 2captcha API
 
 ## Motive
+
 2captcha is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
 ## Features
