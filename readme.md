@@ -34,7 +34,8 @@ Currently supports:
 
 - google-recaptcha (v2 / v3),
 - hcaptcha,
-- base64 image captchas 
+- FunCaptcha,
+- base64 image captchas
 
 ## Planned Features
 
