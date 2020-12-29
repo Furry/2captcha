@@ -162,7 +162,6 @@ export class Solver extends EventEmitter {
         const payload = {
             invisible: false,
             header_acao: false,
-            soft_id: 7215953,
             ...extra,
             googlekey: googlekey,
             pageurl: pageurl,
@@ -208,7 +207,6 @@ export class Solver extends EventEmitter {
         const payload = {
             invisible: false,
             header_acao: false,
-            soft_id: 7215953,
             ...extra,
             sitekey: sitekey,
             pageurl: pageurl,
@@ -249,7 +247,6 @@ export class Solver extends EventEmitter {
      */
     public async imageCaptcha(base64image: string, extra: UserImageCaptchaExtra = { }): Promise<CaptchaAnswer> {
         const payload = {
-            soft_id: 7215953,
             ...extra,
             ...this.defaultPayload,
             method: "base64"
@@ -272,6 +269,46 @@ export class Solver extends EventEmitter {
         }
     }
 
+    /**
+     * Solves a FunCaptcha
+     * @param publicKey The FunCaptcha Public Key
+     * @param pageurl The URL to the website the captcha is seen on
+     * @param serviceURL The FunCaptcha Service URL (recommended)
+     * @param extra Extra properties to pass to 2captcha
+     * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve
+     * @throws APIError
+     * funCaptcha("12AB34CD-56F7-AB8C-9D01-2EF3456789A0", "http://mysite.com/page/with/funcaptcha/")
+     * .then((res) => {
+     *   console.log(res)
+     * })
+     */
+    public async funCaptcha(publicKey: string, pageURL: string, serviceURL?: string, extra: UserImageCaptchaExtra = { }): Promise<CaptchaAnswer> {
+        const payload = {
+            ...extra,
+            ...this.defaultPayload,
+            method: "funcaptcha",
+            publickey: publicKey,
+            pageurl: pageURL
+            ...(serviceURL ? { surl: serviceURL } : { })
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
     /**
      * Report an unsuccessful solve
      * 
