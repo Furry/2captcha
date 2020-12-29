@@ -11,7 +11,9 @@
     "api",
     "captchasolver",
     "capmonster",
-    "recaptcha"
+    "recaptcha",
+    "hcaptcha",
+    "funcaptcha"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
