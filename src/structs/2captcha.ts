@@ -56,8 +56,8 @@ interface CaptchaAnswer {
  * The main 2captcha class, housing all API calls and api interactions.
  */
 export class Solver extends EventEmitter {
-    public apikey: string
-    public pollingFrequency: number
+    public _apikey: string
+    public _pollingFrequency: number
 
     /**
      * The constructor for the 2captcha Solver class.
@@ -67,9 +67,16 @@ export class Solver extends EventEmitter {
      */
     constructor(apikey: string, pollingFrequency: number = 5000) {
         super()
-        this.apikey = apikey
-        this.pollingFrequency = pollingFrequency
+        this._apikey = apikey
+        this._pollingFrequency = pollingFrequency
     }
+
+    /** The API key this instance is using */
+    public get apikey() { return this._apikey }
+    /** Frequency the instance polls for updates */
+    public get pollingFrequency() { return this._pollingFrequency }
+    /** Set the API key for this instance */
+    public set apikey(update: string) { this._apikey = update }
 
     private get in() { return "https://2captcha.com/in.php" }
     private get res() { return "https://2captcha.com/res.php"}
@@ -289,7 +296,7 @@ export class Solver extends EventEmitter {
             ...this.defaultPayload,
             method: "funcaptcha",
             publickey: publicKey,
-            pageurl: pageURL
+            pageurl: pageURL,
             ...(serviceURL ? { surl: serviceURL } : { })
         }
 
