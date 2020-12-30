@@ -91,6 +91,25 @@ solver.recaptcha(fs.readFileSync("./captcha.png", "base64"))
 })
 ```
 
+Proxy,
+```js
+const Captcha = require("2captcha")
+
+// A new 'solver' instance with our API key
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+/* Example ReCaptcha Website */
+solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/", {
+    proxy: "login:password@21.214.43.26",
+    proxytype: "HTTP"
+})
+
+.then((res) => {
+    // Logs a solved Captcha Key
+    console.log(res)
+})
+```
+
 ## Commit Guidelines
 
 - All pull requiests must provide a valid reason for the change or implementation
