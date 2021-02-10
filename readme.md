@@ -108,6 +108,8 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 
 ## Commit Guidelines
 
+The latest version of the code base will always be under the '**next**' branch!
+
 - All pull requiests must provide a valid reason for the change or implementation
 - All **CORE CHANGES** require an issue with reasoning made before a PR will even be addressed.
 - All PR's must follow the general structure of the code base
