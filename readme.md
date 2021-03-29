@@ -79,7 +79,7 @@ Image,
 const Captcha = require("2captcha")
 const fs = require("fs")
 
-const solver = new Captcha.solver("<Your 2captcha api key>")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Read from a file as base64 text
 solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
