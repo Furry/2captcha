@@ -1,4 +1,4 @@
-import fetch from "node-fetch"
+import fetch from "../utils/fetch"
 
 import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
