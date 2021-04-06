@@ -2,7 +2,6 @@ import fetch from "../utils/fetch"
 
 import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
-import { EventEmitter } from "events"
 
 interface BaseSolve {
 
@@ -55,7 +54,7 @@ interface CaptchaAnswer {
 /**
  * The main 2captcha class, housing all API calls and api interactions.
  */
-export class Solver extends EventEmitter {
+export class Solver {
     public _apikey: string
     public _pollingFrequency: number
 
@@ -66,7 +65,6 @@ export class Solver extends EventEmitter {
      * @param pollingFrequency {number} The frequency to poll for requests
      */
     constructor(apikey: string, pollingFrequency: number = 5000) {
-        super()
         this._apikey = apikey
         this._pollingFrequency = pollingFrequency
     }
