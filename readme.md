@@ -24,6 +24,7 @@ A wrapper around the 2captcha API
 ## Features
 
 - Promise based 2captcha solving
+- Browser & NodeJS Support
 - Uses node-fetch, a light weight http library
 - Fluent typings & TS support
 - Account Interaction
