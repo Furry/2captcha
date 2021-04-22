@@ -167,10 +167,10 @@ export class Solver {
         const payload = {
             invisible: false,
             header_acao: false,
+            action: "get",
             ...extra,
             googlekey: googlekey,
             pageurl: pageurl,
-            action: "get",
             method: "userrecaptcha",
             ...this.defaultPayload
         }
@@ -212,10 +212,10 @@ export class Solver {
         const payload = {
             invisible: false,
             header_acao: false,
+            action: "get",
             ...extra,
             sitekey: sitekey,
             pageurl: pageurl,
-            action: "get",
             method: "hcaptcha",
             ...this.defaultPayload
         }
