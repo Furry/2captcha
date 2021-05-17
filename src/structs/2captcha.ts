@@ -331,7 +331,7 @@ export class Solver {
             ...this.defaultPayload
         }
 
-        const response = await fetch(this.in + utils.objectToURI(payload))
+        const response = await fetch(this.res + utils.objectToURI(payload))
         const result = await response.text()
 
         let data;
