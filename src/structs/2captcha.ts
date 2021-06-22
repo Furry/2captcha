@@ -114,7 +114,7 @@ export class Solver {
      * 
      * Polls for  a captcha, finding out if it's been completed
      * @param {string} id Captcha ID
-     * @param {pollingFreq} polling Frequency
+     * @param {number} pollingFreq Polling Frequency
      * 
      * @returns {Promise<CaptchaAnswer>}
      * @throws APIError
