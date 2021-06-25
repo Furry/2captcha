@@ -114,18 +114,19 @@ export class Solver {
      * 
      * Polls for  a captcha, finding out if it's been completed
      * @param {string} id Captcha ID
+     * @param {number} pollingFreq Polling Frequency
      * 
      * @returns {Promise<CaptchaAnswer>}
      * @throws APIError
      */
-    private async pollResponse(id: string): Promise<CaptchaAnswer> {
+    private async pollResponse(id: string, pollingFreq: number = this.pollingFrequency): Promise<CaptchaAnswer> {
         const payload = {
             ...this.defaultPayload,
             action: "get",
             id: id
         }
 
-        await utils.sleep(this.pollingFrequency)
+        await utils.sleep(pollingFreq)
 
         const res = await fetch(this.res + utils.objectToURI(payload))
         const result = await res.text()
@@ -140,7 +141,7 @@ export class Solver {
             throw new APIError(result)
         }
         switch (data.request) {
-            case "CAPCHA_NOT_READY": return this.pollResponse(id);
+            case "CAPCHA_NOT_READY": return this.pollResponse(id, 5000);
             default: {
                 throw new APIError(data.request)
             }
