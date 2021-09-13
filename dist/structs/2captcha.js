@@ -300,7 +300,6 @@ class Solver {
     async geetest(gt, challenge, pageurl, api_server, extra = {}) {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
-            header_acao: false,
             ...extra,
             gt: gt,
             challenge: challenge,
