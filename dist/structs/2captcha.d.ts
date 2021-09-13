@@ -157,10 +157,10 @@ export declare class Solver {
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.geetest("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
-     * .then((res) => {
-     *   console.log(res)
-     * })
+     * solver.geetest("f2ae6cadcf7886856696502e1d55e00c", "12345678abc90123d45678ef90123a456b", "https://2captcha.com/demo/geetest", "api.geetest.com")
+     * .then(res => {
+     *      console.log(res)
+     *  })
      */
     geetest(gt: string, challenge: string, pageurl: string, api_server?: string, extra?: UserRecaptchaExtra): Promise<CaptchaAnswer>;
     /**

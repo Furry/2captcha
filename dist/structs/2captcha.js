@@ -286,18 +286,11 @@ class Solver {
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.geetest("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
-     * .then((res) => {
-     *   console.log(res)
-     * })
+     * solver.geetest("f2ae6cadcf7886856696502e1d55e00c", "12345678abc90123d45678ef90123a456b", "https://2captcha.com/demo/geetest", "api.geetest.com")
+     * .then(res => {
+     *      console.log(res)
+     *  })
      */
-    // http://2captcha.com/in.php?
-    // key=1abc234de56fab7c89012d34e56fa7b8
-    // method=geetest
-    // gt=f1ab2cdefa3456789012345b6c78d90e
-    // challenge=12345678abc90123d45678ef90123a456b
-    // api_server=api-na.geetest.com
-    // pageurl=https://www.site.com/page/
     async geetest(gt, challenge, pageurl, api_server, extra = {}) {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
@@ -309,7 +302,6 @@ class Solver {
             pageurl: pageurl,
             ...this.defaultPayload
         };
-        console.log(utils.objectToURI(payload));
         const response = await fetch_1.default(this.in + utils.objectToURI(payload));
         const result = await response.text();
         let data;
