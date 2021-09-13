@@ -315,6 +315,61 @@ export class Solver {
             throw new APIError(data.request)
         }
     }
+
+    /**
+     * Solves a geetest Captcha, returning the result as a string.
+     *
+     * @param {string} gt Value of gt parameter found on site
+     * @param {string} challenge Value of challenge parameter found on site
+     * @param {string} pageurl The URL the captcha appears on
+     * @param {string} api_server The URL of the api_server (recommended)
+     * @param {object} extra Extra options
+     *
+     * @returns {Promise<CaptchaAnswer>} The result from the solve.
+     * @throws APIError
+     * @example
+     * solver.geetest("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
+     * .then((res) => {
+     *   console.log(res)
+     * })
+     */
+    // http://2captcha.com/in.php?
+    // key=1abc234de56fab7c89012d34e56fa7b8
+    // method=geetest
+    // gt=f1ab2cdefa3456789012345b6c78d90e
+    // challenge=12345678abc90123d45678ef90123a456b
+    // api_server=api-na.geetest.com
+    // pageurl=https://www.site.com/page/
+    public async geetest(gt: string, challenge: string, pageurl: string, api_server?: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
+        //'extra' is user defined, and the default contents should be overridden by it.
+        const payload = {
+            header_acao: false,
+            ...extra,
+            gt: gt,
+            challenge: challenge,
+            pageurl: pageurl,
+            api_server: api_server,
+            method: "geetest",
+            ...this.defaultPayload
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
     /**
      * Report an unsuccessful solve
      * 
