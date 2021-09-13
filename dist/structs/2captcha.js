@@ -140,6 +140,7 @@ class Solver {
             method: "userrecaptcha",
             ...this.defaultPayload
         };
+        console.log(utils.objectToURI(payload));
         const response = await fetch_1.default(this.in + utils.objectToURI(payload));
         const result = await response.text();
         let data;
@@ -301,11 +302,11 @@ class Solver {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             ...extra,
+            method: "geetest",
             gt: gt,
             challenge: challenge,
-            pageurl: pageurl,
             api_server: api_server,
-            method: "geetest",
+            pageurl: pageurl,
             ...this.defaultPayload
         };
         console.log(utils.objectToURI(payload));
