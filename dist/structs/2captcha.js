@@ -309,6 +309,7 @@ class Solver {
             method: "geetest",
             ...this.defaultPayload
         };
+        console.log(utils.objectToURI(payload));
         const response = await fetch_1.default(this.in + utils.objectToURI(payload));
         const result = await response.text();
         let data;
