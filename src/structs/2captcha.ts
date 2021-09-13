@@ -343,7 +343,6 @@ export class Solver {
     public async geetest(gt: string, challenge: string, pageurl: string, api_server?: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
-            header_acao: false,
             ...extra,
             gt: gt,
             challenge: challenge,
