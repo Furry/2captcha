@@ -175,7 +175,7 @@ export class Solver {
             method: "userrecaptcha",
             ...this.defaultPayload
         }
-        console.log(utils.objectToURI(payload))
+
         const response = await fetch(this.in + utils.objectToURI(payload))
         const result = await response.text()
 
