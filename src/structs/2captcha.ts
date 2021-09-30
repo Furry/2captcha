@@ -315,53 +315,6 @@ export class Solver {
             throw new APIError(data.request)
         }
     }
-
-    /**
-     * Solves a geetest Captcha, returning the result as a string.
-     *
-     * @param {string} gt Value of gt parameter found on site
-     * @param {string} challenge Value of challenge parameter found on site
-     * @param {string} pageurl The URL the captcha appears on
-     * @param {string} api_server The URL of the api_server (recommended)
-     * @param {object} extra Extra options
-     *
-     * @returns {Promise<CaptchaAnswer>} The result from the solve.
-     * @throws APIError
-     * @example
-     * solver.geetest("f2ae6cadcf7886856696502e1d55e00c", "12345678abc90123d45678ef90123a456b", "https://2captcha.com/demo/geetest", "api.geetest.com")
-     * .then(res => {
-     *      console.log(res)
-     *  })
-     */
-    public async geetest(gt: string, challenge: string, pageurl: string, api_server?: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
-        //'extra' is user defined, and the default contents should be overridden by it.
-        const payload = {
-            ...extra,
-            method: "geetest",
-            gt: gt,
-            challenge: challenge,
-            api_server: api_server,
-            pageurl: pageurl,
-            ...this.defaultPayload
-        }
-
-        const response = await fetch(this.in + utils.objectToURI(payload))
-        const result = await response.text()
-
-        let data;
-        try {
-            data = JSON.parse(result)
-        } catch {
-            throw new APIError(result)
-        }
-
-        if (data.status == 1) {
-            return this.pollResponse(data.request)
-        } else {
-            throw new APIError(data.request)
-        }
-    }
-
     /**
      * Report an unsuccessful solve
      * 
