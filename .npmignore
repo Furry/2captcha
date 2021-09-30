@@ -1,0 +1,14 @@
+# Directories
+src/
+node_modules/
+tests/
+tsconfig.json/
+out/
+docs/
+
+# Files
+.yarn.lock
+.gitignore
+download.jpg
+readme.md
+jsdoc.json
