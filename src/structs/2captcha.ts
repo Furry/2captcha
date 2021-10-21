@@ -23,7 +23,11 @@ interface UserHCaptchaExtra extends BaseSolve {
     header_acao?: boolean,
     pingback?: string,
     proxy?: string,
-    proxytype?: string
+    proxytype?: string,
+    invisible?: 0 | 1,
+    data?: string,
+    userAgent?: string,
+    soft_id?: number;
 }
 
 interface UserImageCaptchaExtra extends BaseSolve {
