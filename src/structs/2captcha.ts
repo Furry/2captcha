@@ -172,7 +172,6 @@ export class Solver {
         const payload = {
             invisible: false,
             header_acao: false,
-            action: "get",
             ...extra,
             googlekey: googlekey,
             pageurl: pageurl,
@@ -217,7 +216,6 @@ export class Solver {
         const payload = {
             invisible: false,
             header_acao: false,
-            action: "get",
             ...extra,
             sitekey: sitekey,
             pageurl: pageurl,
