@@ -61,6 +61,7 @@ interface CaptchaAnswer {
 export class Solver {
     public _apikey: string
     public _pollingFrequency: number
+    public _headerACAO: number;
 
     /**
      * The constructor for the 2captcha Solver class.
@@ -68,9 +69,10 @@ export class Solver {
      * @param apikey {string} The API key to use
      * @param pollingFrequency {number} The frequency to poll for requests
      */
-    constructor(apikey: string, pollingFrequency: number = 5000) {
+    constructor(apikey: string, pollingFrequency: number = 5000, enableACAO: boolean = true) {
         this._apikey = apikey
         this._pollingFrequency = pollingFrequency
+        this._headerACAO = enableACAO ? 1 : 0
     }
 
     /** The API key this instance is using */
@@ -82,7 +84,7 @@ export class Solver {
 
     private get in() { return "https://2captcha.com/in.php" }
     private get res() { return "https://2captcha.com/res.php"}
-    private get defaultPayload() { return { key: this.apikey, json: 1 } }
+    private get defaultPayload() { return { key: this.apikey, json: 1, header_acao: this._headerACAO } }
 
     /**
      * Returns the remaining account balance.
