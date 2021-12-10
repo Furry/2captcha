@@ -35,8 +35,8 @@ interface UserImageCaptchaExtra extends BaseSolve {
     regsense?: 0 | 1,
     numeric?: 0 | 1 | 2 | 3 | 4,
     calc?: 0 | 1,
-    min_len?: 0 | string, // 1..20
-    max_len?: 0 | string, // 1..20
+    min_len?: 0 | string | number, // 1..20
+    max_len?: 0 | string | number, // 1..20
     language?: 0 | 1 | 2,
     lang?: string,
 }
