@@ -18,9 +18,9 @@ interface UserRecaptchaExtra extends BaseSolve {
     proxy?: string,
     proxytype?: string,
     action?: string,
-    enterprise?: boolean,
+    enterprise?: 0 | 1,
     min_score?: number,
-    version?: 0 | 1
+    version?: string
 }
 
 interface UserHCaptchaExtra extends BaseSolve {
