@@ -16,7 +16,8 @@ interface UserRecaptchaExtra extends BaseSolve {
     pingback?: string,
     soft_id?: number,
     proxy?: string,
-    proxytype?: string
+    proxytype?: string,
+    action?: string
 }
 
 interface UserHCaptchaExtra extends BaseSolve {
