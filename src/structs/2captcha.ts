@@ -177,7 +177,6 @@ export class Solver {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             invisible: false,
-            header_acao: false,
             ...extra,
             googlekey: googlekey,
             pageurl: pageurl,
@@ -221,7 +220,6 @@ export class Solver {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             invisible: false,
-            header_acao: false,
             ...extra,
             sitekey: sitekey,
             pageurl: pageurl,
@@ -263,18 +261,18 @@ export class Solver {
      *      console.log(res)
      *  })
      */
-     public async geetest(gt: string, challenge: string, pageurl: string, api_server?: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
+     public async geetest(gt: string, challenge: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             ...extra,
             method: "geetest",
             gt: gt,
             challenge: challenge,
-            api_server: api_server,
             pageurl: pageurl,
             ...this.defaultPayload
         }
 
+        console.log(payload)
         const response = await fetch(this.in + utils.objectToURI(payload))
         const result = await response.text()
 
