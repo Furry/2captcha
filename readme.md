@@ -1,4 +1,4 @@
-<div style="text-align: center">
+<center>
     <h1>
         2captcha
     </h1>
@@ -12,7 +12,7 @@
 ![Size](https://img.shields.io/bundlephobia/min/2captcha)
 ![Downloads](https://img.shields.io/npm/dw/2captcha)
 
-</div>
+</center>
 
 <center>A wrapper around the 2captcha API</center>
 
