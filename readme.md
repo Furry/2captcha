@@ -14,8 +14,19 @@
 
 </div>
 
+## Info
+<h3>
+<ul>
+    <li>Finding Sitekeys
+        <ul>
+            <li><a href="./docs/hcaptcha.md">hCaptcha</a></li>
+        </ul>
+    </li>
+</ul>
+</h3>
+
 <hr>
-A wrapper around the 2captcha API
+<center>A wrapper around the 2captcha API</center>
 
 ## Motive
 
