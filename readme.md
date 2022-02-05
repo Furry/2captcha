@@ -14,6 +14,8 @@
 
 </div>
 
+<center>A wrapper around the 2captcha API</center>
+
 ## Info
 <h3>
 <ul>
@@ -26,7 +28,6 @@
 </h3>
 
 <hr>
-<center>A wrapper around the 2captcha API</center>
 
 ## Motive
 
