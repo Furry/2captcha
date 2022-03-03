@@ -5,6 +5,7 @@ tests/
 tsconfig.json/
 out/
 docs/
+issues/
 
 # Files
 .yarn.lock

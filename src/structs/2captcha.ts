@@ -7,7 +7,7 @@ interface BaseSolve {
 
 }
 
-interface UserRecaptchaExtra extends BaseSolve {
+export interface UserRecaptchaExtra extends BaseSolve {
     invisible?: boolean,
     "data-s"?: string,
     cookies?: string,
@@ -23,7 +23,7 @@ interface UserRecaptchaExtra extends BaseSolve {
     version?: string
 }
 
-interface UserHCaptchaExtra extends BaseSolve {
+export interface UserHCaptchaExtra extends BaseSolve {
     header_acao?: boolean,
     pingback?: string,
     proxy?: string,
@@ -34,7 +34,7 @@ interface UserHCaptchaExtra extends BaseSolve {
     soft_id?: number;
 }
 
-interface UserImageCaptchaExtra extends BaseSolve {
+export interface UserImageCaptchaExtra extends BaseSolve {
     phrase?: 0 | 1,
     regsense?: 0 | 1,
     numeric?: 0 | 1 | 2 | 3 | 4,

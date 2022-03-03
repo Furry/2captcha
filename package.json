@@ -17,13 +17,17 @@
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
-    "docgen": "tsc && jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r"
+    "dev": "tsc && node ./issues/dev",
+    "jsdoc": "jsdoc",
+    "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@types/node": "^17.0.16",
     "@types/node-fetch": "^2.5.7",
-    "jaguarjs-jsdoc": "^1.1.0"
+    "jaguarjs-jsdoc": "^1.1.0",
+    "jsdoc": "^3.6.10"
   }
 }
