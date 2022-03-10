@@ -78,7 +78,7 @@ export class APIError extends Error {
             }; break;
             case "ERROR_WRONG_GOOGLEKEY": {
                 this.code = 19
-                this.message = "The 'googlekey' parameter is missing in this request. Please open an issue on GitHub (https://github.com/furry/2captcha) detailing this event."
+                this.message = "The 'googlekey' parameter is missing or of an invalid format. Please make sure it is a valid string."
             }; break;
             case "ERROR_CAPTCHAIMAGE_BLOCKED": {
                 this.code = 20
@@ -141,6 +141,12 @@ export class APIError extends Error {
             case "ERROR_PROXY_CONNECTION_FAILED": {
                 this.code = 34
                 this.message = "The proxy server was unable to load the captcha. This Proxy has been marked as bad, and will recieve an 'ERROR_BAD_PROXY' in future use."
+            }; break;
+            // @Victor, I hate you. Debugging this took a minute or two, but those two minutes were *very* irritating.
+            // It doesn't follow 2captcha's error codes, and it's not documented in the 'Error Handling' tab of your API docs! :P 
+            case "https://2captcha.com/blog/google-search-recaptcha": {
+                this.code = 35
+                this.message = "This captcha appears to be a Google Service Captcha (A special captcha that Google uses to protect their websites). Please provide a 'data-s' attribute in the CaptchaExtras of this function. View https://2captcha.com/blog/google-search-recaptcha for more information."
             }; break;
             default: {
                 console.log(err)
