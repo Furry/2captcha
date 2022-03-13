@@ -1,0 +1,5 @@
+# Directories
+node_modules/
+
+# Files
+yarn.lock

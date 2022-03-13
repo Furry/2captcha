@@ -1,0 +1,12 @@
+{
+  "name": "2captcha",
+  "version": "3.0.0@next",
+  "description": "An asynchronous wrapper around the 2captcha API.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/furry/2captcha",
+  "author": "Furry <ender@thefluegges.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.2.3"
+  }
+}
