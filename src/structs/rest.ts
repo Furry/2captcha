@@ -1,6 +1,7 @@
 import * as http from "http";
 import * as https from "https";
 import { Pingback } from "../index.js";
+import { Readable, Writable } from "stream";
 
 export class Rest {
     // A Restful API to facilitate pingback requests.
@@ -16,20 +17,19 @@ export class Rest {
 
         this._pingback = pingback;
         this._port = port;
-        this._pingbackKey = "";
+        this._pingbackKey = "oisdnfoiawjdoiawjda";
     }
 
-    public async handleRequest(req: http.IncomingMessage, res: http.OutgoingMessage): Promise<void> {
+    public async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
         return new Promise((resolve, reject) => {
             if (req.url === "/2captcha.txt") {
-                res._write(Buffer.from(this._pingbackKey), "utf8", () => {
-                    // Close request
-                    res.end();
-                    return resolve();
-                });
-                // Handle pingback requests.
-                return this._pingback;
+                res.writeHead(200);
+                res.end(this._pingbackKey);
+            } else {
+                res.writeHead(404);
+                res.end();
             }
+
             return resolve();
         })
     }

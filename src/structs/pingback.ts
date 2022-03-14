@@ -3,11 +3,12 @@ import { EventEmitter } from "events";
 
 import L, { Locale } from "../utils/locale.js";
 import { Rest } from "./rest.js";
-import { GenericObject } from "../types.js";
+import { CaptchaType, GenericObject } from "../types.js";
 
 export type PingbackEvents =
     "solve" |
-    "error";
+    "error" |
+    "info";
 
 export class PingbackClient {
     private _solver: Solver;
@@ -42,7 +43,14 @@ export class PingbackClient {
         return this;
     }
 
+    ////////////////////////
+    // Pingback Functions //
+    ////////////////////////
     public async listen() {
         await this._rest.listen();
+    }
+    
+    public async solve(type: CaptchaType, count: number, ...args: any[])  {
+        
     }
 }

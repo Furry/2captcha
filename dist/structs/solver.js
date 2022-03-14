@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { toQueryString } from "../utils/conversions.js";
+import { toBase64, toQueryString } from "../utils/conversions.js";
 import L from "../utils/locale.js";
-import fetch from "../utils/fetch.js";
+import fetch from "../utils/platform.js";
 export class Solver {
     constructor(token, locale = "en") {
         this._token = token;
@@ -39,10 +39,23 @@ export class Solver {
     get(url, query) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(url + toQueryString(query), {
-                method: "POST",
+                method: "GET",
                 headers: {
+                    "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
+            });
+            return response.json();
+        });
+    }
+    post(url, query, body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(url + toQueryString(query), {
+                method: "POST",
+                headers: {
+                    "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
+                },
+                body: body ? body : ""
             });
             return response.json();
         });
@@ -58,6 +71,15 @@ export class Solver {
     getPingbackDomains() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.get(this.out, Object.assign(Object.assign({}, this.defaults), { action: "get_pingback" })).then(res => res.request ? res.request : []);
+        });
+    }
+    //////////////////////
+    // SOLVING METHODDS //
+    ////////////////////// 
+    imageCaptcha(image, extras) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = toBase64(image);
+            return yield this.post(this.in, Object.assign(Object.assign(Object.assign({}, extras), this.defaults), { method: "base64" }), data);
         });
     }
 }

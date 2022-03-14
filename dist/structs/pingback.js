@@ -34,9 +34,16 @@ export class PingbackClient {
         }
         return this;
     }
+    ////////////////////////
+    // Pingback Functions //
+    ////////////////////////
     listen() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this._rest.listen();
+        });
+    }
+    solve(type, count, ...args) {
+        return __awaiter(this, void 0, void 0, function* () {
         });
     }
 }
