@@ -12,6 +12,20 @@ export function toQueryString(obj: GenericObject): string {
     }
 }
 
+export function fromQueryString(query: string): GenericObject {
+    if (query.length === 0) {
+        return {};
+    } else {
+        return query.substring(1)
+            .split("&")
+            .map(pair => pair.split("="))
+            .reduce((obj: any, [key, value]) => {
+                obj[key] = decodeURIComponent(value);
+                return obj;
+            }, {});
+    }
+}
+
 export function toBase64(object: any): string {
     if (!isNode) {
         // If the platform isn't NodeJS, we'll assume this is a b64 string already.

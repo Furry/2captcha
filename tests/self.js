@@ -14,9 +14,9 @@ denv.config();
     const p = path.join(path.dirname(import.meta.url), "resources/testImage.png").substring(6);
     const base64Image = fs.readFileSync(p).toString("base64");
 
-    await pingback.listen()
+    await pingback.listen(8080)
 
-    pingback.solve("textCaptcha", 5, )
+    pingback.solve("textCaptcha", 5, base64Image)
     console.log(x);
     // await pingback.listen();
 })();

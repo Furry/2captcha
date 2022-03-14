@@ -74,6 +74,11 @@ export class Solver {
             return yield this.get(this.out, Object.assign(Object.assign({}, this.defaults), { action: "get_pingback" })).then(res => res.request ? res.request : []);
         });
     }
+    addPingbackDomain(domain) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get(this.out, Object.assign(Object.assign({}, this.defaults), { action: "add_pingback", addr: domain })).then(res => res.request);
+        });
+    }
     //////////////////////
     // SOLVING METHODDS //
     ////////////////////// 

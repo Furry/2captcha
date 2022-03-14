@@ -77,6 +77,12 @@ export class Solver {
         }).then(res => res.request ? res.request : []);
     }
 
+    public async addPingbackDomain(domain: string): Promise<void> {
+        return await this.get(this.out, {
+            ...this.defaults, action: "add_pingback", addr: domain
+        }).then(res => res.request);
+    }
+
     //////////////////////
     // SOLVING METHODDS //
     ////////////////////// 

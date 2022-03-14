@@ -3,8 +3,10 @@ import { EventEmitter } from "events";
 
 import L, { Locale } from "../utils/locale.js";
 import { Rest } from "./rest.js";
-import { CaptchaType, GenericObject } from "../types.js";
+import { CaptchaType, CaptchaTypes, GenericObject, ImageCaptchaExtras } from "../types.js";
 import { genFunctionBindings } from "../utils/bindings.js";
+import fetch from "../utils/platform.js";
+
 export type PingbackEvents =
     "solve" |
     "error" |
@@ -14,15 +16,17 @@ export class PingbackClient {
     private _solver: Solver;
     private _rest: Rest
     private _serverToken: string;
+    private _pingbackAddress: string;
     private _bindings: ReturnType<typeof genFunctionBindings> = {} as any;
 
     private listeners: { [key: string]: CallableFunction[] } = {};
 
-    constructor(token: string, serverToken: string, locale: Locale = "en") {
+    constructor(token: string, serverToken: string, pingbackAddress: string, locale: Locale = "en") {
         this._serverToken = serverToken;
         this._solver = new Solver(token, locale);
-        this._rest = new Rest(this, 8080);
+        this._rest = new Rest(this);
         this._bindings = genFunctionBindings(this._solver);
+        this._pingbackAddress = pingbackAddress;
     }
 
     /**
@@ -44,20 +48,53 @@ export class PingbackClient {
 
         return this;
     }
+    
+    public emit(event: PingbackEvents, body: GenericObject) {
+        if (this.listeners[event]) {
+            this.listeners[event].forEach(listener => listener(body));
+        }
+    }
 
     ////////////////////////
     // Pingback Functions //
     ////////////////////////
-    public async listen() {
-        await this._rest.listen();
+    private async addDomain() {
+        // const domains = await this._solver.getPingbackDomains();
     }
     
-    public requestSolve(type: CaptchaType, count: number, ...args: any[])  {
-        const callable: CallableFunction = this._bindings[type];
+    public async listen(port: number) {
+        await this._rest.listen(port);
+        // Verify that the server is running by making a request to the pingback server.
+        const r = await fetch(this._pingbackAddress + "/2captcha.txt").then((res) => res.text());
+        if (r != this._serverToken) {
+            throw new Error("Sever token could not be read on loopback.");
+        } else {
+            console.log("Success!")
+        }
+    }
+
+    // End Overloads
+    public requestSolve<Key extends keyof CaptchaTypes>(which: Key, count: number, ...args: CaptchaTypes[])  {
+        const callable: CallableFunction = this._bindings[which];
+        let extra = {} as GenericObject;
         if (!callable) {
-            throw new Error(`Invalid captcha type: ${type}`);
+            throw new Error(`Invalid captcha type: ${which}`);
         }
 
-        const result = await callable(...args);
+        // Check to see if the last element of the args is an object.
+        if (args[args.length - 1] instanceof Object) {
+            extra = args[args.length - 1] as any;
+            args.pop();
+        };
+
+        // Get the last argument of args.
+        extra = {
+            ...extra,
+            pingback: this._pingbackAddress
+        }
+
+        for (let i = 0; i < count; i++) {
+            callable([...args, extra]);
+        }
     }
 }

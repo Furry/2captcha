@@ -10,6 +10,20 @@ export function toQueryString(obj) {
             .join("&");
     }
 }
+export function fromQueryString(query) {
+    if (query.length === 0) {
+        return {};
+    }
+    else {
+        return query.substring(1)
+            .split("&")
+            .map(pair => pair.split("="))
+            .reduce((obj, [key, value]) => {
+            obj[key] = decodeURIComponent(value);
+            return obj;
+        }, {});
+    }
+}
 export function toBase64(object) {
     if (!isNode) {
         // If the platform isn't NodeJS, we'll assume this is a b64 string already.

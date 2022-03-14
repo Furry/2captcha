@@ -16,6 +16,7 @@ export declare class Solver {
      */
     balance(): Promise<number>;
     getPingbackDomains(): Promise<string[]>;
+    addPingbackDomain(domain: string): Promise<void>;
     imageCaptcha(image: Base64String | AbsoluteFilePathString | Buffer, extras: ImageCaptchaExtras): Promise<CaptchaResult>;
 }
 //# sourceMappingURL=solver.d.ts.map

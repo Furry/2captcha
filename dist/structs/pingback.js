@@ -9,12 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Solver } from "./solver.js";
 import { Rest } from "./rest.js";
+import { genFunctionBindings } from "../utils/bindings.js";
+import fetch from "../utils/platform.js";
 export class PingbackClient {
-    constructor(token, serverToken, locale = "en") {
+    constructor(token, serverToken, pingbackAddress, locale = "en") {
+        this._bindings = {};
         this.listeners = {};
         this._serverToken = serverToken;
         this._solver = new Solver(token, locale);
-        this._rest = new Rest(this, 8080);
+        this._rest = new Rest(this);
+        this._bindings = genFunctionBindings(this._solver);
+        this._pingbackAddress = pingbackAddress;
     }
     /**
      * Get the solver instance used by this pingback instance.
@@ -34,16 +39,49 @@ export class PingbackClient {
         }
         return this;
     }
+    emit(event, body) {
+        if (this.listeners[event]) {
+            this.listeners[event].forEach(listener => listener(body));
+        }
+    }
     ////////////////////////
     // Pingback Functions //
     ////////////////////////
-    listen() {
+    addDomain() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this._rest.listen();
+            // const domains = await this._solver.getPingbackDomains();
         });
     }
-    solve(type, count, ...args) {
+    listen(port) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield this._rest.listen(port);
+            // Verify that the server is running by making a request to the pingback server.
+            const r = yield fetch(this._pingbackAddress + "/2captcha.txt").then((res) => res.text());
+            if (r != this._serverToken) {
+                throw new Error("Sever token could not be read on loopback.");
+            }
+            else {
+                console.log("Success!");
+            }
         });
+    }
+    // End Overloads
+    requestSolve(which, count, ...args) {
+        const callable = this._bindings[which];
+        let extra = {};
+        if (!callable) {
+            throw new Error(`Invalid captcha type: ${which}`);
+        }
+        // Check to see if the last element of the args is an object.
+        if (args[args.length - 1] instanceof Object) {
+            extra = args[args.length - 1];
+            args.pop();
+        }
+        ;
+        // Get the last argument of args.
+        extra = Object.assign(Object.assign({}, extra), { pingback: this._pingbackAddress });
+        for (let i = 0; i < count; i++) {
+            callable([...args, extra]);
+        }
     }
 }
