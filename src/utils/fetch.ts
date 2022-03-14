@@ -1,4 +1,4 @@
 import NodeFetch from "node-fetch";
 
 // Thanks to Alex
-export = typeof window === "undefined" ? NodeFetch : fetch;
+export default (typeof window === "undefined" ? NodeFetch : fetch);
