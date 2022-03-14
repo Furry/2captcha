@@ -4,6 +4,9 @@ denv.config();
 
 (async () => {
     const solver = new Captcha.Solver(process.env.TOKEN);
-    const balance = await solver.balance();
-    console.log(`Balance: ${balance}`);
+    // const balance = await solver.balance();
+    // console.log(`Balance: ${balance}`);
+
+    const pingbacks = await solver.getPingbackDomains();
+    console.log(`Pingbacks: ${pingbacks}`);
 })();

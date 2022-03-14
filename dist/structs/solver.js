@@ -52,7 +52,12 @@ export class Solver {
      */
     balance() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.get(this.in, Object.assign(Object.assign({}, this.defaults), { action: "getbalance" })).then(res => res.request);
+            return yield this.get(this.out, Object.assign(Object.assign({}, this.defaults), { action: "getbalance" })).then(res => res.request);
+        });
+    }
+    getPingbackDomains() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get(this.out, Object.assign(Object.assign({}, this.defaults), { action: "get_pingback" })).then(res => res.request ? res.request : []);
         });
     }
 }

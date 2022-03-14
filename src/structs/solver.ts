@@ -57,5 +57,11 @@ export class Solver {
         }).then(res => res.request) as number;
     }
 
+    public async getPingbackDomains(): Promise<string[]> {
+        return await this.get(this.out, {
+            ...this.defaults, action: "get_pingback"
+        }).then(res => res.request ? res.request : []);
+    }
+
     // Default Methods
 }

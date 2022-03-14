@@ -13,5 +13,6 @@ export declare class Solver {
      * Get the balance of the account.
      */
     balance(): Promise<number>;
+    getPingbackDomains(): Promise<string[]>;
 }
 //# sourceMappingURL=solver.d.ts.map
