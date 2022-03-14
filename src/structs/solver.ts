@@ -50,12 +50,13 @@ export class Solver {
     }
 
     private async post(url: string, query: GenericObject, body: string) {
+        // console.log(body)
         const response = await fetch(url + toQueryString(query), {
             method: "POST",
             headers: {
                 "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
             },
-            body: body ? body : ""
+            body: body
         })
 
         return response.json();
@@ -86,6 +87,6 @@ export class Solver {
             ...extras,
             ...this.defaults,
             method: "base64"
-        }, data);
+        }, JSON.stringify({body: data}));
     }
 }

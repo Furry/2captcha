@@ -1,5 +1,5 @@
 import { isNode } from "./platform.js";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 export function toQueryString(obj) {
     if (Object.keys(obj).length === 0) {
         return "";
@@ -19,10 +19,14 @@ export function toBase64(object) {
         // We know it's a buffer, so convert to b64.
         return object.toString("base64");
     }
-    else {
+    else if (existsSync(object)) {
         // Only option left is a file. Read it into a buffer, and convert to b64.
         // I'm reading it to a buffer first to make sure there's no encoding issues.
         return Buffer.from(readFileSync(object, "utf8"))
             .toString("base64");
+    }
+    else {
+        // Hopefully it's already base64
+        return object;
     }
 }

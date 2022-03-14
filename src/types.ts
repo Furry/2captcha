@@ -3,6 +3,7 @@ export type CaptchaType =
     "GridMethodCoordnates" |
     "reCaptchaEnterprise"  |
     "rotateCaptcha"        |
+    "imageCaptcha"         |
     "reCaptchav2"          |
     "reCaptchav3"          | 
     "textCaptcha"          |

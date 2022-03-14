@@ -50,12 +50,13 @@ export class Solver {
     }
     post(url, query, body) {
         return __awaiter(this, void 0, void 0, function* () {
+            // console.log(body)
             const response = yield fetch(url + toQueryString(query), {
                 method: "POST",
                 headers: {
                     "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
                 },
-                body: body ? body : ""
+                body: body
             });
             return response.json();
         });
@@ -79,7 +80,7 @@ export class Solver {
     imageCaptcha(image, extras) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = toBase64(image);
-            return yield this.post(this.in, Object.assign(Object.assign(Object.assign({}, extras), this.defaults), { method: "base64" }), data);
+            return yield this.post(this.in, Object.assign(Object.assign(Object.assign({}, extras), this.defaults), { method: "base64" }), JSON.stringify({ body: data }));
         });
     }
 }

@@ -1,1 +1,0 @@
-{"version":3,"file":"pingback.d.ts","sourceRoot":"","sources":["../src/pingback.ts"],"names":[],"mappings":";AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,aAAa,CAAC;AACrC,OAAO,EAAE,YAAY,EAAE,MAAM,QAAQ,CAAC;AAEtC,qBAAa,cAAe,SAAQ,YAAY;IAC5C,OAAO,CAAC,OAAO,CAAS;gBAEZ,KAAK,EAAE,MAAM;IAMzB;;OAEG;IACH,IAAW,MAAM,IAAI,MAAM,CAE1B;CACJ"}
