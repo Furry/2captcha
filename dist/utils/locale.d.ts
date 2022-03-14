@@ -4,9 +4,13 @@ declare const _default: {
         domain: string;
         ERROR_WRONG_USER_KEY: string;
         ERROR_KEY_DOES_NOT_EXIST: string;
+        UNEXPECTED: string;
+        LOOPBACK_BIND: string;
     };
     en: {
         domain: string;
+        UNEXPECTED: string;
+        LOOPBACK_BIND: string;
     };
 };
 export default _default;

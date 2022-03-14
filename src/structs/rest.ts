@@ -6,6 +6,7 @@ export class Rest {
     // A Restful API to facilitate pingback requests.
     private _port: number;
     private _pingback: Pingback;
+    private _pingbackKey: string;
 
     constructor(pingback: Pingback, port: number) {
         // Check to make  sure we're on Node.
@@ -15,13 +16,22 @@ export class Rest {
 
         this._pingback = pingback;
         this._port = port;
+        this._pingbackKey = "";
     }
 
-    public async handleRequest(req: http.IncomingMessage, res: http.OutgoingMessage) {
-        if (req.url === "/2captcha.txt") {
-            // Handle pingback requests.
-            return this._pingback;
-        }
+    public async handleRequest(req: http.IncomingMessage, res: http.OutgoingMessage): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (req.url === "/2captcha.txt") {
+                res._write(Buffer.from(this._pingbackKey), "utf8", () => {
+                    // Close request
+                    res.end();
+                    return resolve();
+                });
+                // Handle pingback requests.
+                return this._pingback;
+            }
+            return resolve();
+        })
     }
 
     public listen(): Promise<void> {

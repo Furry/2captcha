@@ -3,10 +3,8 @@ import denv from "dotenv";
 denv.config();
 
 (async () => {
-    const solver = new Captcha.Solver(process.env.TOKEN);
-    // const balance = await solver.balance();
-    // console.log(`Balance: ${balance}`);
+    // const solver = new Captcha.Solver(process.env.TOKEN);
+    const pingback = new Captcha.Pingback(process.env.TOKEN);
 
-    const pingbacks = await solver.getPingbackDomains();
-    console.log(`Pingbacks: ${pingbacks}`);
+    await pingback.listen();
 })();
