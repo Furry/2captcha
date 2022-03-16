@@ -34,6 +34,7 @@ export class Solver {
         };
     }
 
+
     /////////////////////
     // Utility Methods //
     /////////////////////
@@ -50,7 +51,6 @@ export class Solver {
     }
 
     private async post(url: string, query: GenericObject, body: string) {
-        // console.log(body)
         const response = await fetch(url + toQueryString(query), {
             method: "POST",
             headers: {

@@ -16,7 +16,7 @@ denv.config();
 
     await pingback.listen(8080)
 
-    pingback.solve("textCaptcha", 5, base64Image)
+    pingback.requestSolve("textCaptcha", 5, base64Image)
     console.log(x);
     // await pingback.listen();
 })();

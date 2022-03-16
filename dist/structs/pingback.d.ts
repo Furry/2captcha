@@ -14,6 +14,7 @@ export declare class PingbackClient {
      * Get the solver instance used by this pingback instance.
      */
     get solver(): Solver;
+    get serverToken(): string;
     on(event: PingbackEvents, listener: (...args: any[]) => void): this;
     emit(event: PingbackEvents, body: GenericObject): void;
     private addDomain;

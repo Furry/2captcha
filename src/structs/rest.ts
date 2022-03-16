@@ -1,13 +1,11 @@
 import * as http from "http";
 import * as https from "https";
 import { Pingback } from "../index.js";
-import { Readable, Writable } from "stream";
 import { fromQueryString } from "../utils/conversions.js";
 
 export class Rest {
     // A Restful API to facilitate pingback requests.
     private _pingback: Pingback;
-    private _pingbackKey: string;
 
     constructor(pingback: Pingback) {
         // Check to make  sure we're on Node.
@@ -16,14 +14,13 @@ export class Rest {
         }
 
         this._pingback = pingback;
-        this._pingbackKey = "oisdnfoiawjdoiawjda";
     }
 
     public async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
         return new Promise((resolve) => {
             if (req.url === "/2captcha.txt") {
                 res.writeHead(200);
-                res.end(this._pingbackKey);
+                res.end(this._pingback.serverToken);
             } else if (req.url === "/pingback") {
                 // Retrieve the query parameters.
                 const q = fromQueryString(req.url.split("?")[1]);
@@ -38,7 +35,7 @@ export class Rest {
     }
 
     public listen(port: number): Promise<void> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             // Listen for incoming requests.
             http.createServer((req, res) => {
                 this.handleRequest(req, res);

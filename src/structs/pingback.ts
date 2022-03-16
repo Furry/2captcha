@@ -36,6 +36,10 @@ export class PingbackClient {
         return this._solver;
     }
 
+    public get serverToken(): string {
+        return this._serverToken;
+    }
+
     ///////////////////////
     // EMITTER FUNCTIONS //
     ///////////////////////
@@ -60,17 +64,24 @@ export class PingbackClient {
     ////////////////////////
     private async addDomain() {
         // const domains = await this._solver.getPingbackDomains();
+        let x = await this.solver.addPingbackDomain(this._pingbackAddress);
+        console.log(x)
     }
-    
+
     public async listen(port: number) {
         await this._rest.listen(port);
         // Verify that the server is running by making a request to the pingback server.
         const r = await fetch(this._pingbackAddress + "/2captcha.txt").then((res) => res.text());
+
         if (r != this._serverToken) {
             throw new Error("Sever token could not be read on loopback.");
         } else {
             console.log("Success!")
         }
+
+        console.log("Adding Pingback Domain..")
+        await this.addDomain();
+
     }
 
     // End Overloads

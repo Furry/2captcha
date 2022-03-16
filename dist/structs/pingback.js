@@ -27,6 +27,9 @@ export class PingbackClient {
     get solver() {
         return this._solver;
     }
+    get serverToken() {
+        return this._serverToken;
+    }
     ///////////////////////
     // EMITTER FUNCTIONS //
     ///////////////////////
@@ -50,6 +53,8 @@ export class PingbackClient {
     addDomain() {
         return __awaiter(this, void 0, void 0, function* () {
             // const domains = await this._solver.getPingbackDomains();
+            let x = yield this.solver.addPingbackDomain(this._pingbackAddress);
+            console.log(x);
         });
     }
     listen(port) {
@@ -63,6 +68,8 @@ export class PingbackClient {
             else {
                 console.log("Success!");
             }
+            console.log("Adding Pingback Domain..");
+            yield this.addDomain();
         });
     }
     // End Overloads

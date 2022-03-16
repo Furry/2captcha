@@ -50,7 +50,6 @@ export class Solver {
     }
     post(url, query, body) {
         return __awaiter(this, void 0, void 0, function* () {
-            // console.log(body)
             const response = yield fetch(url + toQueryString(query), {
                 method: "POST",
                 headers: {
