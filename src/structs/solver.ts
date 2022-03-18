@@ -2,6 +2,7 @@ import { AbsoluteFilePathString, Base64String, CaptchaResult, GenericObject, Ima
 import { toBase64, toQueryString } from "../utils/conversions.js";
 import L, { Locale } from "../utils/locale.js";
 import fetch, { isNode } from "../utils/platform.js";
+import { SolverError } from "./error.js";
 
 export class Solver {
     private _token: string;
@@ -49,7 +50,13 @@ export class Solver {
             }
         });
 
-        return response.json();
+        const json = await response.json();
+
+        if (json.status == "0") {
+            throw new SolverError(json.request, this._locale);
+        } else {
+            return json;
+        }
     }
 
     private async post(url: string, query: GenericObject, body: string) {
@@ -61,7 +68,13 @@ export class Solver {
             body: body
         })
 
-        return response.json();
+        const json = await response.json();
+
+        if (json.status == "0") {
+            throw new SolverError(json.request, this._locale);
+        } else {
+            return json;
+        }
     }
 
     /**
