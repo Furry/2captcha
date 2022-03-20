@@ -1,4 +1,10 @@
-import { AbsoluteFilePathString, Base64String, CaptchaResult, GenericObject, ImageCaptchaExtras } from "../types.js";
+import { 
+    Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, 
+    GenericObject, HCaptchaExtras, ImageCaptchaExtras, 
+    KeyCaptchaExtras, 
+    RecaptchaV2Extras, 
+    RecaptchaV3Extras, 
+    RotateCaptchaExtras} from "../types.js";
 import { toBase64, toQueryString } from "../utils/conversions.js";
 import L, { Locale } from "../utils/locale.js";
 import fetch, { isNode } from "../utils/platform.js";
@@ -8,7 +14,6 @@ export class Solver {
     private _token: string;
     private _locale: Locale;
     private _pending: { [key: string]: Promise<CaptchaResult> } = {};
-    // private _pending: string[] = [];
 
     constructor(token: string, locale: Locale = "en") {
         this._token = token;
@@ -143,14 +148,125 @@ export class Solver {
     //////////////////////
     // SOLVING METHODDS //
     ////////////////////// 
-    public async imageCaptcha( image: Base64String | Buffer, extras: ImageCaptchaExtras): Promise<CaptchaResult> {
+    public async imageCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
         const data = toBase64(image);
 
         const c = await this.post(this.in, {
-            ...extras,
+            ...extra,
             ...this.defaults,
             method: "base64"
         }, JSON.stringify({body: data}));
+
+        return this.registerPollEntry(c.request);
+    }
+    // An alias for ImageCaptcha
+    public async textCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
+        return this.imageCaptcha(image, extra); }
+
+    public async recaptchaV2(googlekey: string, pageurl: string, extra: RecaptchaV2Extras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "userrecaptcha",
+            googlekey: googlekey,
+            pageurl: pageurl
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async hcaptcha(sitekey: string, pageurl: string, extra: HCaptchaExtras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "hcaptcha",
+            pageurl: pageurl,
+            sitekey: sitekey
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async geetest(gt: string, challenge: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "geetest",
+            gt: gt,
+            challenge: challenge,
+            pageurl: pageurl
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async funCaptcha(publickey: string, pageurl: string, serviceurl?: string, extra: FunCaptchaExtras = {}) {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "funcaptcha",
+            publickey: publickey,
+            pageurl: pageurl,
+            // Spread the serviceurl if it exists into the object.
+            ...(serviceurl ? { surl: serviceurl } : {})
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async rotateCaptcha(image: Base64String | Buffer, angle: number = 40, extra: RotateCaptchaExtras): Promise<CaptchaResult> {
+        const data = toBase64(image);
+        const c = await this.post(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "rotatecaptcha",
+            angle: angle,
+        }, JSON.stringify({body: data}));
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async keyCaptcha(
+        sscUserId: string, sscSessionId: string,
+        sscWebserverSign: string, sscWebserverSign2: string,
+        pageurl: string, extra: KeyCaptchaExtras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "keycaptcha",
+            s_s_c_user_id: sscUserId,
+            s_s_c_session_id: sscSessionId,
+            s_s_c_web_server_sign: sscWebserverSign,
+            s_s_c_web_server_sign2  : sscWebserverSign2,
+            pageurl: pageurl
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async recaptchaV3(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "userrecaptcha",
+            version: "v3",
+            sitekey: sitekey,
+            pageurl: pageurl
+        });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    public async recaptchaEnterprise(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "userrecaptcha",
+            version: "v3",
+            enterprise: "1",
+            sitekey: sitekey,
+            pageurl: pageurl
+        });
 
         return this.registerPollEntry(c.request);
     }

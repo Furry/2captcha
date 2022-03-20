@@ -1,16 +1,16 @@
 export type GenericObject = { [key: string | number]: string | number | any[] | GenericObject };
 export type CaptchaType = 
     "GridMethodCoordnates" |
-    "reCaptchaEnterprise"  |
-    "rotateCaptcha"        |
-    "imageCaptcha"         |
-    "reCaptchav2"          |
+    "reCaptchaEnterprise"  | 
+    "rotateCaptcha"        | //
+    "imageCaptcha"         | //
+    "reCaptchav2"          | //
     "reCaptchav3"          | 
-    "textCaptcha"          |
-    "funCaptcha"           |
-    "keyCaptcha"           |
-    "hCaptcha"             |
-    "GeeTest"              |
+    "textCaptcha"          | 
+    "funCaptcha"           | // 
+    "keyCaptcha"           | //
+    "hCaptcha"             | // 
+    "GeeTest"              | // 
     "tiktok"               |
     "capy";
 
@@ -40,4 +40,32 @@ export interface CaptchaTypes {
 
 export interface ImageCaptchaExtras extends GenericObject {
 
-};
+}
+
+export interface RecaptchaV2Extras extends GenericObject {
+
+}
+
+export interface HCaptchaExtras extends GenericObject {
+
+}
+
+export interface GeetestExtras extends GenericObject {
+
+}
+
+export interface FunCaptchaExtras extends GenericObject {
+
+}
+
+export interface RotateCaptchaExtras extends GenericObject {
+
+}
+
+export interface KeyCaptchaExtras extends GenericObject {
+
+}
+
+export interface RecaptchaV3Extras extends GenericObject {
+    
+}
