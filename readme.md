@@ -85,6 +85,9 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 .then((res) => {
     console.log(res)
 })
+.catch((err) => {
+    console.error(err.message)
+})
 ```
 
 Image,
@@ -99,6 +102,9 @@ solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
 .then((res) => {
     // Logs the image text
     console.log(res)
+})
+.catch((err) => {
+    console.error(err.message)
 })
 ```
 
@@ -116,6 +122,9 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 
 .then((res) => {
     console.log(res)
+})
+.catch((err) => {
+    console.error(err.message)
 })
 ```
 
