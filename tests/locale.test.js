@@ -1,4 +1,4 @@
-const Captcha = require("../");
+import Captcha from "../dist/index";
 
 test("Verifies the Locale Configurations.", () => {
     // Uses the 2captcha API & Logging. (Also Default)

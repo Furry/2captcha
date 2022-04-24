@@ -1,7 +1,24 @@
+import { SolverError } from "./structs/error.js";
+export interface PendingCaptchaStorage {
+    captchaId: string;
+    resolve: (value: CaptchaResult) => void;
+    reject: (error: SolverError) => void;
+    promise: Promise<CaptchaResult>;
+}
 export declare type GenericObject = {
     [key: string | number]: string | number | any[] | GenericObject;
 };
-export declare type CaptchaType = "GridMethodCoordnates" | "reCaptchaEnterprise" | "rotateCaptcha" | "imageCaptcha" | "reCaptchav2" | "reCaptchav3" | "textCaptcha" | "funCaptcha" | "keyCaptcha" | "hCaptcha" | "GeeTest" | "tiktok" | "capy";
+export declare type CaptchaType = "GridMethodCoordnates" | "reCaptchaEnterprise" | //
+"rotateCaptcha" | //
+"imageCaptcha" | //
+"reCaptchav2" | //
+"reCaptchav3" | //
+"textCaptcha" | //
+"funCaptcha" | // 
+"keyCaptcha" | //
+"hCaptcha" | // 
+"GeeTest" | // 
+"tiktok" | "capy";
 export declare type AbsoluteFilePathString = string;
 export declare type Base64String = string;
 export interface CaptchaResult {
@@ -24,5 +41,19 @@ export interface CaptchaTypes {
     "capy": [];
 }
 export interface ImageCaptchaExtras extends GenericObject {
+}
+export interface RecaptchaV2Extras extends GenericObject {
+}
+export interface HCaptchaExtras extends GenericObject {
+}
+export interface GeetestExtras extends GenericObject {
+}
+export interface FunCaptchaExtras extends GenericObject {
+}
+export interface RotateCaptchaExtras extends GenericObject {
+}
+export interface KeyCaptchaExtras extends GenericObject {
+}
+export interface RecaptchaV3Extras extends GenericObject {
 }
 //# sourceMappingURL=types.d.ts.map

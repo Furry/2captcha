@@ -2,6 +2,7 @@ import {
     Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, 
     GenericObject, HCaptchaExtras, ImageCaptchaExtras, 
     KeyCaptchaExtras, 
+    PendingCaptchaStorage, 
     RecaptchaV2Extras, 
     RecaptchaV3Extras, 
     RotateCaptchaExtras} from "../types.js";
@@ -13,7 +14,10 @@ import { SolverError } from "./error.js";
 export class Solver {
     private _token: string;
     private _locale: Locale;
-    private _pending: { [key: string]: Promise<CaptchaResult> } = {};
+
+    // No clue how to apply typings to this...
+    private _pending: {[key: string]: PendingCaptchaStorage} = {};
+    private _interval: number | null = null;
 
     constructor(token: string, locale: Locale = "en") {
         this._token = token;
@@ -126,23 +130,71 @@ export class Solver {
     }
 
     /**
-     * Gets the solution for multiple captchas.
-     * @param captchaIds The captcha IDs to solve.
-     * @returns {Promise<CaptchaResult[]>} The solved captchas.
+     * Resolves all possible promises for outstanding captchas.
      */
-    private async getSolutions(captchaIds: string[]): Promise<CaptchaResult[]> {
+    private async getSolutions(): Promise<void> {
+        const pendingIds = Object.keys(this._pending);
+        if (pendingIds.length == 0) {
+            // remove the interval.
+            clearInterval(this._interval as number);
+            return;
+        }
+
+        // Captcha solutions from this endpoint are returned as a string seperated by a vertical bar. 
+        // Eg. "263s2v|CAPCHA_NOT_READY|365312" and so on.
         const solutions = await this.get(this.out, {
-            ...this.defaults, action: "get", ids: captchaIds.join(",")
+            ...this.defaults, action: "get", ids: pendingIds.join(",")
         }).then((res) => res.request);
 
-        console.log(solutions);
-        return [];
+        solutions.split("|").forEach((state: string, index: number) => {
+            const id = pendingIds[index];
+            const captcha = this._pending[id];
+
+            switch (state) {
+                case "CAPCHA_NOT_READY":
+                    // Do nothing.
+                break;
+                case "ERROR_CAPTCHA_UNSOLVABLE":
+                    captcha.reject(new SolverError(state, this._locale));
+                    delete this._pending[id];
+                break;
+                default:
+                    captcha.resolve({
+                        id: id,
+                        data: state
+                    });
+                    delete this._pending[id];
+                break;
+            };
+        });
     }
 
+    /**
+     * Registers a new captcha promise to the array of pending captchas, returning the promise
+     * object that will be automatically resolved or rejected by the getSolutions() function.
+     * @param captchaId The captcha ID to get the solution of.
+     * @returns The resulting captcha promise.
+     */
     private async registerPollEntry(captchaId: string): Promise<CaptchaResult> {
-        // add a new pending promise to the map that will never resulve.
-        this._pending[captchaId] = new Promise<CaptchaResult>((resolve, reject) => {});
-        return this._pending[captchaId];
+        const captchaPromiseObject: PendingCaptchaStorage = {
+            captchaId: captchaId
+        } as any;
+
+        captchaPromiseObject.promise = new Promise<CaptchaResult>((resolve, reject) => {
+            captchaPromiseObject.resolve = resolve;
+            captchaPromiseObject.reject = reject;
+        });
+
+        // Add the captcha to the pending list.
+        this._pending[captchaId] = captchaPromiseObject;
+
+        if (this._interval == null) {
+            this._interval = setInterval(() => {
+                this.getSolutions();
+            }, 1000) as unknown as number;
+        }
+
+        return captchaPromiseObject.promise;
     }
 
     //////////////////////
@@ -159,6 +211,7 @@ export class Solver {
 
         return this.registerPollEntry(c.request);
     }
+
     // An alias for ImageCaptcha
     public async textCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
         return this.imageCaptcha(image, extra); }

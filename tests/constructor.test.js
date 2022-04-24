@@ -1,4 +1,4 @@
-const Captcha = require("../");
+import Captcha from "../dist/index";
 
 test("Creates a base Solver & Solver.Pingback instance.", () => {
     const token = "test"

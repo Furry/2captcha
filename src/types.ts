@@ -1,12 +1,21 @@
+import { SolverError } from "./structs/error.js";
+
+export interface PendingCaptchaStorage {
+    captchaId: string;
+    resolve: (value: CaptchaResult) => void;
+    reject: (error: SolverError) => void;
+    promise: Promise<CaptchaResult>;
+}
+
 export type GenericObject = { [key: string | number]: string | number | any[] | GenericObject };
 export type CaptchaType = 
     "GridMethodCoordnates" |
-    "reCaptchaEnterprise"  | 
+    "reCaptchaEnterprise"  | //
     "rotateCaptcha"        | //
     "imageCaptcha"         | //
     "reCaptchav2"          | //
-    "reCaptchav3"          | 
-    "textCaptcha"          | 
+    "reCaptchav3"          | //
+    "textCaptcha"          | //
     "funCaptcha"           | // 
     "keyCaptcha"           | //
     "hCaptcha"             | // 
@@ -67,5 +76,5 @@ export interface KeyCaptchaExtras extends GenericObject {
 }
 
 export interface RecaptchaV3Extras extends GenericObject {
-    
+
 }
