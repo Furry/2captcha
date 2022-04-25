@@ -65,7 +65,8 @@ interface CaptchaAnswer {
 export class Solver {
     public _apikey: string
     public _pollingFrequency: number
-    public _headerACAO: number;
+    public _headerACAO: number
+    public _progressBarCallback: Function
 
     /**
      * The constructor for the 2captcha Solver class.
@@ -73,10 +74,11 @@ export class Solver {
      * @param apikey {string} The API key to use
      * @param pollingFrequency {number} The frequency to poll for requests
      */
-    constructor(apikey: string, pollingFrequency: number = 5000, enableACAO: boolean = true) {
+    constructor(apikey: string, pollingFrequency: number = 5000, enableACAO: boolean = true, progressBarCallback: Function = ()=>{}) {
         this._apikey = apikey
         this._pollingFrequency = pollingFrequency
         this._headerACAO = enableACAO ? 1 : 0
+        this._progressBarCallback = progressBarCallback
     }
 
     /** The API key this instance is using */
@@ -85,6 +87,8 @@ export class Solver {
     public get pollingFrequency() { return this._pollingFrequency }
     /** Set the API key for this instance */
     public set apikey(update: string) { this._apikey = update }
+    /**  Progress bar callback */
+    public get progressBarCallback() { return this._progressBarCallback }
 
     private get in() { return "https://2captcha.com/in.php" }
     private get res() { return "https://2captcha.com/res.php"}
@@ -129,6 +133,9 @@ a     *
      * @throws APIError
      */
     private async pollResponse(id: string): Promise<CaptchaAnswer> {
+
+        this.progressBarCallback()
+
         const payload = {
             ...this.defaultPayload,
             action: "get",
