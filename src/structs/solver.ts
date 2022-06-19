@@ -12,7 +12,7 @@ import {
 import { toBase64, toQueryString } from "../utils/conversions.js";
 import L, { Locale } from "../utils/locale.js";
 import fetch, { isNode } from "../utils/platform.js";
-import { SolverError } from "./error.js";
+import { NetError, SolverError } from "./error.js";
 
 export class Solver {
     private _token: string;
@@ -59,7 +59,9 @@ export class Solver {
                 "User-Agent": this._userAgent,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        });
+        }).catch(err => {
+            throw new NetError(err, this._locale);
+        })
 
         const json = await response.json();
 
@@ -77,6 +79,8 @@ export class Solver {
                 "User-Agent": this._userAgent,
             },
             body: body
+        }).catch(err => {
+            throw new NetError(err, this._locale);
         })
 
         const json = await response.json();

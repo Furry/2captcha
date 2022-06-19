@@ -9,5 +9,7 @@ dotenv.config();
 
 describe("Multi Image Test", () => {
     const solver = new Captcha.Solver(process.env.TOKEN);
-    it("Should solve multiple ")
+    it("Should solve multiple image captchas.", async () => {
+        solver
+    })
 })
