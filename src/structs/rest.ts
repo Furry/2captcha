@@ -10,7 +10,7 @@ export class Rest {
     constructor(pingback: Pingback) {
         // Check to make  sure we're on Node.
         if (typeof process === "undefined") {
-            throw new Error("The Rest & Pingback API is only available on Node.js.");
+            throw new Error("The Rest & Pingback API is only available on NodeJS");
         }
 
         this._pingback = pingback;

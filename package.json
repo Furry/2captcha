@@ -6,24 +6,24 @@
   "repository": "https://github.com/furry/2captcha",
   "author": "Furry <ender@thefluegges.com>",
   "license": "MIT",
-  "type": "module",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "tsc": "tsc",
-    "test": "yarn tsc && node ./tests/self.js",
-    "tests": "tsc && jest",
+    "mocha": "mocha",
+    "test": "yarn mocha --timeout 900000",
     "pingbackTest": "tsc && node ./tests/pingbackTest.js"
   },
-  "jest": {
-    "module": ""
-  },
   "dependencies": {
-    "node-fetch": "^3.2.3"
+    "mocha": "^10.0.0",
+    "node-fetch": "^3.2.6"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
+    "@types/node-fetch": "^2.6.2",
+    "chai": "^4.3.6",
     "dotenv": "^16.0.0",
-    "jest": "^27.5.1",
+    "mocha-parallel-tests": "^2.3.0",
     "ngrok": "^4.3.1",
     "tunnel": "^0.0.6",
     "typescript": "^4.7.0-dev.20220314"

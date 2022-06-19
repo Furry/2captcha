@@ -1,11 +1,13 @@
-import { 
-    Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, 
-    GenericObject, HCaptchaExtras, ImageCaptchaExtras, 
-    KeyCaptchaExtras, 
-    PendingCaptchaStorage, 
-    RecaptchaV2Extras, 
-    RecaptchaV3Extras, 
-    RotateCaptchaExtras} from "../types.js";
+import {
+    Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras,
+    GenericObject, HCaptchaExtras, ImageCaptchaExtras,
+    KeyCaptchaExtras,
+    PendingCaptchaStorage,
+    RecaptchaV2Extras,
+    RecaptchaV3Extras,
+    RotateCaptchaExtras
+} from "../types.js";
+
 import { toBase64, toQueryString } from "../utils/conversions.js";
 import L, { Locale } from "../utils/locale.js";
 import fetch, { isNode } from "../utils/platform.js";
@@ -16,9 +18,9 @@ export class Solver {
     private _locale: Locale;
 
     // No clue how to apply typings to this...
-    private _pending: {[key: string]: PendingCaptchaStorage} = {};
+    private _pending: { [key: string]: PendingCaptchaStorage } = {};
     private _interval: number | null = null;
-
+    private _userAgent = "2captchaNode / 4.0.0 - Node-Fetch (https://github.com/furry/2captcha)";
     constructor(token: string, locale: Locale = "en") {
         this._token = token;
         this._locale = locale;
@@ -54,7 +56,7 @@ export class Solver {
         const response = await fetch(url + toQueryString(query), {
             method: "GET",
             headers: {
-                "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
+                "User-Agent": this._userAgent,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         });
@@ -72,7 +74,7 @@ export class Solver {
         const response = await fetch(url + toQueryString(query), {
             method: "POST",
             headers: {
-                "User-Agent": "2captchaNode/4.0.0 - Node-Fetch (https://github.com/furry/2captcha)",
+                "User-Agent": this._userAgent,
             },
             body: body
         })
@@ -153,18 +155,18 @@ export class Solver {
             switch (state) {
                 case "CAPCHA_NOT_READY":
                     // Do nothing.
-                break;
+                    break;
                 case "ERROR_CAPTCHA_UNSOLVABLE":
                     captcha.reject(new SolverError(state, this._locale));
                     delete this._pending[id];
-                break;
+                    break;
                 default:
                     captcha.resolve({
                         id: id,
                         data: state
                     });
                     delete this._pending[id];
-                break;
+                    break;
             };
         });
     }
@@ -200,6 +202,12 @@ export class Solver {
     //////////////////////
     // SOLVING METHODDS //
     ////////////////////// 
+    /**
+     * Solves an image based captcha
+     * @param image The image to solve.
+     * @param extra  The extra data to send to the solver.
+     * @returns Captcha result.
+     */
     public async imageCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
         const data = toBase64(image);
 
@@ -207,14 +215,15 @@ export class Solver {
             ...extra,
             ...this.defaults,
             method: "base64"
-        }, JSON.stringify({body: data}));
+        }, JSON.stringify({ body: data }));
 
         return this.registerPollEntry(c.request);
     }
 
     // An alias for ImageCaptcha
     public async textCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
-        return this.imageCaptcha(image, extra); }
+        return this.imageCaptcha(image, extra);
+    }
 
     public async recaptchaV2(googlekey: string, pageurl: string, extra: RecaptchaV2Extras = {}): Promise<CaptchaResult> {
         const c = await this.get(this.in, {
@@ -274,7 +283,7 @@ export class Solver {
             ...this.defaults,
             method: "rotatecaptcha",
             angle: angle,
-        }, JSON.stringify({body: data}));
+        }, JSON.stringify({ body: data }));
 
         return this.registerPollEntry(c.request);
     }
@@ -290,7 +299,7 @@ export class Solver {
             s_s_c_user_id: sscUserId,
             s_s_c_session_id: sscSessionId,
             s_s_c_web_server_sign: sscWebserverSign,
-            s_s_c_web_server_sign2  : sscWebserverSign2,
+            s_s_c_web_server_sign2: sscWebserverSign2,
             pageurl: pageurl
         });
 

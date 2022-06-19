@@ -1,4 +1,4 @@
-/// <reference types="node" resolution-mode="require"/>
+/// <reference types="node" />
 import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
 import { Locale } from "../utils/locale.js";
 export declare class Solver {
@@ -6,6 +6,7 @@ export declare class Solver {
     private _locale;
     private _pending;
     private _interval;
+    private _userAgent;
     constructor(token: string, locale?: Locale);
     get token(): string;
     private get in();
@@ -47,6 +48,12 @@ export declare class Solver {
      * @returns The resulting captcha promise.
      */
     private registerPollEntry;
+    /**
+     * Solves an image based captcha
+     * @param image The image to solve.
+     * @param extra  The extra data to send to the solver.
+     * @returns Captcha result.
+     */
     imageCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult>;
     textCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult>;
     recaptchaV2(googlekey: string, pageurl: string, extra?: RecaptchaV2Extras): Promise<CaptchaResult>;

@@ -30,7 +30,7 @@ export function toBase64(object: any): string {
     if (!isNode) {
         // If the platform isn't NodeJS, we'll assume this is a b64 string already.
         return object;
-    } else if (Buffer.isBuffer(object)) {
+    } else if (!!Buffer && Buffer.isBuffer(object)) {
         // We know it's a buffer, so convert to b64.
         return object.toString("base64");
     } else if (existsSync(object)) {
