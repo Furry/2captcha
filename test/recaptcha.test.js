@@ -29,7 +29,7 @@ describe("Recaptcha Test", () => {
         try {
             await solver.recaptchaV2("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://example.com/");
         } catch (e) {
-            console.log(e.message).to.equal("ERROR_CAPTCHA_UNSOLVABLE");
+            expect(e.message).to.equal("ERROR_CAPTCHA_UNSOLVABLE");
         }
     })
 })

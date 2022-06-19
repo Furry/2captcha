@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
+import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, PendingCaptcha, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
 import { Locale } from "../utils/locale.js";
 export declare class Solver {
     private _token;
@@ -14,6 +14,11 @@ export declare class Solver {
     private get defaults();
     private get;
     private post;
+    /**
+     * Gets a list of all pending captchas.
+     * @returns A list of all pending captchas.
+     */
+    getPending(): PendingCaptcha[];
     /**
      * Get the balance of the account.
      *

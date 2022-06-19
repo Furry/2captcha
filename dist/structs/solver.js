@@ -5,7 +5,6 @@ import { SolverError } from "./error.js";
 export class Solver {
     _token;
     _locale;
-    // No clue how to apply typings to this...
     _pending = {};
     _interval = null;
     _userAgent = "2captchaNode / 4.0.0 - Node-Fetch (https://github.com/furry/2captcha)";
@@ -67,6 +66,23 @@ export class Solver {
         }
     }
     /**
+     * Gets a list of all pending captchas.
+     * @returns A list of all pending captchas.
+     */
+    getPending() {
+        const pendingCache = [];
+        // A shallow clone isn't enough, so they need to be iterated manually.
+        for (const pending of Object.keys(this._pending)) {
+            const c = this._pending[pending];
+            pendingCache.push({
+                startTime: c.startTime,
+                captchaId: c.captchaId,
+                polls: c.polls,
+            });
+        }
+        return pendingCache;
+    }
+    /**
      * Get the balance of the account.
      *
      * @returns {Promise<number>} The current balance.
@@ -125,7 +141,8 @@ export class Solver {
             const captcha = this._pending[id];
             switch (state) {
                 case "CAPCHA_NOT_READY":
-                    // Do nothing.
+                    // Increment the polls for the captcha by one.
+                    captcha.polls++;
                     break;
                 case "ERROR_CAPTCHA_UNSOLVABLE":
                     captcha.reject(new SolverError(state, this._locale));
@@ -150,7 +167,9 @@ export class Solver {
      */
     async registerPollEntry(captchaId) {
         const captchaPromiseObject = {
-            captchaId: captchaId
+            startTime: Date.now(),
+            captchaId: captchaId,
+            polls: 0
         };
         captchaPromiseObject.promise = new Promise((resolve, reject) => {
             captchaPromiseObject.resolve = resolve;

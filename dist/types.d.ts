@@ -1,6 +1,10 @@
 import { SolverError } from "./structs/error.js";
-export interface PendingCaptchaStorage {
+export interface PendingCaptcha {
+    startTime: number;
+    polls: number;
     captchaId: string;
+}
+export interface PendingCaptchaStorage extends PendingCaptcha {
     resolve: (value: CaptchaResult) => void;
     reject: (error: SolverError) => void;
     promise: Promise<CaptchaResult>;

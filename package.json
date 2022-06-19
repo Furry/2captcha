@@ -11,7 +11,7 @@
   "scripts": {
     "tsc": "tsc",
     "mocha": "mocha",
-    "test": "yarn mocha --timeout 900000",
+    "test": "yarn mocha --parallel --timeout 900000",
     "pingbackTest": "tsc && node ./tests/pingbackTest.js"
   },
   "dependencies": {

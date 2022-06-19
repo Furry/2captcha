@@ -2,6 +2,7 @@ import {
     Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras,
     GenericObject, HCaptchaExtras, ImageCaptchaExtras,
     KeyCaptchaExtras,
+    PendingCaptcha,
     PendingCaptchaStorage,
     RecaptchaV2Extras,
     RecaptchaV3Extras,
@@ -17,7 +18,6 @@ export class Solver {
     private _token: string;
     private _locale: Locale;
 
-    // No clue how to apply typings to this...
     private _pending: { [key: string]: PendingCaptchaStorage } = {};
     private _interval: number | null = null;
     private _userAgent = "2captchaNode / 4.0.0 - Node-Fetch (https://github.com/furry/2captcha)";
@@ -89,6 +89,26 @@ export class Solver {
     }
 
     /**
+     * Gets a list of all pending captchas.
+     * @returns A list of all pending captchas.
+     */
+    public getPending(): PendingCaptcha[] {
+        const pendingCache: PendingCaptcha[] = [];
+
+        // A shallow clone isn't enough, so they need to be iterated manually.
+        for (const pending of Object.keys(this._pending)) {
+            const c = this._pending[pending];
+            pendingCache.push({
+                startTime: c.startTime,
+                captchaId: c.captchaId,
+                polls: c.polls,
+            })
+        }
+
+        return pendingCache;
+    }
+
+    /**
      * Get the balance of the account.
      * 
      * @returns {Promise<number>} The current balance.
@@ -154,7 +174,8 @@ export class Solver {
 
             switch (state) {
                 case "CAPCHA_NOT_READY":
-                    // Do nothing.
+                    // Increment the polls for the captcha by one.
+                    captcha.polls++;
                     break;
                 case "ERROR_CAPTCHA_UNSOLVABLE":
                     captcha.reject(new SolverError(state, this._locale));
@@ -179,7 +200,9 @@ export class Solver {
      */
     private async registerPollEntry(captchaId: string): Promise<CaptchaResult> {
         const captchaPromiseObject: PendingCaptchaStorage = {
-            captchaId: captchaId
+            startTime: Date.now(),
+            captchaId: captchaId,
+            polls: 0
         } as any;
 
         captchaPromiseObject.promise = new Promise<CaptchaResult>((resolve, reject) => {
