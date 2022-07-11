@@ -365,6 +365,39 @@ a     *
             throw new APIError(data.request)
         }
     }
+
+    /**
+     * Reports a captcha as correctly solved.
+     * 
+     * @param id The ID of the captcha
+     * @throws APIError
+     * @example
+     * solver.goodReport("123456789")
+     */
+    public async goodReport(id: string): Promise<void> {
+        const payload = {
+            id: id,
+            action: "reportgood",
+            ...this.defaultPayload
+        }
+
+        const response = await fetch(this.res + utils.objectToURI(payload))
+        const result = await response.text();
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.request == "OK_REPORT_RECORDED") {
+            return
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
     /**
      * Report an unsuccessful solve
      * 
