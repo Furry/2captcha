@@ -1,8 +1,8 @@
 {
-  "name": "2captcha",
-  "version": "3.0.5",
+  "name": "2captcha-js",
+  "version": "1.0.0",
   "main": "dist/index.js",
-  "repository": "https://github.com/furry/2captcha",
+  "repository": "https://github.com/dzmitry-duboyski/2captcha-js",
   "license": "MIT",
   "types": "dist/index.d.ts",
   "keywords": [
