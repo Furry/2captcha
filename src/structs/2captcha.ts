@@ -45,6 +45,17 @@ export interface UserImageCaptchaExtra extends BaseSolve {
     lang?: string,
 }
 
+// FixMe: parameter "offline" is boolean or number? 
+// https://2captcha.com/2captcha-api#solving_geetest:~:text=on%20target%20website-,offline,-Number%0ADefault%3A%200
+export interface UserGeetestExtra extends BaseSolve {
+    api_server?: string,
+    offline?: number | boolean,
+    new_captcha?: number | boolean,
+    pingback?: string,
+    soft_id?: number,
+    proxy?: string,
+    proxytype?: string,
+}
 
 /**
  * An object containing properties of the captcha solution.
@@ -201,7 +212,7 @@ export class Solver {
     }
 
     /**
-     * Solves a google Recaptcha, returning the result as a string.
+     * Solves a hCaptcha, returning the result as a string.
      * 
      * @param {string} sitekey The hcaptcha site key
      * @param {string} pageurl The URL the captcha appears on
@@ -210,7 +221,7 @@ export class Solver {
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
      * @example
-     * solver.recaptcha("37f92ac1-4956-457e-83cd-723423af613f", "https://www.tokyobitcoiner.com/hcaptcha")
+     * solver.hcaptcha("a5f74b19-9e45-40e0-b45d-47ff91b7a6c2", "https://accounts.hcaptcha.com/demo)
      * .then((res) => {
      *   console.log(res)
      * })
@@ -260,7 +271,7 @@ export class Solver {
      *      console.log(res)
      *  })
      */
-     public async geetest(gt: string, challenge: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
+     public async geetest(gt: string, challenge: string, pageurl: string, extra: UserGeetestExtra = { }): Promise<CaptchaAnswer> {
         //'extra' is user defined, and the default contents should be overridden by it.
         const payload = {
             ...extra,
