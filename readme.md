@@ -1,20 +1,9 @@
-<center>
-    <h1>
-        2captcha
-    </h1>
+# 2captcha-js
 
-
-<a href="https://discord.gg/tamVs2Ujrf">
-    <img src="https://discordapp.com/api/guilds/769020183540400128/widget.png?style=banner2" alt="Discord Banner 2"/>
-</a>
-
-![Discord Shield](https://img.shields.io/github/commit-activity/m/furry/2captcha)
 ![Size](https://img.shields.io/bundlephobia/min/2captcha)
-![Downloads](https://img.shields.io/npm/dw/2captcha)
+![Downloads](https://img.shields.io/npm/dw/2captcha-js)
 
-</center>
-
-<center>A wrapper around the 2captcha API</center>
+A wrapper around the 2captcha API.
 
 ## Info
 <h3>
@@ -31,7 +20,7 @@
 
 ## Motive
 
-2captcha is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
+2captcha is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage. This project is a fork of this [package](https://www.npmjs.com/package/2captcha).
 
 ## Features
 
@@ -43,14 +32,23 @@
 - Invalid Captcha reporting
 - Proxy Support
 
-Currently supports:
+Supported captchas:
 
-- google-recaptcha (v2 / v3),
-- hcaptcha,
-- FunCaptcha,
-- base64 image captchas
+* [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3),
+* [x] hCaptcha,
+* [x] FunCaptcha,
+* [x] base64 image captchas
+* [ ] Geetest
+* [ ] Geetest v4
+* [ ] Yandex Smart Captcha
+* [ ] Capy Puzzle
+* [ ] Lemin Cropped Captcha
+* [ ] Cloudflare Turnstile
+* [ ] Amazon WAF Captcha
+* [ ] ~~TikTok Captcha~~
 
-## Planned Features
+
+<!-- ## Planned Features
 
 - ~~Account Interaction~~
 - ~~Base64 image support~~
@@ -58,23 +56,23 @@ Currently supports:
 - Built-in Rate-Limit handling
 - ~~Proxy support~~
 - ~~Invalid-Captcha reporting support~~
-- And many other things.
+- And many other things. -->
 
 ## Install
 
 ```sh
-npm install 2captcha
+npm install 2captcha-js
 ```
-```sh
-yarn add 2captcha
-```
+<!-- ```sh
+yarn add 2captcha-js
+``` -->
 
 ## Usage
 
 
 Recaptcha,
 ```js
-const Captcha = require("2captcha")
+const Captcha = require("2captcha-js")
 
 // A new 'solver' instance with our API key
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -92,7 +90,7 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 
 Image,
 ```js
-const Captcha = require("2captcha")
+const Captcha = require("2captcha-js")
 const fs = require("fs")
 
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -110,7 +108,7 @@ solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
 
 Proxy,
 ```js
-const Captcha = require("2captcha")
+const Captcha = require("2captcha-js")
 
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -128,7 +126,7 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 })
 ```
 
-## Commit Guidelines
+<!-- ## Commit Guidelines
 
 The latest version of the code base will always be under the '**next**' branch!
 
@@ -138,6 +136,6 @@ The latest version of the code base will always be under the '**next**' branch!
 - If you have questions, feel free to make an issue and i'll get to it right away!
 
 <hr>
-<div style="text-align: center">
+ <div style="text-align: center">
 <a href="https://www.buymeacoffee.com/ether" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-</div>
+</div> -->
