@@ -88,7 +88,7 @@ export class Solver {
 
     private get in() { return "https://2captcha.com/in.php" }
     private get res() { return "https://2captcha.com/res.php"}
-    private get defaultPayload() { return { key: this.apikey, json: 1, header_acao: this._headerACAO, soft_id: 3316 } }
+    private get defaultPayload() { return { key: this.apikey, json: 1, header_acao: this._headerACAO, soft_id: 100500100 } }
 
     /**
      * Returns the remaining account balance.
