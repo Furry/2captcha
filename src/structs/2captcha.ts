@@ -161,7 +161,9 @@ export class Solver {
             throw new APIError(result)
         }
         switch (data.request) {
-            case "CAPCHA_NOT_READY": return this.pollResponse(id);
+            case "CAPCHA_NOT_READY": 
+                // console.log('CAPCHA_NOT_READY')
+                return this.pollResponse(id);
             default: {
                 throw new APIError(data.request)
             }
