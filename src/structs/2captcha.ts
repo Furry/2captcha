@@ -301,6 +301,49 @@ export class Solver {
         }
     }
 
+  
+     /**
+     * Solves a Yandex Smart Captcha, returning the result as a string.
+     * 
+     * @param {string} sitekey The Yandex Smart Captcha site key
+     * @param {string} pageurl The URL the captcha appears on
+     * @param {object} extra Extra options
+     * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve
+     * @throws APIError
+     * @example
+     * solver.yandexSmart("FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9", "https://captcha-api.yandex.ru/demo")
+     * .then((res) => {
+     *   console.log(res)
+     * })
+     */
+public async yandexSmart(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
+    //'extra' is user defined, and the default contents should be overridden by it.
+    const payload = {
+        ...extra,
+        sitekey: sitekey,
+        pageurl: pageurl,
+        method: "yandex",
+        ...this.defaultPayload
+    }
+
+    const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
+
     /**
      * Solves a image-based captcha.
      * @param {string} base64image Base64 image data for the captcha

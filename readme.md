@@ -38,9 +38,9 @@ Supported captchas:
 * [x] hCaptcha,
 * [x] FunCaptcha,
 * [x] base64 image captchas
-* [ ] Geetest
+* [x] Geetest
 * [ ] Geetest v4
-* [ ] Yandex Smart Captcha
+* [x] Yandex Smart Captcha
 * [ ] Capy Puzzle
 * [ ] Lemin Cropped Captcha
 * [ ] Cloudflare Turnstile
