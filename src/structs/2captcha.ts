@@ -2,6 +2,13 @@ import fetch from "../utils/fetch"
 
 import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
+import  getProviderData  from "./providers/providers"
+import { softId } from "./constants/constants"
+
+
+const provider = getProviderData ()
+
+console.log(provider)
 
 interface BaseSolve {
 
@@ -97,9 +104,9 @@ export class Solver {
     /** Set the API key for this instance */
     public set apikey(update: string) { this._apikey = update }
 
-    private get in() { return "https://2captcha.com/in.php" }
-    private get res() { return "https://2captcha.com/res.php"}
-    private get defaultPayload() { return { key: this.apikey, json: 1, header_acao: this._headerACAO, soft_id: 100500100 } }
+    private get in() { return provider.in }
+    private get res() { return provider.res}
+    private get defaultPayload() { return { key: this.apikey, json: 1, header_acao: this._headerACAO, soft_id: softId } }
 
     /**
      * Returns the remaining account balance.
