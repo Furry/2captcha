@@ -45,7 +45,7 @@ Supported captchas:
 * [ ] Lemin Cropped Captcha
 * [ ] Cloudflare Turnstile
 * [ ] Amazon WAF Captcha
-* [ ] ~~TikTok Captcha~~
+* [ ] ~~TikTok Captcha~~ (this captcha is temporarily not supported by 2captcha)
 
 
 <!-- ## Planned Features
@@ -70,14 +70,14 @@ yarn add 2captcha-js
 ## Usage
 
 
-Recaptcha,
+### reCAPTCHA:
 ```js
 const Captcha = require("2captcha-js")
 
 // A new 'solver' instance with our API key
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-/* Example ReCaptcha Website */
+/* Example reCAPTCHA Website */
 solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
 
 .then((res) => {
@@ -88,7 +88,7 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 })
 ```
 
-Image,
+### Image captcha:
 ```js
 const Captcha = require("2captcha-js")
 const fs = require("fs")
@@ -106,7 +106,7 @@ solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
 })
 ```
 
-Proxy,
+### Proxy:
 ```js
 const Captcha = require("2captcha-js")
 
@@ -123,6 +123,41 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 })
 .catch((err) => {
     console.error(err.message)
+})
+```
+
+### GeeTest:
+```js
+const Captcha = require("2captcha-js")
+
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+
+solver.geetest("d7e36de8f91fae3768e8f4fadfa3bf1f", "2bc0c39f85b8c44acb70971f5581e38e", "https://marketplace.axieinfinity.com/profile/dashboard")
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Yandex Smart Captcha:
+```js
+const Captcha = require("2captcha-js")
+
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+// Warning: method argument is an object
+solver.yandexSmart({ 
+    pageurl: "https://captcha-api.yandex.ru/demo",
+    sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
+ })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
 })
 ```
 
