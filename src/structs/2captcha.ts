@@ -8,8 +8,6 @@ import { softId } from "./constants/constants"
 
 const provider = getProviderData ()
 
-console.log(provider)
-
 interface BaseSolve {
 
 }
@@ -65,6 +63,25 @@ export interface UserGeetestExtra extends BaseSolve {
 }
 
 /**
+ * Interface for yandexSmart captcha
+ * 
+ * @typedef {object} yandexSmart
+ * @property {string} pageurl URL of the page where the captcha is located
+ * @property {string} sitekey The `sitekey` value you found on the captcha page
+ * @property {string} pingback
+ * @property {string} proxy Format: login:password@123.123.123.123:3128
+ * @property {string} proxytype Type of your proxy: HTTP, HTTPS, SOCKS4, SOCKS5.
+ * 
+ */
+export interface yandexSmart {
+    pageurl: string,
+    sitekey: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string
+}
+
+/**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
  * @param {string} data The solution to the captcha
@@ -95,6 +112,7 @@ export class Solver {
         this._apikey = apikey
         this._pollingFrequency = pollingFrequency
         this._headerACAO = enableACAO ? 1 : 0
+
     }
 
     /** The API key this instance is using */
@@ -309,27 +327,33 @@ export class Solver {
     }
 
   
-     /**
-     * Solves a Yandex Smart Captcha, returning the result as a string.
+
+    /**
+     * Method for sending Yandex Smart Captcha.
+     * This method accepts an object with the following fields: `pageurl`, `sitekey`, `pingback`, `proxy`, `proxytype`.
+     * The `pageurl` and `sitekey` fields are required.
      * 
-     * @param {string} sitekey The Yandex Smart Captcha site key
-     * @param {string} pageurl The URL the captcha appears on
-     * @param {object} extra Extra options
+     * @param {{pageurl, sitekey, pingback, proxy, proxytype}} params The method takes arguments as an object.
+     * @param {string} params.pageurl Required parameter. URL of the page where the captcha is located.
+     * @param {string} params.sitekey Required parameter. The `sitekey` value you found on the captcha page.
+     * @param {string} params.pingback An optional param.
+     * @param {string} params.proxy An optional param. Format: `login:password@123.123.123.123:3128`.
+     * @param {string} params.proxytype An optional param. Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
      * 
-     * @returns {Promise<CaptchaAnswer>} The result from the solve
+     * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.yandexSmart("FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9", "https://captcha-api.yandex.ru/demo")
+     * Solver.yandexSmart({ pageurl: "https://captcha-api.yandex.ru/demo", sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9" })
      * .then((res) => {
      *   console.log(res)
      * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
      */
-public async yandexSmart(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
-    //'extra' is user defined, and the default contents should be overridden by it.
+    public async yandexSmart(params: yandexSmart): Promise<CaptchaAnswer> {
     const payload = {
-        ...extra,
-        sitekey: sitekey,
-        pageurl: pageurl,
+        ...params,
         method: "yandex",
         ...this.defaultPayload
     }
@@ -432,10 +456,10 @@ public async yandexSmart(sitekey: string, pageurl: string, extra: UserHCaptchaEx
     /**
      * Reports a captcha as correctly solved.
      * 
-     * @param id The ID of the captcha
+     * @param {string} id The ID of the captcha
      * @throws APIError
      * @example
-     * solver.goodReport("123456789")
+     * Solver.goodReport("123456789")
      */
     public async goodReport(id: string): Promise<void> {
         const payload = {
@@ -469,9 +493,9 @@ public async yandexSmart(sitekey: string, pageurl: string, extra: UserHCaptchaEx
      * @returns {Promise<void>} Resolves on completion
      * @throws APIError
      * @example
-     * report("55316")
+     * Solver.badReport("55316")
      */
-    public async report(id: string): Promise<void> {
+    public async badReport(id: string): Promise<void> {
         const payload = {
             id: id,
             action: "reportbad",
