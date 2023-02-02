@@ -20,7 +20,3 @@ export default function getProviderData( provider = defautlProvider ) {
 
   return currentProviderData
 }
-
-console.log( getProviderData() )
-
-
