@@ -132,7 +132,7 @@ export class Solver {
      * @return {Promise<Number>} Remaining balance
      * @throws APIError
      * @example
-     * Solver.balance()
+     * solver.balance()
      * .then((res) => {
      *   console.log(res)
      * })
@@ -343,7 +343,7 @@ export class Solver {
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * Solver.yandexSmart({ pageurl: "https://captcha-api.yandex.ru/demo", sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9" })
+     * solver.yandexSmart({ pageurl: "https://captcha-api.yandex.ru/demo", sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9" })
      * .then((res) => {
      *   console.log(res)
      * })
@@ -459,7 +459,7 @@ export class Solver {
      * @param {string} id The ID of the captcha
      * @throws APIError
      * @example
-     * Solver.goodReport("123456789")
+     * solver.goodReport("123456789")
      */
     public async goodReport(id: string): Promise<void> {
         const payload = {
@@ -493,7 +493,7 @@ export class Solver {
      * @returns {Promise<void>} Resolves on completion
      * @throws APIError
      * @example
-     * Solver.badReport("55316")
+     * solver.badReport("55316")
      */
     public async badReport(id: string): Promise<void> {
         const payload = {
