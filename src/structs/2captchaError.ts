@@ -100,6 +100,10 @@ export class APIError extends Error {
                 this.code = 24
                 this.message = "The proxy provided did not work."
             }; break;
+            case "ERROR_CAPTCHA_ID": {
+                this.code = 250
+                this.message = "One of the parameters is incorrect. If you are submitting GeeTest V4 captcha, then check that the \'captcha_id\' parameter is correct."
+            }; break;
 
             // Start for Res.php errors
             case "CAPCHA_NOT_READY": {
