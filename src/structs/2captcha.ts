@@ -69,8 +69,8 @@ export interface UserGeetestExtra extends BaseSolve {
  * @property {string} pageurl URL of the page where the captcha is located
  * @property {string} sitekey The `sitekey` value you found on the captcha page
  * @property {string} pingback
- * @property {string} proxy Format: login:password@123.123.123.123:3128
- * @property {string} proxytype Type of your proxy: HTTP, HTTPS, SOCKS4, SOCKS5.
+ * @property {string} proxy Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+ * @property {string} proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
  * 
  */
 export interface yandexSmart {
@@ -78,7 +78,28 @@ export interface yandexSmart {
     sitekey: string,
     pingback?: string,
     proxy?: string,
-    proxytype?: string
+    proxytype?: string,
+}
+
+/**
+ * Interface for GeeTest V4 captcha
+ * 
+ * @typedef {object} paramsGeeTestV4
+ * @property {string} pageurl Required parameter. URL of the page where the captcha is located
+ * @property {string} captcha_id Required parameter. Value of `captcha_id` parameter you found on target website.
+ * @property {string} pingback An optional param. [More info here](https://2captcha.com/2captcha-api#pingback).
+ * @property {string} proxy An optional param. Format: `login:password@123.123.123.123:3128`
+ * @property {string} proxytype An optional param. Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * @property {string} userAgent An optional param. Your `userAgent` that will be passed to our worker and used to solve the captcha.
+ * 
+ */
+export interface paramsGeeTestV4 {
+    pageurl: string,
+    captcha_id: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+    userAgent?: string
 }
 
 /**
@@ -195,6 +216,7 @@ export class Solver {
         }
     }
 
+    //fix: Recaptcha => reCAPTCHA
     /**
      * Solves a google Recaptcha, returning the result as a string.
      * 
@@ -282,7 +304,7 @@ export class Solver {
     }
 
     /**
-     * Solves a geetest Captcha, returning the result as a string.
+     * Solves a GeeTest Captcha, returning the result as a string.
      *
      * @param {string} gt Value of gt parameter found on site
      * @param {string} challenge Value of challenge parameter found on site
@@ -326,7 +348,57 @@ export class Solver {
         }
     }
 
-  
+    /**
+     * ### Solves a GeeTest V4 Captcha.
+     * 
+     * 
+     * This method accepts an object with the following fields: `pageurl`, `captcha_id`, `pingback`, `proxy`, `proxytype`, `userAgent`.
+     * The `pageurl` and `captcha_id` fields are required.
+     * 
+     * @param {{pageurl, captcha_id, pingback, proxy, proxytype, userAgent}} params The method geetestV4 takes arguments as an object.
+     * @param {string} params.captcha_id Required parameter. Value of `captcha_id` parameter you found on target website.
+     * @param {string} params.pingback An optional param. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy An optional param. Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype An optional param. Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * @param {string} params.userAgent An optional param. Your `userAgent` that will be passed to our worker and used to solve the captcha.
+     * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve.
+     * @throws APIError
+     * @example
+     * solver.geetestV4({    
+     *    pageurl: 'https://2captcha.com/demo/geetest-v4',
+     *    captcha_id: 'e392e1d7fd421dc63325744d5a2b9c73'
+     * })
+     * .then((res) => {
+     *   console.log(res)
+     * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
+     */
+      public async geetestV4(params: paramsGeeTestV4): Promise<CaptchaAnswer> {
+        const payload = {
+            ...params,
+            method: "geetest_v4",
+            ...this.defaultPayload
+        }
+    
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+    
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+    
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
 
     /**
      * Method for sending Yandex Smart Captcha.
