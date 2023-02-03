@@ -39,7 +39,7 @@ Supported captchas:
 * [x] FunCaptcha,
 * [x] base64 image captchas
 * [x] Geetest
-* [ ] Geetest v4
+* [x] Geetest v4
 * [x] Yandex Smart Captcha
 * [ ] Capy Puzzle
 * [ ] Lemin Cropped Captcha
@@ -73,7 +73,6 @@ yarn add 2captcha-js
 ### reCAPTCHA:
 ```js
 const Captcha = require("2captcha-js")
-
 // A new 'solver' instance with our API key
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -92,7 +91,6 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 ```js
 const Captcha = require("2captcha-js")
 const fs = require("fs")
-
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Read from a file as base64 text
@@ -109,7 +107,6 @@ solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
 ### Proxy:
 ```js
 const Captcha = require("2captcha-js")
-
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -126,10 +123,9 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 })
 ```
 
-### GeeTest:
+### GeeTest Captcha:
 ```js
 const Captcha = require("2captcha-js")
-
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -142,13 +138,32 @@ solver.geetest("d7e36de8f91fae3768e8f4fadfa3bf1f", "2bc0c39f85b8c44acb70971f5581
 })
 ```
 
-### Yandex Smart Captcha:
+### GeeTest V4 Captcha:
+<!--//TODO: when fix all methods, delete this string `// Info: method argument is an object` -->
 ```js
 const Captcha = require("2captcha-js")
-
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-// Warning: method argument is an object
+// Info: method argument is an object
+solver.geetestV4({
+    pageurl: 'https://2captcha.com/demo/geetest-v4',
+    captcha_id: 'e392e1d7fd421dc63325744d5a2b9c73'
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Yandex Smart Captcha:
+<!--//TODO: when fix all methods, delete this string `// Info: method argument is an object` -->
+```js
+const Captcha = require("2captcha-js")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+// Info: method argument is an object
 solver.yandexSmart({ 
     pageurl: "https://captcha-api.yandex.ru/demo",
     sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
