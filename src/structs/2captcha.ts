@@ -216,9 +216,9 @@ export class Solver {
         }
     }
 
-    //fix: Recaptcha => reCAPTCHA
+    
     /**
-     * Solves a google Recaptcha, returning the result as a string.
+     * Solves a google reCAPTCHA, returning the result as a string.
      * 
      * @param {string} googlekey The google captcha key
      * @param {string} pageurl The URL the captcha appears on
