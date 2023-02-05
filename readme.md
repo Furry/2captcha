@@ -94,13 +94,15 @@ const fs = require("fs")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Read from a file as base64 text
-solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
+const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
+
+solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
 .then((res) => {
     // Logs the image text
-    console.log(res)
+    console.log(res);
 })
 .catch((err) => {
-    console.error(err.message)
+    console.log(err);
 })
 ```
 
