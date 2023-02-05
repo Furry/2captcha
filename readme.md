@@ -90,6 +90,23 @@ solver.recaptcha({
 })
 ```
 
+### hCaptcha:
+```js
+const Captcha = require("2captcha-js")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.hcaptcha({
+    pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
+    sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
 ### Image captcha:
 ```js
 const Captcha = require("2captcha-js")
