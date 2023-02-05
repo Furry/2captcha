@@ -4,22 +4,34 @@
   "main": "dist/index.js",
   "repository": "https://github.com/dzmitry-duboyski/2captcha-js",
   "license": "MIT",
+  "author": "Dima Dub",
+  "bugs": {
+    "url": "https://github.com/dzmitry-duboyski/2captcha-js/issues"
+  },
+  "homepage": "https://github.com/dzmitry-duboyski/2captcha-js",
   "types": "dist/index.d.ts",
   "keywords": [
-    "captcha",
     "2captcha",
+    "captcha",
     "api",
     "captchasolver",
     "capmonster",
-    "recaptcha",
-    "hcaptcha",
-    "funcaptcha"
+    "reCAPTCHA",
+    "hCaptcha",
+    "FunCaptcha",
+    "Geetest",
+    "image captcha",
+    "Geetest V4",
+    "Yandex Smart Captcha",
+    "bypass captcha",
+    "solve captcha"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
     "dev": "tsc && node ./issues/dev",
     "jsdoc": "jsdoc",
-    "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r"
+    "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r",
+    "test": "tsc && node ./tests/geetestV4.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"

@@ -3,26 +3,13 @@
 ![Size](https://img.shields.io/bundlephobia/min/2captcha)
 ![Downloads](https://img.shields.io/npm/dw/2captcha-js)
 
-A wrapper around the 2captcha API.
-
-## Info
-<h3>
-<ul>
-    <li>Finding Sitekeys
-        <ul>
-            <li><a href="./docs/hcaptcha.md">hCaptcha</a></li>
-        </ul>
-    </li>
-</ul>
-</h3>
-
-<hr>
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. Support **reCAPTCHA V2**, **reCAPTCHA V3**, **hCaptcha**, Arkose Labs **FunCaptcha**, **image** captcha, **Geetest**, **Geetest V4**, **Yandex Smart Captcha**. 
 
 ## Motive
 
-2captcha is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage. This project is a fork of this [package](https://www.npmjs.com/package/2captcha).
+[2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
-## Features
+### Features
 
 - Promise based 2captcha solving
 - Browser & NodeJS Support
@@ -32,11 +19,11 @@ A wrapper around the 2captcha API.
 - Invalid Captcha reporting
 - Proxy Support
 
-Supported captchas:
+## Supported captchas:
 
-* [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3),
-* [x] hCaptcha,
-* [x] Arkose Labs FunCaptcha,
+* [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
+* [x] hCaptcha
+* [x] Arkose Labs FunCaptcha
 * [x] base64 image captchas
 * [x] Geetest
 * [x] Geetest v4
@@ -46,7 +33,7 @@ Supported captchas:
 * [ ] Lemin Cropped Captcha
 * [ ] Cloudflare Turnstile
 * [ ] Amazon WAF Captcha
-* [ ] ~~TikTok Captcha~~ (this captcha is temporarily not supported by 2captcha)
+* [ ] ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
 
 
 <!-- ## Planned Features
@@ -164,12 +151,10 @@ solver.geetest({
 ```
 
 ### GeeTest V4 Captcha:
-<!--//TODO: when fix all methods, delete this string `// Info: method argument is an object` -->
 ```js
 const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-// Info: method argument is an object
 solver.geetestV4({
   pageurl: 'https://2captcha.com/demo/geetest-v4',
   captcha_id: 'e392e1d7fd421dc63325744d5a2b9c73'
@@ -183,12 +168,10 @@ solver.geetestV4({
 ```
 
 ### Yandex Smart Captcha:
-<!--//TODO: when fix all methods, delete this string `// Info: method argument is an object` -->
 ```js
 const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-// Info: method argument is an object
 solver.yandexSmart({ 
   pageurl: "https://captcha-api.yandex.ru/demo",
   sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
@@ -233,3 +216,14 @@ The latest version of the code base will always be under the '**next**' branch!
  <div style="text-align: center">
 <a href="https://www.buymeacoffee.com/ether" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 </div> -->
+
+---
+
+## Useful articles
+* [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support?from=16653706)
+* [Automatic ReCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution?from=16653706)
+* Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
+
+---
+
+This project is a fork of this [package](https://www.npmjs.com/package/2captcha). In this version, new types of captchas have been added and the method of passing captcha parameters has been changed ({ using an object }) and etc.
