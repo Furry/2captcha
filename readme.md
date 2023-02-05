@@ -2,7 +2,7 @@
 
 ## Description
 
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. Support **reCAPTCHA V2**, **reCAPTCHA V3**, **hCaptcha**, Arkose Labs **FunCaptcha**, **image** captcha, **Geetest**, **Geetest V4**, **Yandex Smart Captcha**. 
+A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
