@@ -30,7 +30,10 @@ export interface paramsRecaptcha extends BaseSolve {
     version?: string
 }
 
-export interface UserHCaptchaExtra extends BaseSolve {
+
+export interface paramsHCaptcha extends BaseSolve {
+    sitekey: string,
+    pageurl: string,
     header_acao?: boolean,
     pingback?: string,
     proxy?: string,
@@ -288,25 +291,28 @@ export class Solver {
     /**
      * Solves a hCaptcha, returning the result as a string.
      * 
-     * @param {string} sitekey The hcaptcha site key
-     * @param {string} pageurl The URL the captcha appears on
-     * @param {object} extra Extra options
+     * [Read more about other hCaptcha parameters](https://2captcha.com/2captcha-api#solving_hcaptcha).
+     * 
+     * @param {{sitekey, pageurl}} params Object
+     * @param {string} params.sitekey The hcaptcha site key. Value of `k` or `data-sitekey` parameter you found on page.
+     * @param {string} params.pageurl The URL the captcha appears on.
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
      * @example
-     * solver.hcaptcha("a5f74b19-9e45-40e0-b45d-47ff91b7a6c2", "https://accounts.hcaptcha.com/demo)
+     * solver.hcaptcha({
+     *   pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
+     *   sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
      * .then((res) => {
-     *   console.log(res)
+     *     console.log(res);
+     * })
+     * .catch((err) => {
+     *     console.log(err);
      * })
      */
-    public async hcaptcha(sitekey: string, pageurl: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
-        //'extra' is user defined, and the default contents should be overridden by it.
+    public async hcaptcha(params: paramsHCaptcha): Promise<CaptchaAnswer> {
         const payload = {
-            invisible: false,
-            ...extra,
-            sitekey: sitekey,
-            pageurl: pageurl,
+            ...params,
             method: "hcaptcha",
             ...this.defaultPayload
         }

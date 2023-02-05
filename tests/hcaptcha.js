@@ -3,7 +3,10 @@ require('dotenv').config();
 const APIKEY = process.env.APIKEY
 const solver = new Captcha.Solver(APIKEY);
 
-solver.hcaptcha("4c672d35-0701-42b2-88c3-78380b0db560", "https://discord.com")
+solver.hcaptcha({
+    pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
+    sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
+})
 .then((res) => {
     console.log(res);
 })
