@@ -45,15 +45,19 @@ export interface paramsHCaptcha extends BaseSolve {
 }
 
 // FixMe: change this interface for funCaptcha. FunCaptcha uses this interface.
-export interface UserImageCaptchaExtra extends BaseSolve {
-    phrase?: 0 | 1,
-    regsense?: 0 | 1,
-    numeric?: 0 | 1 | 2 | 3 | 4,
-    calc?: 0 | 1,
-    min_len?: 0 | string | number, // 1..20
-    max_len?: 0 | string | number, // 1..20
-    language?: 0 | 1 | 2,
-    lang?: string,
+// paramsFunCapthca
+
+// FixMe:data[key] - how to send this parameter
+export interface paramsFunCapthca extends BaseSolve {
+  publickey: string,
+  pageurl: string,
+  surl?: string,
+  header_acao?: boolean,
+  pingback?: string,
+  proxy?: string,
+  proxytype?: string,
+  userAgent?: string,
+  soft_id?: number;
 }
 
 export interface paramsImageCaptcha {
@@ -570,27 +574,35 @@ export class Solver {
     }
 
     /**
-     * Solves a FunCaptcha
-     * @param publicKey The FunCaptcha Public Key
-     * @param pageurl The URL to the website the captcha is seen on
-     * @param serviceURL The FunCaptcha Service URL (recommended)
-     * @param extra Extra properties to pass to 2captcha
+     * ### Solves Arkose Labs FunCaptcha.
+     * 
+     * [Read more](https://2captcha.com/2captcha-api#solving_funcaptcha_new) about other solving and other parameters for Arkose Labs FunCaptcha.
+     * 
+     * @param {{pageurl, publicKey, surl}} params Object
+     * @param {string} params.publicKey The FunCaptcha Public Key
+     * @param {string} params.pageurl The URL to the website the captcha is seen on
+     * @param {string} params.surl The FunCaptcha Service URL (recommended)
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
-     * funCaptcha("12AB34CD-56F7-AB8C-9D01-2EF3456789A0", "http://mysite.com/page/with/funcaptcha/")
-     * .then((res) => {
-     *   console.log(res)
-     * })
+     * 
+     * @example
+     *  solver.funCaptcha({
+     *    pageurl: "https://funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=804380F4-6844-FFA1-ED4E-5877CA1F1EA4&lang=en",
+     *    publickey: "804380F4-6844-FFA1-ED4E-5877CA1F1EA4"
+     *  })
+     *  .then((res) => {
+     *      console.log(res);
+     *  })
+     *  .catch((err) => {
+     *      console.log(err);
+     *  })
      */
-    public async funCaptcha(publicKey: string, pageURL: string, serviceURL?: string, extra: UserImageCaptchaExtra = { }): Promise<CaptchaAnswer> {
+    public async funCaptcha(params: paramsFunCapthca): Promise<CaptchaAnswer> {
         const payload = {
-            ...extra,
-            ...this.defaultPayload,
+            ...params,
             method: "funcaptcha",
-            publickey: publicKey,
-            pageurl: pageURL,
-            ...(serviceURL ? { surl: serviceURL } : { })
+            ...this.defaultPayload,
         }
 
         const response = await fetch(this.in + utils.objectToURI(payload))
