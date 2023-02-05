@@ -1,10 +1,5 @@
 # 2captcha-ts
 
-![Size](https://img.shields.io/bundlephobia/min/2captcha)
-![Downloads](https://img.shields.io/npm/dw/2captcha-ts)
-
----
-
 ## Description
 
 A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. Support **reCAPTCHA V2**, **reCAPTCHA V3**, **hCaptcha**, Arkose Labs **FunCaptcha**, **image** captcha, **Geetest**, **Geetest V4**, **Yandex Smart Captcha**. 
