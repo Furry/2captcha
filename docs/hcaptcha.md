@@ -42,4 +42,15 @@ solver.hCaptcha("4c672d35-0701-42b2-88c3-78380b0db560", "discord.com")
 .then((res) = {
     console.log(res);
 })
+
+solver.hcaptcha({
+    pageurl: "https://discord.com",
+    sitekey: "4c672d35-0701-42b2-88c3-78380b0db560"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
 ```
