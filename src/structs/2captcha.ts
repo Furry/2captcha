@@ -234,26 +234,7 @@ export class Solver {
         }
     }
 
-    
-
-    // pageurl: string,
-    // googlekey: string,
-    // invisible?: boolean,
-    // "data-s"?: string,
-    // domain?: string,
-    // cookies?: string,
-    // userAgent?: string,
-    // header_acao?: boolean,
-    // pingback?: string,
-    // soft_id?: number,
-    // proxy?: string,
-    // proxytype?: string,
-    // action?: string,
-    // enterprise?: 0 | 1,
-    // min_score?: number,
-    // version?: string
-
-    /**
+     /**
      * ### Solves a google reCAPTCHA V2 | V3. 
      * 
      * [Read more about other reCAPTCHA parameters](https://2captcha.com/2captcha-api#solving_recaptchav2_new).
