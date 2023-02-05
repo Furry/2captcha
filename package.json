@@ -1,5 +1,5 @@
 {
-  "name": "2captcha-js",
+  "name": "2captcha-ts",
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "https://github.com/dzmitry-duboyski/2captcha-js",
