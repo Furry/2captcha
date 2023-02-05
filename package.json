@@ -2,13 +2,13 @@
   "name": "2captcha-ts",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "repository": "https://github.com/dzmitry-duboyski/2captcha-js",
+  "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
   "license": "MIT",
   "author": "Dima Dub",
   "bugs": {
-    "url": "https://github.com/dzmitry-duboyski/2captcha-js/issues"
+    "url": "https://github.com/dzmitry-duboyski/2captcha-ts/issues"
   },
-  "homepage": "https://github.com/dzmitry-duboyski/2captcha-js",
+  "homepage": "https://github.com/dzmitry-duboyski/2captcha-ts",
   "types": "dist/index.d.ts",
   "keywords": [
     "2captcha",
