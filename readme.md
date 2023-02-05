@@ -36,7 +36,7 @@ Supported captchas:
 
 * [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3),
 * [x] hCaptcha,
-* [x] FunCaptcha,
+* [x] Arkose Labs FunCaptcha,
 * [x] base64 image captchas
 * [x] Geetest
 * [x] Geetest v4
@@ -83,10 +83,10 @@ solver.recaptcha({
   googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u'
 })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
@@ -96,14 +96,31 @@ const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.hcaptcha({
-    pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
-    sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
+  pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
+  sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
 })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
+})
+```
+
+### Arkose Labs FunCaptcha:
+```js
+const Captcha = require("2captcha-js")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.funCaptcha({
+  pageurl: "https://funcaptcha.com/tile-game-lite-mode/fc/api/nojs/?pkey=804380F4-6844-FFA1-ED4E-5877CA1F1EA4&lang=en",
+  publickey: "804380F4-6844-FFA1-ED4E-5877CA1F1EA4"
+})
+.then((res) => {
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err);
 })
 ```
 
@@ -118,11 +135,11 @@ const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "bas
 
 solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
 .then((res) => {
-    // Logs the image text
-    console.log(res);
+  // Logs the image text
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
@@ -134,15 +151,15 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Read more about `challenge` https://2captcha.com/2captcha-api#solving_geetest
 solver.geetest({ 
-    pageurl: 'https://2captcha.com/demo/geetest',
-    gt: '81388ea1fc187e0c335c0a8907ff2625',
-    challenge: '<you need to get a new challenge value each time>'
+  pageurl: 'https://2captcha.com/demo/geetest',
+  gt: '81388ea1fc187e0c335c0a8907ff2625',
+  challenge: '<you need to get a new challenge value each time>'
 })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
@@ -154,14 +171,14 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Info: method argument is an object
 solver.geetestV4({
-    pageurl: 'https://2captcha.com/demo/geetest-v4',
-    captcha_id: 'e392e1d7fd421dc63325744d5a2b9c73'
+  pageurl: 'https://2captcha.com/demo/geetest-v4',
+  captcha_id: 'e392e1d7fd421dc63325744d5a2b9c73'
 })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
@@ -173,14 +190,14 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Info: method argument is an object
 solver.yandexSmart({ 
-    pageurl: "https://captcha-api.yandex.ru/demo",
-    sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
+  pageurl: "https://captcha-api.yandex.ru/demo",
+  sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
  })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
@@ -196,10 +213,10 @@ solver.recaptcha({
   proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
 })
 .then((res) => {
-    console.log(res)
+  console.log(res)
 })
 .catch((err) => {
-    console.error(err.message)
+  console.error(err.message)
 })
 ```
 
