@@ -44,9 +44,6 @@ export interface paramsHCaptcha extends BaseSolve {
     soft_id?: number;
 }
 
-// FixMe: change this interface for funCaptcha. FunCaptcha uses this interface.
-// paramsFunCapthca
-
 // FixMe:data[key] - how to send this parameter
 export interface paramsFunCapthca extends BaseSolve {
   publickey: string,
