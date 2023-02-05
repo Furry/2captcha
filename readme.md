@@ -106,24 +106,6 @@ solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
 })
 ```
 
-### Proxy:
-```js
-const Captcha = require("2captcha-js")
-const solver = new Captcha.Solver("<Your 2captcha api key>")
-
-
-solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/", {
-    proxy: "login:password@21.214.43.26", // The (Username : Password @ Address) of our chosen proxy
-    proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
-})
-
-.then((res) => {
-    console.log(res)
-})
-.catch((err) => {
-    console.error(err.message)
-})
-```
 
 ### GeeTest Captcha:
 ```js
@@ -179,6 +161,25 @@ solver.yandexSmart({
 })
 .catch((err) => {
     console.log(err);
+})
+```
+
+### Proxy:
+```js
+const Captcha = require("2captcha-js")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+
+solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/", {
+    proxy: "login:password@21.214.43.26", // The (Username : Password @ Address) of our chosen proxy
+    proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
+})
+
+.then((res) => {
+    console.log(res)
+})
+.catch((err) => {
+    console.error(err.message)
 })
 ```
 
