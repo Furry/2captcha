@@ -130,8 +130,12 @@ solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhla
 const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-
-solver.geetest("d7e36de8f91fae3768e8f4fadfa3bf1f", "2bc0c39f85b8c44acb70971f5581e38e", "https://marketplace.axieinfinity.com/profile/dashboard")
+// Read more about `challenge` https://2captcha.com/2captcha-api#solving_geetest
+solver.geetest({ 
+    pageurl: 'https://2captcha.com/demo/geetest',
+    gt: '81388ea1fc187e0c335c0a8907ff2625',
+    challenge: '<you need to get a new challenge value each time>'
+})
 .then((res) => {
     console.log(res);
 })
