@@ -11,9 +11,12 @@ interface BaseSolve {
 
 }
 
-export interface UserRecaptchaExtra extends BaseSolve {
+export interface paramsRecaptcha extends BaseSolve {
+    pageurl: string,
+    googlekey: string,
     invisible?: boolean,
     "data-s"?: string,
+    domain?: string,
     cookies?: string,
     userAgent?: string,
     header_acao?: boolean,
@@ -232,28 +235,54 @@ export class Solver {
     }
 
     
+
+    // pageurl: string,
+    // googlekey: string,
+    // invisible?: boolean,
+    // "data-s"?: string,
+    // domain?: string,
+    // cookies?: string,
+    // userAgent?: string,
+    // header_acao?: boolean,
+    // pingback?: string,
+    // soft_id?: number,
+    // proxy?: string,
+    // proxytype?: string,
+    // action?: string,
+    // enterprise?: 0 | 1,
+    // min_score?: number,
+    // version?: string
+
     /**
-     * Solves a google reCAPTCHA, returning the result as a string.
+     * ### Solves a google reCAPTCHA V2 | V3. 
      * 
-     * @param {string} googlekey The google captcha key
-     * @param {string} pageurl The URL the captcha appears on
-     * @param {object} extra Extra options
+     * [Read more about other reCAPTCHA parameters](https://2captcha.com/2captcha-api#solving_recaptchav2_new).
+     * 
+     * @param {{pageurl, googlekey, cookies, proxy, proxytype, userAgent}} params Object
+     * @param {string} params.pageurl The URL the captcha appears on.
+     * @param {string} params.googlekey Value of `k` or `data-sitekey` parameter you found on page.
+     * @param {string} params.cookies Your cookies that will be passed to our worker who solve the captha.
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`. 
+     * @param {string} params.userAgent Your `userAgent` that will be passed to our worker and used to solve the captcha. 
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
+     * solver.recaptcha({
+     *   pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+     *   googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u'
+     * })
      * .then((res) => {
-     *   console.log(res)
+     *     console.log(res);
+     * })
+     * .catch((err) => {
+     *     console.log(err);
      * })
      */
-    public async recaptcha(googlekey: string, pageurl: string, extra: UserRecaptchaExtra = { }): Promise<CaptchaAnswer> {
-        //'extra' is user defined, and the default contents should be overridden by it.
+    public async recaptcha(params: paramsRecaptcha): Promise<CaptchaAnswer> {
         const payload = {
-            invisible: false,
-            ...extra,
-            googlekey: googlekey,
-            pageurl: pageurl,
+            ...params,
             method: "userrecaptcha",
             ...this.defaultPayload
         }

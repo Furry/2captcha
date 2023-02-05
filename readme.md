@@ -42,6 +42,7 @@ Supported captchas:
 * [x] Geetest v4
 * [x] Yandex Smart Captcha
 * [ ] Capy Puzzle
+* [ ] Click Captcha
 * [ ] Lemin Cropped Captcha
 * [ ] Cloudflare Turnstile
 * [ ] Amazon WAF Captcha
@@ -77,13 +78,15 @@ const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 /* Example reCAPTCHA Website */
-solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
-
+solver.recaptcha({
+  pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+  googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u'
+})
 .then((res) => {
-    console.log(res)
+    console.log(res);
 })
 .catch((err) => {
-    console.error(err.message)
+    console.log(err);
 })
 ```
 
@@ -169,12 +172,12 @@ solver.yandexSmart({
 const Captcha = require("2captcha-js")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
-
-solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/", {
-    proxy: "login:password@21.214.43.26", // The (Username : Password @ Address) of our chosen proxy
-    proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
+solver.recaptcha({
+  pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+  googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
+  proxy: "login:password@21.214.43.26", // The (Username : Password @ Address) of our chosen proxy
+  proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
 })
-
 .then((res) => {
     console.log(res)
 })

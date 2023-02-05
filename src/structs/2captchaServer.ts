@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { UserRecaptchaExtra } from "./2captcha.js";
+import { paramsRecaptcha } from "./2captcha.js";
 
 // For creating the server
 import * as http from "http";
@@ -88,12 +88,9 @@ export class Server extends EventEmitter {
     public terminate() {
         this._terminated = true;
     }
-    requestRecaptcha(googlekey: string, pageurl: string, count: number, extra: UserRecaptchaExtra = { }) {
+    requestRecaptcha(params: paramsRecaptcha) {
         const payload = {
-            invisible: false,
-            ...extra,
-            googlekey: googlekey,
-            pageurl: pageurl,
+            ...params,
             method: "userrecaptcha",
             ...this.defaultPayload
         }
