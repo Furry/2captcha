@@ -1,5 +1,4 @@
 import fetch from "../utils/fetch"
-
 import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
 import  getProviderData  from "./providers/providers"
@@ -64,9 +63,10 @@ export interface paramsImageCaptcha {
     textinstructions?: string
 }
 
-// FixMe: parameter "offline" is boolean or number? 
-// https://2captcha.com/2captcha-api#solving_geetest:~:text=on%20target%20website-,offline,-Number%0ADefault%3A%200
-export interface UserGeetestExtra extends BaseSolve {
+export interface paramsGeetest {
+    gt: string,
+    challenge: string,
+    pageurl: string,
     api_server?: string,
     offline?: number | boolean,
     new_captcha?: number | boolean,
@@ -74,6 +74,7 @@ export interface UserGeetestExtra extends BaseSolve {
     soft_id?: number,
     proxy?: string,
     proxytype?: string,
+    userAgent?: string
 }
 
 /**
@@ -318,30 +319,59 @@ export class Solver {
     }
 
     /**
-     * Solves a GeeTest Captcha, returning the result as a string.
-     *
-     * @param {string} gt Value of gt parameter found on site
-     * @param {string} challenge Value of challenge parameter found on site
-     * @param {string} pageurl The URL the captcha appears on
-     * @param {string} api_server The URL of the api_server (recommended)
-     * @param {object} extra Extra options
-     *
+     * Solves a GeeTest Captcha. [Read more about parameters and solving for Geetest captcha](https://2captcha.com/2captcha-api#solving_geetest).
+     * 
+     * @param {{ gt, challenge, api_server, offline, new_captcha,
+     *  pageurl, pingback, proxy, proxytype, userAgent }} params
+     * @param {string} params.gt Value of gt parameter found on site
+     * @param {string} params.challenge Value of challenge parameter found on site
+     * @param {string} params.pageurl The URL the captcha appears on
+     * @param {string} params.api_server The URL of the api_server (recommended)
+     * @param {number} params.offline In rare cases `initGeetest` can be called with `offline` parameter on the target page. If the call uses offline: true, set the value to `1`.
+     * @param {number} params.new_captcha In rare cases `initGeetest` can be called with `new_captcha` parameter. If the call uses `new_captcha: true`, set the value to `1`. Mostly used with offline parameter.
+     * @param {string} params.pingback URL for `pingback` (callback) response that will be sent when captcha is solved. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * @param {string} params.userAgent Your `userAgent` that will be passed to our worker and used to solve the captcha.
+     * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.geetest("f2ae6cadcf7886856696502e1d55e00c", "12345678abc90123d45678ef90123a456b", "https://2captcha.com/demo/geetest", "api.geetest.com")
-     * .then(res => {
+     * ;(async () => {
+     *      
+     *  // Warning: Attention, the `challenge` value is not static but dynamic.
+     *  // You need to find the queries that makes the captcha on the page to API.
+     *  // Then you need to make request to this API and get new `challenge`.
+     *  
+     *  // For page https://rucaptcha.com/demo/geetest, api address is https://rucaptcha.com/api/v1/captcha-demo/gee-test/init-params?t=${t}
+     *  // Also note that when make request to API, the request uses the dynamic parameter `t`
+     *  
+     *  // You can read more about sending GeeTest here https://2captcha.com/2captcha-api#solving_geetest, or here https://2captcha.com/p/geetest
+     *  // In this example I solve GeeTest from page https://2captcha.com/demo/geetest
+     *  
+     *  const t = new Date().getTime()
+     *  // below i make a request to get a new `challenge`. 
+     *  const response = await fetch(`https://2captcha.com/api/v1/captcha-demo/gee-test/init-params?t=${t}`)
+     *  const data = await response.json()
+     *
+     *  const params = { 
+     *      pageurl: 'https://rucaptcha.com/demo/geetest',
+     *      gt: data.gt,
+     *      challenge: data.challenge
+     *  }
+     *
+     *  const res = await solver.geetest(params)
+     *  try {
      *      console.log(res)
-     *  })
+     *      } catch (error) {
+     *      console.error(error);
+     *      }
+     *  })()
      */
-     public async geetest(gt: string, challenge: string, pageurl: string, extra: UserGeetestExtra = { }): Promise<CaptchaAnswer> {
-        //'extra' is user defined, and the default contents should be overridden by it.
+     public async geetest(params: paramsGeetest): Promise<CaptchaAnswer> {
         const payload = {
-            ...extra,
+            ...params,
             method: "geetest",
-            gt: gt,
-            challenge: challenge,
-            pageurl: pageurl,
             ...this.defaultPayload
         }
 
