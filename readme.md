@@ -1,7 +1,7 @@
-# 2captcha-js
+# 2captcha-ts
 
 ![Size](https://img.shields.io/bundlephobia/min/2captcha)
-![Downloads](https://img.shields.io/npm/dw/2captcha-js)
+![Downloads](https://img.shields.io/npm/dw/2captcha-ts)
 
 A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. Support **reCAPTCHA V2**, **reCAPTCHA V3**, **hCaptcha**, Arkose Labs **FunCaptcha**, **image** captcha, **Geetest**, **Geetest V4**, **Yandex Smart Captcha**. 
 
@@ -49,10 +49,10 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. Suppor
 ## Install
 
 ```sh
-npm install 2captcha-js
+npm install 2captcha-ts
 ```
 <!-- ```sh
-yarn add 2captcha-js
+yarn add 2captcha-ts
 ``` -->
 
 ## Usage
@@ -60,7 +60,7 @@ yarn add 2captcha-js
 
 ### reCAPTCHA:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 // A new 'solver' instance with our API key
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -79,7 +79,7 @@ solver.recaptcha({
 
 ### hCaptcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.hcaptcha({
@@ -96,7 +96,7 @@ solver.hcaptcha({
 
 ### Arkose Labs FunCaptcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.funCaptcha({
@@ -113,7 +113,7 @@ solver.funCaptcha({
 
 ### Image captcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const fs = require("fs")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -133,7 +133,7 @@ solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
 
 ### GeeTest Captcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Read more about `challenge` https://2captcha.com/2captcha-api#solving_geetest
@@ -152,7 +152,7 @@ solver.geetest({
 
 ### GeeTest V4 Captcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.geetestV4({
@@ -169,7 +169,7 @@ solver.geetestV4({
 
 ### Yandex Smart Captcha:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.yandexSmart({ 
@@ -186,7 +186,7 @@ solver.yandexSmart({
 
 ### Proxy:
 ```js
-const Captcha = require("2captcha-js")
+const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.recaptcha({
