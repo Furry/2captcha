@@ -39,6 +39,7 @@ export interface UserHCaptchaExtra extends BaseSolve {
     soft_id?: number;
 }
 
+// FixMe: change this interface for funCaptcha. FunCaptcha uses this interface.
 export interface UserImageCaptchaExtra extends BaseSolve {
     phrase?: 0 | 1,
     regsense?: 0 | 1,
@@ -48,6 +49,19 @@ export interface UserImageCaptchaExtra extends BaseSolve {
     max_len?: 0 | string | number, // 1..20
     language?: 0 | 1 | 2,
     lang?: string,
+}
+
+export interface paramsImageCaptcha {
+    phrase?: 0 | 1,
+    regsense?: 0 | 1,
+    numeric?: 0 | 1 | 2 | 3 | 4,
+    calc?: 0 | 1,
+    min_len?: 0 | string | number, // 1..20
+    max_len?: 0 | string | number, // 1..20
+    language?: 0 | 1 | 2,
+    lang?: string,
+    pingback?: string,
+    textinstructions?: string
 }
 
 // FixMe: parameter "offline" is boolean or number? 
@@ -448,21 +462,46 @@ export class Solver {
 }
 
     /**
-     * Solves a image-based captcha.
+     * Solves a image-based captcha. [Read more about parameters for image captcha](https://2captcha.com/2captcha-api#solving_normal_captcha).
+     * 
      * @param {string} base64image Base64 image data for the captcha
-     * @param {object} extra Extra properties to pass to 2captcha
+     * @param {{ phrase,
+     *           regsense,
+     *           numeric,
+     *           calc,
+     *           min_len,
+     *           max_len,
+     *           language,
+     *           lang,
+     *           textinstructions,
+     *           pingback }} params Extra properties to pass to 2captcha.
+     * @param {number} params.phrase Captcha contains two or more words? `1` - Yes. `0` - No.
+     * @param {number} params.regsense Captcha is case sensitive? `1` - Yes. `0` - No.
+     * @param {number} params.numeric `0` - not specified. `1` - captcha contains only numbers. `2` - captcha contains only letters. `3` - captcha contains only numbers OR only letters. `4` - captcha MUST contain both numbers AND letters.
+     * @param {number} params.calc  Does captcha require calculations? (e.g. type the result 4 + 8 = ) `1` - Yes. `0` - No.
+     * @param {number} params.min_len `1..20` - minimal number of symbols in captcha. `0` - not specified.
+     * @param {number} params.max_len `1..20` - maximal number of symbols in captcha. `0` - not specified.
+     * @param {number} params.language `0` - not specified. `1` - Cyrillic captcha. `2` - Latin captcha
+     * @param {string} params.lang Language code. [See the list of supported languages](https://2captcha.com/2captcha-api#language).
+     * @param {string} params.textinstructions Text will be shown to worker to help him to solve the captcha correctly. For example: type red symbols only.
+     * @param {string} params.pingback URL for `pingback` (callback) response that will be sent when captcha is solved. [More info here](https://2captcha.com/2captcha-api#pingback).
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
      * @example
-     * imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
+     * const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
+     * 
+     * solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
      * .then((res) => {
-     *   console.log(res)
+     *     console.log(res);
+     * })
+     * .catch((err) => {
+     *     console.log(err);
      * })
      */
-    public async imageCaptcha(base64image: string, extra: UserImageCaptchaExtra = { }): Promise<CaptchaAnswer> {
+    public async imageCaptcha(base64image: string, params: paramsImageCaptcha = { }): Promise<CaptchaAnswer> {
         const payload = {
-            ...extra,
+            ...params,
             ...this.defaultPayload,
             method: "base64"
         }
