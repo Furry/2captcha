@@ -1,6 +1,6 @@
 {
   "name": "2captcha-ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
   "license": "MIT",
