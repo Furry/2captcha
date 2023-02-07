@@ -1,14 +1,16 @@
-# 2captcha-ts
-![baner2](https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg)
+<p align="center">
+ <img src="https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg">
+</p>
 
+![](https://img.shields.io/npm/v/2captcha-ts) ![](https://img.shields.io/npm/l/2captcha-ts) ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
+
+---
 ## Description
-
 A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
 ### Features
-
 - Promise based 2captcha solving
 - Browser & NodeJS Support
 - Uses node-fetch, a light weight http library
@@ -18,19 +20,19 @@ A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA 
 - Proxy Support
 
 ## Supported captchas:
-- [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
-- [x] hCaptcha
-- [x] Arkose Labs FunCaptcha
-- [x] base64 image captchas
-- [x] Geetest
-- [x] Geetest v4
-- [x] Yandex Smart Captcha
-- [ ] Capy Puzzle
-- [ ] Click Captcha
-- [x] Lemin Cropped Captcha
-- [ ] Cloudflare Turnstile
-- [ ] Amazon WAF Captcha
-- [ ] ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
+- ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
+- ✅ hCaptcha
+- ✅ Arkose Labs FunCaptcha
+- ✅ base64 image captchas
+- ✅ Geetest
+- ✅ Geetest v4
+- ✅ Yandex Smart Captcha
+- ⬜ Capy Puzzle
+- ⬜ Click Captcha
+- ✅ Lemin Cropped Captcha
+- ⬜ Cloudflare Turnstile
+- ⬜ Amazon WAF Captcha
+- ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
 
 
 <!-- ## Planned Features
