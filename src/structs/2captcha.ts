@@ -124,6 +124,16 @@ export interface paramsGeeTestV4 {
     userAgent?: string
 }
 
+export interface paramsLemin {
+    pageurl: string,
+    captcha_id: string,
+    div_id: string,
+    api_server?: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -139,6 +149,7 @@ interface CaptchaAnswer {
 
 /**
  * The main 2captcha class, housing all API calls and api interactions.
+ * 
  */
 export class Solver {
     public _apikey: string
@@ -150,6 +161,7 @@ export class Solver {
      * 
      * @param apikey {string} The API key to use
      * @param pollingFrequency {number} The frequency to poll for requests
+     * 
      */
     constructor(apikey: string, pollingFrequency: number = 5000, enableACAO: boolean = true) {
         this._apikey = apikey
@@ -599,6 +611,56 @@ export class Solver {
         const payload = {
             ...params,
             method: "funcaptcha",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+
+    /**
+     * 
+     * ### Solves a Lemin captcha
+     * 
+     * [Read more about other Lemin captcha parameters](https://2captcha.com/2captcha-api#lemin).
+     * 
+     * @param {{ pageurl, captcha_id, div_id }} params Object
+     * @param {string} params.pageurl The URL the captcha appears on.
+     * @param {string} params.captcha_id Value of `captcha_id` parameter you found on page.
+     * @param {string} params.div_id Value `id` of captcha pareent `<div></div>` element.
+     * 
+     * @example
+     * solver.lemin({
+     *   pageurl:'https://2captcha.com/demo/lemin', 
+     *   captcha_id: 'CROPPED_3dfdd5c_d1872b526b794d83ba3b365eb15a200b',
+     *   div_id: 'lemin-cropped-captcha',
+     *   api_server: 'https://api.leminnow.com/captcha/v1/cropped/'
+     * })
+     * .then((res) => {
+     *     console.log(res);
+     * })
+     * .catch((err) => {
+     *     console.log(err);
+     * })
+     */
+    public async lemin(params: paramsLemin): Promise<CaptchaAnswer> {
+        const payload = {
+            ...params,
+            method: "lemin",
             ...this.defaultPayload,
         }
 
