@@ -1,10 +1,12 @@
 <p align="center">
- <img src="https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg">
+  <img src="https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg">
 </p>
 
-![](https://img.shields.io/npm/v/2captcha-ts) ![](https://img.shields.io/npm/l/2captcha-ts) ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
+![](https://img.shields.io/npm/v/2captcha-ts)
+![](https://img.shields.io/npm/l/2captcha-ts)
+![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
 
----
+
 ## Description
 A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha.
 
