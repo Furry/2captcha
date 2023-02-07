@@ -17,20 +17,19 @@ A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA 
 - Proxy Support
 
 ## Supported captchas:
-
-* [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
-* [x] hCaptcha
-* [x] Arkose Labs FunCaptcha
-* [x] base64 image captchas
-* [x] Geetest
-* [x] Geetest v4
-* [x] Yandex Smart Captcha
-* [ ] Capy Puzzle
-* [ ] Click Captcha
-* [ ] Lemin Cropped Captcha
-* [ ] Cloudflare Turnstile
-* [ ] Amazon WAF Captcha
-* [ ] ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
+- [x] google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
+- [x] hCaptcha
+- [x] Arkose Labs FunCaptcha
+- [x] base64 image captchas
+- [x] Geetest
+- [x] Geetest v4
+- [x] Yandex Smart Captcha
+- [ ] Capy Puzzle
+- [ ] Click Captcha
+- [ ] Lemin Cropped Captcha
+- [ ] Cloudflare Turnstile
+- [ ] Amazon WAF Captcha
+- [ ] ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
 
 
 <!-- ## Planned Features
