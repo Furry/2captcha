@@ -146,6 +146,18 @@ export interface paramsAmazonWAF {
     proxytype?: string,
 }
 
+export interface paramsTurnstile {
+    pageurl: string,
+    sitekey: string,
+    action?: string,
+    data?: string,
+    header_acao?: boolean,
+    pingback?: string,
+    soft_id?: number,
+    proxy?: string,
+    proxytype?: string,
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -724,6 +736,54 @@ export class Solver {
         const payload = {
             ...params,
             method: "amazon_waf",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+    /**
+     * 
+     * ### Solves Cloudflare Turnstile captcha
+     * 
+     * [Read more about Cloudflare Turnstile captcha](https://2captcha.com/2captcha-api#turnstile).
+     * 
+     * @param {{ pageurl, sitekey, action, data }} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
+     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.sitekey Is a value of `sitekey` parameter in the page source.
+     * @param {string} params.action Value of optional `action` parameter you found on page.
+     * @param {string} params.data  Value of optional `data` parameter you found on page.
+     * 
+     * @example 
+     * solver.cloudflareTurnstile({
+     *   pageurl: "https://app.nodecraft.com/login",
+     *   sitekey: "0x4AAAAAAAAkg0s3VIOD10y4"    
+     * })
+     * .then((res) => {
+     *   console.log(res);
+     * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
+     */
+    public async cloudflareTurnstile(params: paramsTurnstile): Promise<CaptchaAnswer> {
+        const payload = {
+            ...params,
+            method: "turnstile",
             ...this.defaultPayload,
         }
 
