@@ -52,9 +52,9 @@ A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA 
 ```sh
 npm install 2captcha-ts
 ```
-<!-- ```sh
+```sh
 yarn add 2captcha-ts
-``` -->
+```
 
 ## Usage
 
