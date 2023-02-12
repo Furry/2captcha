@@ -26,7 +26,8 @@
     "Yandex Smart Captcha",
     "Lemin captcha",
     "bypass captcha",
-    "solve captcha"
+    "solve captcha",
+    "Amazon WAF"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
