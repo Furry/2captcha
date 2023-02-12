@@ -8,7 +8,7 @@
 
 
 ## Description
-A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha.
+A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
@@ -33,7 +33,7 @@ A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA 
 - ⬜ Click Captcha
 - ✅ Lemin Cropped Captcha
 - ⬜ Cloudflare Turnstile
-- ⬜ Amazon WAF Captcha
+- ✅ Amazon WAF Captcha
 - ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
 
 
@@ -201,6 +201,25 @@ solver.lemin({
 })
 .catch((err) => {
     console.log(err);
+})
+```
+
+### Amazon WAF Captcha (AWS WAF):
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.amazonWaf({
+  pageurl: "https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest",
+  sitekey: "AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AHMDLodoefdvyOnsHMRt...",
+  context: "9BUgmlm48F92WUoqv97a49ZuEJJ50TCk9MVr3C7WMtQ0X6flVbufM4n8mjFLmbLVAPgaQ...",
+  iv: "CgAHbCe2GgAAAAAj",
+})
+.then((res) => {
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err);
 })
 ```
 
