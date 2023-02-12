@@ -134,6 +134,18 @@ export interface paramsLemin {
     proxytype?: string
 }
 
+export interface paramsAmazonWAF {
+    pageurl: string,
+    sitekey: string,
+    iv: string
+    context: string,
+    header_acao?: boolean,
+    pingback?: string,
+    soft_id?: number,
+    proxy?: string,
+    proxytype?: string,
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -661,6 +673,57 @@ export class Solver {
         const payload = {
             ...params,
             method: "lemin",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+
+    /**
+     * 
+     * ### Solves Amazon WAF captcha
+     * 
+     * [Read more about "Amazon WAF" captcha](https://2captcha.com/2captcha-api#amazon-waf).
+     * 
+     * @param {{ pageurl, sitekey, iv, context }} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/amazonWaf.js)
+     * @param {string} params.pageurl Is the full `URL` of page where you were challenged by the captcha.
+     * @param {string} params.sitekey Is a value of `key` parameter in the page source.
+     * @param {string} params.iv Is a value of `iv` parameter in the page source.
+     * @param {string} params.context  Is a value of `context` parameter in the page source.
+     * 
+     * @example 
+     * solver.amazonWaf({
+     *  pageurl: "https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest",
+     *  sitekey: "AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AHMDLodoefdvyOnsHMRtEKQAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMUX+ZqwwuANRnZujSAgEQgDvHSxUQmVBuyUtumoW2n4ccTG7xQN1r3X/zz41qmQaYv9SSSvQrjIoDXKaUQ23tVb4ii8+uljuRdz/HPA==",
+     *  context: "9BUgmlm48F92WUoqv97a49ZuEJJ50TCk9MVr3C7WMtQ0X6flVbufM4n8mjFLmbLVAPgaQ1Jydeaja94iAS49ljb+sUNLoukWedAQZKrlY4RdbOOzvcFqmD/ZepQFS9N5w15Exr4VwnVq+HIxTsDJwRviElWCdzKDebN/mk8/eX2n7qJi5G3Riq0tdQw9+C4diFZU5E97RSeahejOAAJTDqduqW6uLw9NsjJBkDRBlRjxjn5CaMMo5pYOxYbGrM8Un1JH5DMOLeXbq1xWbC17YSEoM1cRFfTgOoc+VpCe36Ai9Kc=",
+     *  iv: "CgAHbCe2GgAAAAAj",
+     * })
+     * .then((res) => {
+     *     console.log(res);
+     * })
+     * .catch((err) => {
+     *     console.log(err);
+     * })
+     */
+    public async amazonWaf(params: paramsAmazonWAF): Promise<CaptchaAnswer> {
+        const payload = {
+            ...params,
+            method: "amazon_waf",
             ...this.defaultPayload,
         }
 
