@@ -197,10 +197,10 @@ solver.lemin({
   api_server: 'https://api.leminnow.com/captcha/v1/cropped'
 })
 .then((res) => {
-    console.log(res);
+  console.log(res);
 })
 .catch((err) => {
-    console.log(err);
+  console.log(err);
 })
 ```
 
