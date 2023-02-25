@@ -589,6 +589,11 @@ export class Solver {
      * })
      */
     public async imageCaptcha(base64image: string, params: paramsImageCaptcha = { }): Promise<CaptchaAnswer> {
+        const isTheFirstParameterHasAnIncorrectType = typeof(arguments[0]) !== 'string'
+        if(isTheFirstParameterHasAnIncorrectType){
+            throw new Error(`Error when check params image captcha. Field "base64image" is incorrect type. The "base64image" field must be a string containing an image in the "base64" format. Please correct the "base64image" field and try again.`)
+        }
+
         const payload = {
             ...params,
             ...this.defaultPayload,
