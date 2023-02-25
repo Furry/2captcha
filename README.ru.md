@@ -239,14 +239,12 @@ solver.recaptcha({
   console.error(err.message)
 })
 ```
----
 
 ## Полезные статьи
 * [Как решать капчу Geetest v4](https://2captcha.com/ru/blog/geetest-v4-obkhod?from=16653706)
 * [Автоматическое решение reCAPTCHA V3 - инструкция для разработчиков и заказчиков](https://2captcha.com/ru/blog/avtomaticheskoe-reshenie-recaptcha-v3?from=16653706)
 * <a href="./docs/hcaptcha.md">Поиск значения `sitekey` для hCaptcha</a>
 
----
 ## Примеры использования с исходным кодом и описанием
 * [Решение капчи GeeTest используя Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
 

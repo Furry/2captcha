@@ -240,14 +240,12 @@ solver.recaptcha({
   console.error(err.message)
 })
 ```
----
 
 ## 有用的文章
 * [如何解决Geetest v4 captcha](https://2captcha.com/ru/blog/geetest-v4-obkhod?from=16653706)
 * [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/blog/avtomaticheskoe-reshenie-recaptcha-v3?from=16653706)
 * <a href="./docs/hcaptcha.md">搜索hCaptcha的`sitekey`值</a>
 
----
 ## 带有源代码和描述的使用示例
 * [使用`puppeteer`测试Captcha解决方案](https://github.com/dzmitry-duboyski/GeeTest-demo)
 
