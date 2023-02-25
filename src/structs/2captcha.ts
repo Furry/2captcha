@@ -3,6 +3,7 @@ import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
 import  getProviderData  from "./providers/providers"
 import { softId } from "./constants/constants"
+import checkJSCaptchaParams from "../utils/checkJSCaptchaParams"
 
 
 const provider = getProviderData ()
@@ -302,6 +303,7 @@ export class Solver {
      * })
      */
     public async recaptcha(params: paramsRecaptcha): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "userrecaptcha")
         const payload = {
             ...params,
             method: "userrecaptcha",
@@ -348,6 +350,7 @@ export class Solver {
      * })
      */
     public async hcaptcha(params: paramsHCaptcha): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "hcaptcha")
         const payload = {
             ...params,
             method: "hcaptcha",
@@ -422,6 +425,7 @@ export class Solver {
      *  })()
      */
      public async geetest(params: paramsGeetest): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "geetest")
         const payload = {
             ...params,
             method: "geetest",
@@ -474,6 +478,7 @@ export class Solver {
      * })
      */
       public async geetestV4(params: paramsGeeTestV4): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "geetest_v4")
         const payload = {
             ...params,
             method: "geetest_v4",
@@ -521,6 +526,7 @@ export class Solver {
      * })
      */
     public async yandexSmart(params: yandexSmart): Promise<CaptchaAnswer> {
+    checkJSCaptchaParams(params, "yandex")
     const payload = {
         ...params,
         method: "yandex",
@@ -632,6 +638,7 @@ export class Solver {
      *  })
      */
     public async funCaptcha(params: paramsFunCapthca): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "funcaptcha")
         const payload = {
             ...params,
             method: "funcaptcha",
@@ -682,6 +689,7 @@ export class Solver {
      * })
      */
     public async lemin(params: paramsLemin): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "lemin")
         const payload = {
             ...params,
             method: "lemin",
@@ -733,6 +741,7 @@ export class Solver {
      * })
      */
     public async amazonWaf(params: paramsAmazonWAF): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "amazon_waf")
         const payload = {
             ...params,
             method: "amazon_waf",
@@ -781,6 +790,7 @@ export class Solver {
      * })
      */
     public async cloudflareTurnstile(params: paramsTurnstile): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "turnstile")
         const payload = {
             ...params,
             method: "turnstile",
