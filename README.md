@@ -34,7 +34,7 @@ A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA 
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
 - ⬜ Click Captcha
-- ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706))
+<!-- - ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706)) -->
 
 
 <!-- ## Planned Features
@@ -226,6 +226,7 @@ solver.cloudflareTurnstile({
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
+//INFO: The `context` value is dynamic, it is necessary to take the actual value from the page each time.
 solver.amazonWaf({
   pageurl: "https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest",
   sitekey: "AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AHMDLodoefdvyOnsHMRt...",
