@@ -28,7 +28,9 @@
     "bypass captcha",
     "solve captcha",
     "Amazon WAF",
-    "Cloudflare Turnstile"
+    "Cloudflare Turnstile",
+    "行为验证4.0",
+    "行为验证"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
