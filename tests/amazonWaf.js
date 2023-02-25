@@ -3,6 +3,7 @@ require('dotenv').config();
 const APIKEY = process.env.APIKEY
 const solver = new Captcha.Solver(APIKEY);
 
+//INFO: The `context` value is dynamic, it is necessary to take the actual value from the page each time.
 solver.amazonWaf({
     pageurl: "https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest",
     sitekey: "AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AHMDLodoefdvyOnsHMRtEKQAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMUX+ZqwwuANRnZujSAgEQgDvHSxUQmVBuyUtumoW2n4ccTG7xQN1r3X/zz41qmQaYv9SSSvQrjIoDXKaUQ23tVb4ii8+uljuRdz/HPA==",
