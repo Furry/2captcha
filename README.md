@@ -1,4 +1,4 @@
-<u><b>[English](README.md)</b></u> | [Spanish](README.es.md) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
+<b>[English](README.md)</b> | [Spanish](README.es.md) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 <p align="center">
   <img src="https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg">
 </p>
