@@ -811,11 +811,14 @@ export class Solver {
      * 
      * [Read more about Cloudflare Turnstile captcha](https://2captcha.com/2captcha-api#turnstile).
      * 
-     * @param {{ pageurl, sitekey, action, data }} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
+     * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
      * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
      * @param {string} params.sitekey Is a value of `sitekey` parameter in the page source.
      * @param {string} params.action Value of optional `action` parameter you found on page.
      * @param {string} params.data  Value of optional `data` parameter you found on page.
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
      * 
      * @example 
      * solver.cloudflareTurnstile({
