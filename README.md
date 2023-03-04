@@ -277,7 +277,7 @@ The latest version of the code base will always be under the '**next**' branch!
 
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support?from=16653706)
-* [Automatic ReCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution?from=16653706)
+* [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution?from=16653706)
 * Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
 
 ## Usage examples with source code and description
