@@ -56,7 +56,7 @@ export interface paramsFunCapthca extends BaseSolve {
   proxy?: string,
   proxytype?: string,
   userAgent?: string,
-  soft_id?: number;
+  data?: string
 }
 
 export interface paramsImageCaptcha {
@@ -645,10 +645,15 @@ export class Solver {
      * 
      * [Read more](https://2captcha.com/2captcha-api#solving_funcaptcha_new) about other solving and other parameters for Arkose Labs FunCaptcha.
      * 
-     * @param {{pageurl, publicKey, surl}} params Object
+     * @param {{pageurl, publicKey, surl, data, pingback, proxy, proxytype, userAgent}} params Object
      * @param {string} params.publicKey The FunCaptcha Public Key
      * @param {string} params.pageurl The URL to the website the captcha is seen on
      * @param {string} params.surl The FunCaptcha Service URL (recommended)
+     * @param {string} params.data Custom data to pass to FunCaptcha. For example: `'data': '{"blob": "foo"}'`.
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * @param {string} params.userAgent Your `userAgent` that will be passed to our worker and used to solve the captcha.
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
