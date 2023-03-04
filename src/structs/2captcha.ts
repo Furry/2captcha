@@ -95,6 +95,7 @@ export interface paramsGeetest {
  * @property {string} pingback
  * @property {string} proxy Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
  * @property {string} proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * @property {string} userAgent Your `userAgent` that will be passed to our worker and used to solve the captcha.
  * 
  */
 export interface yandexSmart {
@@ -103,6 +104,7 @@ export interface yandexSmart {
     pingback?: string,
     proxy?: string,
     proxytype?: string,
+    userAgent?: string
 }
 
 /**
@@ -524,17 +526,21 @@ export class Solver {
      * This method accepts an object with the following fields: `pageurl`, `sitekey`, `pingback`, `proxy`, `proxytype`.
      * The `pageurl` and `sitekey` fields are required.
      * 
-     * @param {{pageurl, sitekey, pingback, proxy, proxytype}} params The method takes arguments as an object.
+     * @param {{pageurl, sitekey, pingback, proxy, proxytype, userAgent}} params The method takes arguments as an object.
      * @param {string} params.pageurl Required parameter. URL of the page where the captcha is located.
      * @param {string} params.sitekey Required parameter. The `sitekey` value you found on the captcha page.
      * @param {string} params.pingback An optional param.
      * @param {string} params.proxy An optional param. Format: `login:password@123.123.123.123:3128`.
      * @param {string} params.proxytype An optional param. Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * @param {string} params.userAgent An optional param. Your `userAgent` that will be passed to our worker and used to solve the captcha.
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
      * @example
-     * solver.yandexSmart({ pageurl: "https://captcha-api.yandex.ru/demo", sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9" })
+     * solver.yandexSmart({ 
+     *   pageurl: "https://captcha-api.yandex.ru/demo",
+     *   sitekey: "FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9"
+     * })
      * .then((res) => {
      *   console.log(res)
      * })
