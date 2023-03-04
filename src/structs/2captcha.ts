@@ -473,6 +473,7 @@ export class Solver {
      * The `pageurl` and `captcha_id` fields are required.
      * 
      * @param {{pageurl, captcha_id, pingback, proxy, proxytype, userAgent}} params The method geetestV4 takes arguments as an object.
+     * @param {string} params.pageurl Full URL of the page where you see Geetest V4 captcha.
      * @param {string} params.captcha_id Required parameter. Value of `captcha_id` parameter you found on target website.
      * @param {string} params.pingback An optional param. [More info here](https://2captcha.com/2captcha-api#pingback).
      * @param {string} params.proxy An optional param. Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
