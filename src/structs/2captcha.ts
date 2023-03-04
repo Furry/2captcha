@@ -42,7 +42,8 @@ export interface paramsHCaptcha extends BaseSolve {
     invisible?: 0 | 1,
     data?: string,
     userAgent?: string,
-    soft_id?: number;
+    soft_id?: number,
+    domain?: string
 }
 
 // FixMe:data[key] - how to send this parameter
@@ -340,15 +341,22 @@ export class Solver {
      * 
      * [Read more about other hCaptcha parameters](https://2captcha.com/2captcha-api#solving_hcaptcha).
      * 
-     * @param {{sitekey, pageurl}} params Object
+     * @param {{sitekey, pageurl, data, userAgent, invisible}} params Object
      * @param {string} params.sitekey The hcaptcha site key. Value of `k` or `data-sitekey` parameter you found on page.
      * @param {string} params.pageurl The URL the captcha appears on.
+     * @param {string} params.data Custom `data` that is used in some implementations of hCaptcha, mostly with `invisible=1`. In most cases you see it as `rqdata` inside network requests. IMPORTANT: you MUST provide `userAgent` if you submit captcha with `data` paramater. The value should match the User-Agent you use when interacting with the target website.
+     * @param {string} params.userAgent Your userAgent that will be passed to our worker and used to solve the captcha. Required for hCaptcha with `data` parameter.
+     * @param {number} params.invisible Use `1` for invisible version of hcaptcha. Currently it is a very rare case.
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. More info [here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * @param {string} params.domain Domain used to load the captcha: `hcaptcha.com` or `js.hcaptcha.com`
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve
      * @throws APIError
      * @example
      * solver.hcaptcha({
-     *   pageurl: "https://2captcha.com/demo/hcaptcha?difficulty=moderate",
+     *   pageurl: "https://2captcha.com/demo/hcaptcha",
      *   sitekey: "b76cd927-d266-4cfb-a328-3b03ae07ded6"
      * .then((res) => {
      *     console.log(res);
