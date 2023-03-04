@@ -16,7 +16,7 @@ export interface paramsRecaptcha extends BaseSolve {
     pageurl: string,
     googlekey: string,
     invisible?: boolean,
-    "data-s"?: string,
+    datas?: string,
     domain?: string,
     cookies?: string,
     userAgent?: string,
@@ -280,13 +280,21 @@ export class Solver {
      * 
      * [Read more about other reCAPTCHA parameters](https://2captcha.com/2captcha-api#solving_recaptchav2_new).
      * 
-     * @param {{pageurl, googlekey, cookies, proxy, proxytype, userAgent}} params Object
+     * @param {{pageurl, googlekey, cookies, proxy, proxytype, userAgent, invisible, datas, pingback, action, enterprise, min_score, version, domain}} params Object
      * @param {string} params.pageurl The URL the captcha appears on.
      * @param {string} params.googlekey Value of `k` or `data-sitekey` parameter you found on page.
      * @param {string} params.cookies Your cookies that will be passed to our worker who solve the captha.
      * @param {string} params.proxy Format: `login:password@123.123.123.123:3128`. You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
      * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`. 
      * @param {string} params.userAgent Your `userAgent` that will be passed to our worker and used to solve the captcha. 
+     * @param {number} params.invisible `1` - means that reCAPTCHA is invisible. `0` - normal reCAPTCHA.  
+     * @param {string} params.datas Value of `data-s` parameter you found on page. Curenttly applicable for Google Search and other Google services.
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.action Value of `action` parameter you found on page.
+     * @param {string} params.enterprise `1` - defines that you're sending reCAPTCHA Enterpise.
+     * @param {number} params.min_score The score needed for resolution reCAPTCHA V3. Currently it's almost impossible to get token with score higher than `0.3`
+     * @param {string} params.version `v2` — defines that you're sending a reCAPTCHA V2. `v3` — defines that you're sending a reCAPTCHA V3.
+     * @param {string} params.domain Domain used to load the captcha: `google.com` or `recaptcha.net`
      * 
      * @returns {Promise<CaptchaAnswer>} The result from the solve.
      * @throws APIError
