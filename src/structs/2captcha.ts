@@ -702,10 +702,14 @@ export class Solver {
      * 
      * [Read more about other Lemin captcha parameters](https://2captcha.com/2captcha-api#lemin).
      * 
-     * @param {{ pageurl, captcha_id, div_id }} params Object
+     * @param {{ pageurl, captcha_id, div_id, api_server, pingback, proxy, proxytype}} params Object
      * @param {string} params.pageurl The URL the captcha appears on.
      * @param {string} params.captcha_id Value of `captcha_id` parameter you found on page.
      * @param {string} params.div_id Value `id` of captcha pareent `<div></div>` element.
+     * @param {string} params.api_server The domain part of script URL you found on page. Default value: `https://api.leminnow.com/`
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
      * 
      * @example
      * solver.lemin({
