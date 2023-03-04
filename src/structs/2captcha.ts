@@ -341,7 +341,7 @@ export class Solver {
      * 
      * [Read more about other hCaptcha parameters](https://2captcha.com/2captcha-api#solving_hcaptcha).
      * 
-     * @param {{sitekey, pageurl, data, userAgent, invisible}} params Object
+     * @param {{sitekey, pageurl, data, userAgent, invisible, pingback, proxy, proxytype, domain}} params Object
      * @param {string} params.sitekey The hcaptcha site key. Value of `k` or `data-sitekey` parameter you found on page.
      * @param {string} params.pageurl The URL the captcha appears on.
      * @param {string} params.data Custom `data` that is used in some implementations of hCaptcha, mostly with `invisible=1`. In most cases you see it as `rqdata` inside network requests. IMPORTANT: you MUST provide `userAgent` if you submit captcha with `data` paramater. The value should match the User-Agent you use when interacting with the target website.
