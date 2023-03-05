@@ -18,7 +18,7 @@ Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para 
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
 - ✅ hCaptcha
 - ✅ Arkose Labs FunCaptcha
-- ✅ base64 image captchas
+- ✅ Image captchas. (`base64` format)
 - ✅ Geetest
 - ✅ Geetest v4
 - ✅ Yandex Smart Captcha
@@ -26,7 +26,7 @@ Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para 
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
-- ⬜ Click Captcha
+- ⬜ Сoordinates (Click Captcha).
 
 ## Instalar
 
@@ -242,8 +242,8 @@ solver.recaptcha({
 ```
 
 ## Artículos útiles
-* [Cómo resolver el captcha Geetest v4](https://2captcha.com/ru/blog/geetest-v4-obkhod?from=16653706)
-* [Solución automática reCAPTCHA V3-instrucciones para desarrolladores y clientes](https://2captcha.com/en/blog/avtomaticheskoe-reshenie-recaptcha-v3?from=16653706)
+* [Cómo resolver el captcha Geetest v4](https://2captcha.com/es/blog/geetest-v4-support?from=16653706)
+* [Solución automática reCAPTCHA V3-instrucciones para desarrolladores y clientes](https://2captcha.com/es/blog/recaptcha-v3-automatic-resolution?from=16653706)
 * <a href="./docs/hcaptcha.md">Buscar el valor de `sitekey` para hCaptcha</a>
 
 ## Ejemplos de uso con código fuente y descripción
@@ -251,4 +251,4 @@ solver.recaptcha({
 
 ---
 
-Este proyecto es una bifurcación [de este paquete](https://www.npmjs.com/package/2captcha ). En esta versión del paquete, se agregó soporte para nuevos tipos de captcha y se cambió la forma de pasar los parámetros de captcha. Los parámetros de captcha ahora se pasan como un objeto ({parámetro: valor}). Así como otros cambios cosméticos.  Puede Leer más sobre los cambios realizados [aquí](https://github.com/dzmitry-duboyski/2captcha-ts/releases).
+Este proyecto es una bifurcación [de este paquete](https://www.npmjs.com/package/2captcha). En esta versión del paquete, se agregó soporte para nuevos tipos de captcha y se cambió la forma de pasar los parámetros de captcha. Los parámetros de captcha ahora se pasan como un objeto ({parámetro: valor}). Así como otros cambios cosméticos.  Puede Leer más sobre los cambios realizados [aquí](https://github.com/dzmitry-duboyski/2captcha-ts/releases).

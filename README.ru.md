@@ -17,7 +17,7 @@
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
 - ✅ hCaptcha
 - ✅ Arkose Labs FunCaptcha
-- ✅ base64 image captchas
+- ✅ Image captchas. (`base64` format)
 - ✅ Geetest
 - ✅ Geetest v4
 - ✅ Yandex Smart Captcha
@@ -25,7 +25,7 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
-- ⬜ Click Captcha
+- ⬜ Сoordinates (Click Captcha).
 
 ## Установка
 
@@ -250,4 +250,4 @@ solver.recaptcha({
 
 ---
 
-Этот проект является форком [этого пакета](https://www.npmjs.com/package/2captcha ). В эту версию пакета, добавлена поддержка новых типов капч и изменен способ передачи параметров капчи. Параметры капчи теперь передаются в виде объекта ({параметр: значение}). А также другие косметические изменения.  Подробнее о сделанных изменениях можно прочитать [тут](https://github.com/dzmitry-duboyski/2captcha-ts/releases).
+Этот проект является форком [этого пакета](https://www.npmjs.com/package/2captcha). В эту версию пакета, добавлена поддержка новых типов капч и изменен способ передачи параметров капчи. Параметры капчи теперь передаются в виде объекта ({параметр: значение}). А также другие косметические изменения.  Подробнее о сделанных изменениях можно прочитать [тут](https://github.com/dzmitry-duboyski/2captcha-ts/releases).

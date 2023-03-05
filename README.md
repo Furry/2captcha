@@ -26,7 +26,7 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
 - ✅ hCaptcha
 - ✅ Arkose Labs FunCaptcha
-- ✅ base64 image captchas
+- ✅ Image captchas. (`base64` format)
 - ✅ Geetest
 - ✅ Geetest v4
 - ✅ Yandex Smart Captcha
@@ -34,7 +34,7 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
-- ⬜ Сoordinates (Click Captcha)
+- ⬜ Сoordinates (Click Captcha).
 <!-- - ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706)) -->
 
 

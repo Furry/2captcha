@@ -18,7 +18,7 @@
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
 - ✅ hCaptcha
 - ✅ Arkose Labs FunCaptcha
-- ✅ base64 image captchas
+- ✅ Image captchas. (`base64` format)
 - ✅ Geetest
 - ✅ Geetest v4
 - ✅ Yandex Smart Captcha
@@ -26,7 +26,7 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
-- ⬜ Click Captcha
+- ⬜ Сoordinates (Click Captcha).
 
 ## 安装/安装
 
@@ -242,8 +242,8 @@ solver.recaptcha({
 ```
 
 ## 有用的文章
-* [如何解决Geetest v4 captcha](https://2captcha.com/ru/blog/geetest-v4-obkhod?from=16653706)
-* [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/blog/avtomaticheskoe-reshenie-recaptcha-v3?from=16653706)
+* [如何解决Geetest v4 captcha](https://2captcha.com/zh/blog/geetest-v4-support?from=16653706)
+* [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/zh/blog/recaptcha-v3-automatic-resolution?from=16653706)
 * <a href="./docs/hcaptcha.md">搜索hCaptcha的`sitekey`值</a>
 
 ## 带有源代码和描述的使用示例
