@@ -35,18 +35,6 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Amazon WAF Captcha
 - ⬜ Capy Puzzle
 - ✅ Сoordinates (Click Captcha).
-<!-- - ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706)) -->
-
-
-<!-- ## Planned Features
-
-- ~~Account Interaction~~
-- ~~Base64 image support~~
-- ~~Documentation Site~~
-- Built-in Rate-Limit handling
-- ~~Proxy support~~
-- ~~Invalid-Captcha reporting support~~
-- And many other things. -->
 
 ## Install
 
@@ -287,11 +275,7 @@ The latest version of the code base will always be under the '**next**' branch!
 - All **CORE CHANGES** require an issue with reasoning made before a PR will even be addressed.
 - All PR's must follow the general structure of the code base
 - If you have questions, feel free to make an issue and i'll get to it right away!
-
-<hr>
- <div style="text-align: center">
-<a href="https://www.buymeacoffee.com/ether" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-</div> -->
+-->
 
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support?from=16653706)
