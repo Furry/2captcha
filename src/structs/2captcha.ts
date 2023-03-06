@@ -162,6 +162,15 @@ export interface paramsTurnstile {
     proxytype?: string,
 }
 
+export interface paramsCoordinates {
+    body: string,
+    language?: 0 | 1 | 2,
+    lang?: string,
+    pingback?: string,
+    textinstructions?: string,
+    imginstrucation?: string
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -841,6 +850,65 @@ export class Solver {
         }
 
         const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+   /**
+    * ### Solves a Coordinates captcha. 
+    * 
+    * @param {{ body, imginstrucation, textinstructions, language, lang, pingback }} params parameters Сoordinates Captcha as an object.
+    * @param {string} params.body Base64-encoded captcha image.
+    * @param {string} params.imginstrucation Base64-encoded image with instruction for solving captcha.
+    * @param {string} params.textinstructions Text will be shown to worker to help him to solve the captcha correctly. For example: click on all objects in red color.
+    * @param {number} params.language `0` - not specified. `1` - Cyrillic captcha. `2` - Latin captcha
+    * @param {string} params.lang Language code. [See the list of supported languages](https://2captcha.com/2captcha-api#language).
+    * @param {string} params.pingback URL for `pingback` (callback) response that will be sent when captcha is solved. [More info here](https://2captcha.com/2captcha-api#pingback).
+    * 
+    * @returns {Promise<CaptchaAnswer>} The result from the solve
+    * 
+    * @example
+    *  const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+    * 
+    *  solver.coordinates({
+    *      body: imageBase64,
+    *      textinstructions: 'Select all photos containing the boat'
+    *  })
+    *  .then((res) => {
+    *      console.log(res);
+    *  })
+    *  .catch((err) => {
+    *      console.log(err);
+    *  })
+    */
+    public async coordinates(params: paramsCoordinates): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "base64")
+       
+        const payload = {
+            ...params,
+            method: "base64",
+            coordinatescaptcha: 1,
+            ...this.defaultPayload,
+        }
+
+        const URL = this.in
+        const response = await fetch(URL, {
+            method: 'post',
+            body: JSON.stringify(payload),
+            headers: {'Content-Type': 'application/json'}  
+        })
         const result = await response.text()
 
         let data;
