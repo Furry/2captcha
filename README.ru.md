@@ -101,7 +101,12 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 // Получаем содержимое файла в формате base64
 const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
 
-solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
+solver.imageCaptcha({
+    body: imageBase64,
+    numeric: 4,
+    min_len: 5,
+    max_len: 5
+})
 .then((res) => {
   console.log(res);
 })

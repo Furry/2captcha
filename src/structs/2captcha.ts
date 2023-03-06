@@ -60,6 +60,7 @@ export interface paramsFunCapthca extends BaseSolve {
 }
 
 export interface paramsImageCaptcha {
+    body: string,
     phrase?: 0 | 1,
     regsense?: 0 | 1,
     numeric?: 0 | 1 | 2 | 3 | 4,
@@ -585,8 +586,8 @@ export class Solver {
     /**
      * Solves a image-based captcha. [Read more about parameters for image captcha](https://2captcha.com/2captcha-api#solving_normal_captcha).
      * 
-     * @param {string} base64image Base64 image data for the captcha
-     * @param {{ phrase,
+     * @param {{ body,
+     *           phrase,
      *           regsense,
      *           numeric,
      *           calc,
@@ -596,6 +597,7 @@ export class Solver {
      *           lang,
      *           textinstructions,
      *           pingback }} params Extra properties to pass to 2captcha.
+     * @param {number} params.body Base64 image data for the captcha.
      * @param {number} params.phrase Captcha contains two or more words? `1` - Yes. `0` - No.
      * @param {number} params.regsense Captcha is case sensitive? `1` - Yes. `0` - No.
      * @param {number} params.numeric `0` - not specified. `1` - captcha contains only numbers. `2` - captcha contains only letters. `3` - captcha contains only numbers OR only letters. `4` - captcha MUST contain both numbers AND letters.
@@ -612,7 +614,12 @@ export class Solver {
      * @example
      * const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
      * 
-     * solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
+     *  solver.imageCaptcha({
+     *      body: imageBase64,
+     *      numeric: 4,
+     *      min_len: 5,
+     *      max_len: 5
+     *  })
      * .then((res) => {
      *     console.log(res);
      * })
@@ -620,19 +627,20 @@ export class Solver {
      *     console.log(err);
      * })
      */
-    public async imageCaptcha(base64image: string, params: paramsImageCaptcha = { }): Promise<CaptchaAnswer> {
-        const isTheFirstParameterHasAnIncorrectType = typeof(arguments[0]) !== 'string'
-        if(isTheFirstParameterHasAnIncorrectType){
-            throw new Error(`Error when check params image captcha. Field "base64image" is incorrect type. The "base64image" field must be a string containing an image in the "base64" format. Please correct the "base64image" field and try again.`)
-        }
+    public async imageCaptcha( params: paramsImageCaptcha ): Promise<CaptchaAnswer> {
+        checkJSCaptchaParams(params, "base64")
 
         const payload = {
             ...params,
             ...this.defaultPayload,
             method: "base64"
         }
-
-        const response = await fetch(this.in + utils.objectToURI(payload), { body: JSON.stringify({ "body": base64image }) , method: "post" })
+        const URL = this.in
+        const response = await fetch(URL, {
+            body: JSON.stringify( payload ),
+            method: "post",
+            headers: {'Content-Type': 'application/json'}
+        })
         const result = await response.text()
 
         let data;
