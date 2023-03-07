@@ -9,7 +9,7 @@
 
 
 ## Описание
-Оболочка вокруг API сервиса [2captcha](https://2captcha.com/?from=16653706). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile.
+Оболочка вокруг API сервиса [2captcha](https://2captcha.com/?from=16653706). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.
 
 [2captcha](https://2captcha.com/?from=16653706) это сервис, который решает множество различных типов капч. Эта библиотека служит оболочкой для их API, чтобы предоставить NodeJS простую функциональность, основанную на `promise`.
 
@@ -24,7 +24,7 @@
 - ✅ Lemin Cropped Captcha
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
-- ⬜ Capy Puzzle
+- ✅ Capy Puzzle
 - ✅ Сoordinates (Click Captcha).
 
 ## Установка
@@ -223,6 +223,23 @@ solver.amazonWaf({
 })
 .catch((err) => {
   console.log(err);
+})
+```
+
+### Capy Puzzle
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.capyPuzzle({
+    pageurl: "https://www.capy.me/account/register/",
+    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
 })
 ```
 

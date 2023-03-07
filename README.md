@@ -9,7 +9,7 @@
 
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile.
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
@@ -33,8 +33,9 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Lemin Cropped Captcha
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
-- ⬜ Capy Puzzle
+- ✅ Capy Puzzle
 - ✅ Сoordinates (Click Captcha).
+<!-- ⬜ -->
 
 ## Install
 
@@ -232,6 +233,23 @@ solver.amazonWaf({
 })
 .catch((err) => {
   console.log(err);
+})
+```
+
+### Capy Puzzle
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.capyPuzzle({
+    pageurl: "https://www.capy.me/account/register/",
+    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
 })
 ```
 
