@@ -64,7 +64,7 @@ const getRequiredFildsArr = (method: string):Array<string> => {
  * @example
  * checkCaptchaParams(params, 'userrecaptcha')
  */
-export default function checkJSCaptchaParams(params: Object, method: string) {
+export default function checkCaptchaParams(params: Object, method: string) {
   let isCorrectCaptchaParams
   const isIncorrectCaptchaMethod = !supportedMethods.includes(method)
 
