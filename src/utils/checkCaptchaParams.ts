@@ -1,5 +1,5 @@
 // Captcha methods for which parameter checking is available
-const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf","turnstile", "base64"]
+const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf","turnstile", "base64", "capy"]
 
 // Names of required fields that must be contained in the parameters captcha
 const recaptchaRequiredFields =   ['pageurl','googlekey']
@@ -12,7 +12,8 @@ const leminRequiredFields =       ['pageurl','div_id','captcha_id']
 const amazonWafRequiredFields =   ['pageurl','context','iv','sitekey']
 const turnstileRequiredFields =   ['pageurl','sitekey']
 // `base64RequiredFields` for Normal Captcha and Coordinates captcha
-const base64RequiredFields =      ['body']
+const base64RequiredFields =      ['body'] 
+const capyPuzzleRequiredFields =      ['captchakey'] 
 
 /**
  * Getting required arguments for a captcha.
@@ -53,6 +54,9 @@ const getRequiredFildsArr = (method: string):Array<string> => {
       break;
     case "base64":
       requiredFieldsArr = base64RequiredFields
+      break;
+    case "capy":
+      requiredFieldsArr = capyPuzzleRequiredFields
       break;
   }
   return requiredFieldsArr
