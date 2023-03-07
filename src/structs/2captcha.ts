@@ -163,6 +163,16 @@ export interface paramsTurnstile {
     proxytype?: string,
 }
 
+export interface paramsCapyPuzzle {
+    pageurl: string,
+    captchakey: string,
+    api_server?: string,
+    version?: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+}
+
 export interface paramsCoordinates {
     body: string,
     language?: 0 | 1 | 2,
@@ -917,6 +927,67 @@ export class Solver {
             body: JSON.stringify(payload),
             headers: {'Content-Type': 'application/json'}  
         })
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+    /**
+     *     pageurl: string,
+    captchakey: string,
+    api_server?: string,
+    version?: string,
+    header_acao?: boolean,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+     */
+
+    /**
+     * ### Solves Capy Puzzle captcha
+     * 
+     * @param {{ pageurl, captchakey, api_server, version, pingback, proxy, proxytype}} params Parameters Capy Puzzle Captcha as an object.
+     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.captchakey Value of `captchakey` parameter you found on page.
+     * @param {string} params.api_server The domain part of script URL you found on page. Default value: `https://jp.api.capy.me/`.
+     * @param {string} params.version  The version of captcha task: `puzzle` (assemble a puzzle) or `avatar` (drag an object)..
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * 
+     * @example 
+     * solver.capyPuzzle({
+     *    pageurl: "https://www.capy.me/account/register/",
+     *    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+     * })
+     * .then((res) => {
+     *   console.log(res);
+     * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
+     */
+    public async capyPuzzle(params: paramsCapyPuzzle): Promise<CaptchaAnswer> {
+        checkCaptchaParams(params, "capy")
+
+        const payload = {
+            ...params,
+            method: "capy",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
         const result = await response.text()
 
         let data;
