@@ -9,7 +9,7 @@
 
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile.
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
@@ -33,20 +33,9 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Lemin Cropped Captcha
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
-- ⬜ Capy Puzzle
-- ⬜ Сoordinates (Click Captcha).
-<!-- - ⬜ ~~TikTok Captcha~~ (this captcha is [temporarily not supported by 2captcha](https://2captcha.com/2captcha-api#solving_tiktok?from=16653706)) -->
-
-
-<!-- ## Planned Features
-
-- ~~Account Interaction~~
-- ~~Base64 image support~~
-- ~~Documentation Site~~
-- Built-in Rate-Limit handling
-- ~~Proxy support~~
-- ~~Invalid-Captcha reporting support~~
-- And many other things. -->
+- ✅ Capy Puzzle
+- ✅ Сoordinates (Click Captcha).
+<!-- ⬜ -->
 
 ## Install
 
@@ -122,7 +111,12 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 // Read from a file as base64 text
 const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
 
-solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
+solver.imageCaptcha({
+    body: imageBase64,
+    numeric: 4,
+    min_len: 5,
+    max_len: 5
+})
 .then((res) => {
   // Logs the image text
   console.log(res);
@@ -242,6 +236,41 @@ solver.amazonWaf({
 })
 ```
 
+### Capy Puzzle
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.capyPuzzle({
+    pageurl: "https://www.capy.me/account/register/",
+    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Сoordinates (Click Captcha):
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+
+solver.coordinates({
+    body: imageBase64,
+    textinstructions: 'Select all photos containing the boat'
+ })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
 ### Proxy:
 ```js
 const Captcha = require("2captcha-ts")
@@ -269,11 +298,7 @@ The latest version of the code base will always be under the '**next**' branch!
 - All **CORE CHANGES** require an issue with reasoning made before a PR will even be addressed.
 - All PR's must follow the general structure of the code base
 - If you have questions, feel free to make an issue and i'll get to it right away!
-
-<hr>
- <div style="text-align: center">
-<a href="https://www.buymeacoffee.com/ether" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-</div> -->
+-->
 
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support?from=16653706)

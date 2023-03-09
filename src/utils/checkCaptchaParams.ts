@@ -1,5 +1,5 @@
 // Captcha methods for which parameter checking is available
-const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf","turnstile"]
+const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf","turnstile", "base64", "capy"]
 
 // Names of required fields that must be contained in the parameters captcha
 const recaptchaRequiredFields =   ['pageurl','googlekey']
@@ -11,6 +11,9 @@ const funCaptchaRequiredFields =  ['pageurl','publickey']
 const leminRequiredFields =       ['pageurl','div_id','captcha_id']
 const amazonWafRequiredFields =   ['pageurl','context','iv','sitekey']
 const turnstileRequiredFields =   ['pageurl','sitekey']
+// `base64RequiredFields` for Normal Captcha and Coordinates captcha
+const base64RequiredFields =      ['body'] 
+const capyPuzzleRequiredFields =      ['captchakey'] 
 
 /**
  * Getting required arguments for a captcha.
@@ -49,6 +52,12 @@ const getRequiredFildsArr = (method: string):Array<string> => {
     case "turnstile":
       requiredFieldsArr = turnstileRequiredFields
       break;
+    case "base64":
+      requiredFieldsArr = base64RequiredFields
+      break;
+    case "capy":
+      requiredFieldsArr = capyPuzzleRequiredFields
+      break;
   }
   return requiredFieldsArr
 }
@@ -59,7 +68,7 @@ const getRequiredFildsArr = (method: string):Array<string> => {
  * @example
  * checkCaptchaParams(params, 'userrecaptcha')
  */
-export default function checkJSCaptchaParams(params: Object, method: string) {
+export default function checkCaptchaParams(params: Object, method: string) {
   let isCorrectCaptchaParams
   const isIncorrectCaptchaMethod = !supportedMethods.includes(method)
 
@@ -75,7 +84,7 @@ export default function checkJSCaptchaParams(params: Object, method: string) {
 
     if(isThisFieldNotAvailable) {
       isCorrectCaptchaParams = false
-      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.`)
+      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.\nPlease correct your code for the "${method}" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
     } else {
       isCorrectCaptchaParams = true
     }

@@ -4,14 +4,13 @@ require('dotenv').config();
 const APIKEY = process.env.APIKEY
 const solver = new Captcha.Solver(APIKEY);
 
-const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
 
-solver.imageCaptcha({
+const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+
+solver.coordinates({
     body: imageBase64,
-    numeric: 4,
-    min_len: 5,
-    max_len: 5
-})
+    textinstructions: 'Select all photos containing the boat'
+ })
 .then((res) => {
     console.log(res);
 })

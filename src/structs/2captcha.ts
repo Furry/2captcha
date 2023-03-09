@@ -3,7 +3,7 @@ import { APIError } from "./2captchaError"
 import * as utils from "../utils/generic"
 import  getProviderData  from "./providers/providers"
 import { softId } from "./constants/constants"
-import checkJSCaptchaParams from "../utils/checkJSCaptchaParams"
+import checkCaptchaParams from "../utils/checkCaptchaParams"
 
 
 const provider = getProviderData ()
@@ -60,6 +60,7 @@ export interface paramsFunCapthca extends BaseSolve {
 }
 
 export interface paramsImageCaptcha {
+    body: string,
     phrase?: 0 | 1,
     regsense?: 0 | 1,
     numeric?: 0 | 1 | 2 | 3 | 4,
@@ -160,6 +161,25 @@ export interface paramsTurnstile {
     soft_id?: number,
     proxy?: string,
     proxytype?: string,
+}
+
+export interface paramsCapyPuzzle {
+    pageurl: string,
+    captchakey: string,
+    api_server?: string,
+    version?: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+}
+
+export interface paramsCoordinates {
+    body: string,
+    language?: 0 | 1 | 2,
+    lang?: string,
+    pingback?: string,
+    textinstructions?: string,
+    imginstrucation?: string
 }
 
 /**
@@ -314,7 +334,7 @@ export class Solver {
      * })
      */
     public async recaptcha(params: paramsRecaptcha): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "userrecaptcha")
+        checkCaptchaParams(params, "userrecaptcha")
         const payload = {
             ...params,
             method: "userrecaptcha",
@@ -368,7 +388,7 @@ export class Solver {
      * })
      */
     public async hcaptcha(params: paramsHCaptcha): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "hcaptcha")
+        checkCaptchaParams(params, "hcaptcha")
         const payload = {
             ...params,
             method: "hcaptcha",
@@ -443,7 +463,7 @@ export class Solver {
      *  })()
      */
      public async geetest(params: paramsGeetest): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "geetest")
+        checkCaptchaParams(params, "geetest")
         const payload = {
             ...params,
             method: "geetest",
@@ -497,7 +517,7 @@ export class Solver {
      * })
      */
       public async geetestV4(params: paramsGeeTestV4): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "geetest_v4")
+        checkCaptchaParams(params, "geetest_v4")
         const payload = {
             ...params,
             method: "geetest_v4",
@@ -549,7 +569,7 @@ export class Solver {
      * })
      */
     public async yandexSmart(params: yandexSmart): Promise<CaptchaAnswer> {
-    checkJSCaptchaParams(params, "yandex")
+    checkCaptchaParams(params, "yandex")
     const payload = {
         ...params,
         method: "yandex",
@@ -576,8 +596,8 @@ export class Solver {
     /**
      * Solves a image-based captcha. [Read more about parameters for image captcha](https://2captcha.com/2captcha-api#solving_normal_captcha).
      * 
-     * @param {string} base64image Base64 image data for the captcha
-     * @param {{ phrase,
+     * @param {{ body,
+     *           phrase,
      *           regsense,
      *           numeric,
      *           calc,
@@ -587,6 +607,7 @@ export class Solver {
      *           lang,
      *           textinstructions,
      *           pingback }} params Extra properties to pass to 2captcha.
+     * @param {number} params.body Base64 image data for the captcha.
      * @param {number} params.phrase Captcha contains two or more words? `1` - Yes. `0` - No.
      * @param {number} params.regsense Captcha is case sensitive? `1` - Yes. `0` - No.
      * @param {number} params.numeric `0` - not specified. `1` - captcha contains only numbers. `2` - captcha contains only letters. `3` - captcha contains only numbers OR only letters. `4` - captcha MUST contain both numbers AND letters.
@@ -603,7 +624,12 @@ export class Solver {
      * @example
      * const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
      * 
-     * solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
+     *  solver.imageCaptcha({
+     *      body: imageBase64,
+     *      numeric: 4,
+     *      min_len: 5,
+     *      max_len: 5
+     *  })
      * .then((res) => {
      *     console.log(res);
      * })
@@ -611,19 +637,20 @@ export class Solver {
      *     console.log(err);
      * })
      */
-    public async imageCaptcha(base64image: string, params: paramsImageCaptcha = { }): Promise<CaptchaAnswer> {
-        const isTheFirstParameterHasAnIncorrectType = typeof(arguments[0]) !== 'string'
-        if(isTheFirstParameterHasAnIncorrectType){
-            throw new Error(`Error when check params image captcha. Field "base64image" is incorrect type. The "base64image" field must be a string containing an image in the "base64" format. Please correct the "base64image" field and try again.`)
-        }
+    public async imageCaptcha( params: paramsImageCaptcha ): Promise<CaptchaAnswer> {
+        checkCaptchaParams(params, "base64")
 
         const payload = {
             ...params,
             ...this.defaultPayload,
             method: "base64"
         }
-
-        const response = await fetch(this.in + utils.objectToURI(payload), { body: JSON.stringify({ "body": base64image }) , method: "post" })
+        const URL = this.in
+        const response = await fetch(URL, {
+            body: JSON.stringify( payload ),
+            method: "post",
+            headers: {'Content-Type': 'application/json'}
+        })
         const result = await response.text()
 
         let data;
@@ -671,7 +698,7 @@ export class Solver {
      *  })
      */
     public async funCaptcha(params: paramsFunCapthca): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "funcaptcha")
+        checkCaptchaParams(params, "funcaptcha")
         const payload = {
             ...params,
             method: "funcaptcha",
@@ -726,7 +753,7 @@ export class Solver {
      * })
      */
     public async lemin(params: paramsLemin): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "lemin")
+        checkCaptchaParams(params, "lemin")
         const payload = {
             ...params,
             method: "lemin",
@@ -781,7 +808,7 @@ export class Solver {
      * })
      */
     public async amazonWaf(params: paramsAmazonWAF): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "amazon_waf")
+        checkCaptchaParams(params, "amazon_waf")
         const payload = {
             ...params,
             method: "amazon_waf",
@@ -833,10 +860,130 @@ export class Solver {
      * })
      */
     public async cloudflareTurnstile(params: paramsTurnstile): Promise<CaptchaAnswer> {
-        checkJSCaptchaParams(params, "turnstile")
+        checkCaptchaParams(params, "turnstile")
         const payload = {
             ...params,
             method: "turnstile",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+   /**
+    * ### Solves a Coordinates captcha. 
+    * 
+    * @param {{ body, imginstrucation, textinstructions, language, lang, pingback }} params parameters Сoordinates Captcha as an object.
+    * @param {string} params.body Base64-encoded captcha image.
+    * @param {string} params.imginstrucation Base64-encoded image with instruction for solving captcha.
+    * @param {string} params.textinstructions Text will be shown to worker to help him to solve the captcha correctly. For example: click on all objects in red color.
+    * @param {number} params.language `0` - not specified. `1` - Cyrillic captcha. `2` - Latin captcha
+    * @param {string} params.lang Language code. [See the list of supported languages](https://2captcha.com/2captcha-api#language).
+    * @param {string} params.pingback URL for `pingback` (callback) response that will be sent when captcha is solved. [More info here](https://2captcha.com/2captcha-api#pingback).
+    * 
+    * @returns {Promise<CaptchaAnswer>} The result from the solve
+    * 
+    * @example
+    *  const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+    * 
+    *  solver.coordinates({
+    *      body: imageBase64,
+    *      textinstructions: 'Select all photos containing the boat'
+    *  })
+    *  .then((res) => {
+    *      console.log(res);
+    *  })
+    *  .catch((err) => {
+    *      console.log(err);
+    *  })
+    */
+    public async coordinates(params: paramsCoordinates): Promise<CaptchaAnswer> {
+        checkCaptchaParams(params, "base64")
+       
+        const payload = {
+            ...params,
+            method: "base64",
+            coordinatescaptcha: 1,
+            ...this.defaultPayload,
+        }
+
+        const URL = this.in
+        const response = await fetch(URL, {
+            method: 'post',
+            body: JSON.stringify(payload),
+            headers: {'Content-Type': 'application/json'}  
+        })
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+
+    /**
+     *     pageurl: string,
+    captchakey: string,
+    api_server?: string,
+    version?: string,
+    header_acao?: boolean,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+     */
+
+    /**
+     * ### Solves Capy Puzzle captcha
+     * 
+     * @param {{ pageurl, captchakey, api_server, version, pingback, proxy, proxytype}} params Parameters Capy Puzzle Captcha as an object.
+     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.captchakey Value of `captchakey` parameter you found on page.
+     * @param {string} params.api_server The domain part of script URL you found on page. Default value: `https://jp.api.capy.me/`.
+     * @param {string} params.version  The version of captcha task: `puzzle` (assemble a puzzle) or `avatar` (drag an object)..
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * 
+     * @example 
+     * solver.capyPuzzle({
+     *    pageurl: "https://www.capy.me/account/register/",
+     *    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+     * })
+     * .then((res) => {
+     *   console.log(res);
+     * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
+     */
+    public async capyPuzzle(params: paramsCapyPuzzle): Promise<CaptchaAnswer> {
+        checkCaptchaParams(params, "capy")
+
+        const payload = {
+            ...params,
+            method: "capy",
             ...this.defaultPayload,
         }
 

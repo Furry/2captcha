@@ -10,7 +10,7 @@
 
 ## 资料描述
 提供[2captcha](https://2captcha.com/?from=16653706)服务的API的包装器.
- 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile.
+ 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.
 
 [2captcha](https://2captcha.com/?from=16653706)是一項服務，可讓您解決許多不同類型的驗證碼。這個 npm 包包裝了[2captcha](https://2captcha.com/?from=16653706)API 來為 NodeJS 提供簡單的基於`promise`的功能。
 
@@ -25,8 +25,8 @@
 - ✅ Lemin Cropped Captcha
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
-- ⬜ Capy Puzzle
-- ⬜ Сoordinates (Click Captcha).
+- ✅ Capy Puzzle
+- ✅ Сoordinates (Click Captcha).
 
 ## 安装/安装
 
@@ -102,7 +102,12 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 // 獲取base64格式的文件內容
 const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
 
-solver.imageCaptcha(imageBase64, { numeric: 4, min_len: 5, max_len: 5 })
+solver.imageCaptcha({
+    body: imageBase64,
+    numeric: 4,
+    min_len: 5,
+    max_len: 5
+})
 .then((res) => {
   console.log(res);
 })
@@ -219,6 +224,41 @@ solver.amazonWaf({
 })
 .catch((err) => {
   console.log(err);
+})
+```
+
+### Capy Puzzle
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.capyPuzzle({
+    pageurl: "https://www.capy.me/account/register/",
+    captchakey: "PUZZLE_Cme4hZLjuZRMYC3uh14C52D3uNms5w"
+})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Сoordinates (Click Captcha):
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+
+solver.coordinates({
+    body: imageBase64,
+    textinstructions: 'Select all photos containing the boat'
+ })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
 })
 ```
 
