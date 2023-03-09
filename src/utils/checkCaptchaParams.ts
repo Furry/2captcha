@@ -84,7 +84,7 @@ export default function checkCaptchaParams(params: Object, method: string) {
 
     if(isThisFieldNotAvailable) {
       isCorrectCaptchaParams = false
-      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.`)
+      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.\nPlease correct your code for the "${method}" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
     } else {
       isCorrectCaptchaParams = true
     }
