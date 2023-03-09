@@ -1,6 +1,6 @@
 {
   "name": "2captcha-ts",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.",
   "main": "dist/index.js",
   "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
