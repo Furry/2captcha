@@ -367,6 +367,46 @@ a     *
     }
 
     /**
+     * Solves a CloudFlare (turnstile) captcha
+     * @param publicKey The turnstile Site Key
+     * @param pageurl The URL to the website the captcha is seen on
+     * @param serviceURL The FunCaptcha Service URL (recommended)
+     * @param extra Extra properties to pass to 2captcha
+     * 
+     * @returns {Promise<CaptchaAnswer>} The result from the solve
+     * @throws APIError
+     * turnstile("0x4AAAAAAADIkEVyoXXXXXXX", "http://mysite.com/page/with/turnstile/")
+     * .then((res) => {
+     *   console.log(res)
+     * })
+     */
+    public async turnstile(siteKey: string, pageURL: string, extra: UserHCaptchaExtra = { }): Promise<CaptchaAnswer> {
+        const payload = {
+            ...extra,
+            ...this.defaultPayload,
+            method: "turnstile",
+            sitekey: siteKey,
+            pageurl: pageURL,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+    
+    /**
      * Reports a captcha as correctly solved.
      * 
      * @param id The ID of the captcha
