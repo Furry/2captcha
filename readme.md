@@ -27,6 +27,8 @@
 </ul>
 </h3>
 
+If there's problems with this service, you can contact official support through [2captcha's Official Site](https://github.com/2captcha) or try [DeathByCaptcha's API](https://github.com/furry/DeathByCaptcha)
+
 <hr>
 
 ## Motive
