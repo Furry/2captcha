@@ -16,19 +16,20 @@
 
 <center>A wrapper around the 2captcha API</center>
 
-## Info
+<hr>
+<center>
+<h2> Captcha Solvers
+</center>
 <h3>
-<ul>
-    <li>Finding Sitekeys
-        <ul>
-            <li><a href="./docs/hcaptcha.md">hCaptcha</a></li>
-        </ul>
-    </li>
-</ul>
+    <center>
+        <b>CapSolver.com</b>
+        <br>
+        <a href="https://capsolver.com">
+            <img src="https://i.imgur.com/YaRmSt4.gif" alt="Capsolver's Banner">
+        </a>
+    </center>
 </h3>
-
-If there's problems with this service, you can contact official support through [2captcha's Official Site](https://github.com/2captcha) or try [DeathByCaptcha's API](https://github.com/furry/DeathByCaptcha)
-
+Supporting all common and well known captcha types and a success rate of over 99%, CapSolver allows for affordable AI-based captcha solving with JS/TS clients as well as HTTP support. Their packages are extremely affordable for projects of any size, offering a free trial to test out their service.
 <hr>
 
 ## Motive
