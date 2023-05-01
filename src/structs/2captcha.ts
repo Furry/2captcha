@@ -207,8 +207,8 @@ export class Solver {
     /**
      * The constructor for the 2captcha Solver class.
      * 
-     * @param apikey {string} The API key to use
-     * @param pollingFrequency {number} The frequency to poll for requests
+     * @param {string} apikey The API key to use
+     * @param {number} pollingFrequency The frequency to poll for requests
      * 
      */
     constructor(apikey: string, pollingFrequency: number = 5000, enableACAO: boolean = true) {
