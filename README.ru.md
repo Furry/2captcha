@@ -25,7 +25,8 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha).
+- ✅ Сoordinates (Click Captcha)
+- ⬜ Audio Recogntion
 
 ## Установка
 
@@ -288,6 +289,7 @@ solver.recaptcha({
 ## Примеры использования с исходным кодом и описанием
 * [Решение капчи GeeTest используя Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
 * [Решение капчи reCAPTCHA используя Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
+* [Решение Yandex Smart Captcha используя Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
 ---
 
 Этот проект является форком [этого пакета](https://www.npmjs.com/package/2captcha). В эту версию пакета, добавлена поддержка новых типов капч и изменен способ передачи параметров капчи. Параметры капчи теперь передаются в виде объекта ({параметр: значение}). А также другие косметические изменения.  Подробнее о сделанных изменениях можно прочитать [тут](https://github.com/dzmitry-duboyski/2captcha-ts/releases).

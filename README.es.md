@@ -26,7 +26,8 @@ Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para 
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha).
+- ✅ Сoordinates (Click Captcha)
+- ⬜ Audio Recogntion
 
 ## Instalar
 
@@ -288,6 +289,7 @@ solver.recaptcha({
 ## Ejemplos de uso con código fuente y descripción
 * [Solución de captcha GeeTest usando Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
 * [Solución de captcha reCAPTCHA usando Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
+* [Yandex Smart Captcha solución usando Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
 
 ---
 

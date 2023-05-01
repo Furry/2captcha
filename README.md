@@ -34,7 +34,8 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha).
+- ✅ Сoordinates (Click Captcha)
+- ⬜ Audio Recogntion
 <!-- ⬜ -->
 
 ## Install
@@ -308,6 +309,7 @@ The latest version of the code base will always be under the '**next**' branch!
 ## Usage examples with source code and description
 * [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
 * [Solving reCAPTCHA using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
+* [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
 
 ---
 
