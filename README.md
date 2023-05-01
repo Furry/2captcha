@@ -307,6 +307,7 @@ The latest version of the code base will always be under the '**next**' branch!
 
 ## Usage examples with source code and description
 * [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
+* [Solving reCAPTCHA using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
 
 ---
 

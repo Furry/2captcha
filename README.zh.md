@@ -288,6 +288,7 @@ solver.recaptcha({
 
 ## 带有源代码和描述的使用示例
 * [使用`puppeteer`测试Captcha解决方案](https://github.com/dzmitry-duboyski/GeeTest-demo)
+* [reCAPTCHA + Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
 
 ---
 这个项目是这个包的一个分支https://www.npmjs.com/package/2captcha. 在此版本的软件包中，添加了对新类型captcha的支持，并更改了传输captcha参数的方法。 Captcha参数现在作为对象（{parameter:value}）传递。 以及其他化妆品的变化。  您可以阅读有关所做更改的更多信息  这里 https://github.com/dzmitry-duboyski/2captcha-ts/releases.

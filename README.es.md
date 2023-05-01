@@ -287,6 +287,7 @@ solver.recaptcha({
 
 ## Ejemplos de uso con código fuente y descripción
 * [Solución de captcha GeeTest usando Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
+* [Solución de captcha reCAPTCHA usando Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
 
 ---
 
