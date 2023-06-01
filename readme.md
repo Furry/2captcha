@@ -80,7 +80,7 @@ Recaptcha,
 const Captcha = require("2captcha")
 
 // A new 'solver' instance with our API key
-const solver = new Captcha.Solver("<Your 2captcha api key>")
+const solver = new Captcha.Solver("<f0331921e2d429dcab2c3d405399173c>")
 
 /* Example ReCaptcha Website */
 solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/")
@@ -98,7 +98,7 @@ Image,
 const Captcha = require("2captcha")
 const fs = require("fs")
 
-const solver = new Captcha.Solver("<Your 2captcha api key>")
+const solver = new Captcha.Solver("<f0331921e2d429dcab2c3d405399173c>")
 
 // Read from a file as base64 text
 solver.imageCaptcha(fs.readFileSync("./captcha.png", "base64"))
@@ -115,7 +115,7 @@ Proxy,
 ```js
 const Captcha = require("2captcha")
 
-const solver = new Captcha.Solver("<Your 2captcha api key>")
+const solver = new Captcha.Solver("<f0331921e2d429dcab2c3d405399173c>")
 
 
 solver.recaptcha("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/", {
