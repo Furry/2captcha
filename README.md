@@ -9,7 +9,7 @@
 
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA.
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
@@ -38,6 +38,7 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
 - ✅ СyberSiARA
+- ✅ MTCaptcha
 <!-- ⬜ -->
 
 ## Install
@@ -287,6 +288,24 @@ solver.cyberSiARA({
     pageurl: "https://www.cybersiara.com/book-a-demo",
     master_url_id: "OXR2LVNvCuXykkZbB8KZIfh162sNT8S2",
     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+})
+.then((res) => {
+console.log(res);
+})
+.catch((err) => {
+console.log(err);
+})
+```
+
+### MTCaptcha
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+
+solver.mtCaptcha({
+    pageurl: "https://service.mtcaptcha.com/mtcv1/demo/index.html",
+    sitekey: "MTPublic-DemoKey9M"
 })
 .then((res) => {
 console.log(res);
