@@ -200,6 +200,15 @@ export interface paramsCyberSiARA {
     proxytype?: string,
 }
 
+export interface paramsMTCaptcha {
+    pageurl: string,
+    sitekey: string,
+    userAgent?: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -1104,6 +1113,54 @@ public async cyberSiARA(params: paramsCyberSiARA): Promise<CaptchaAnswer> {
     const payload = {
         ...params,
         method: "cybersiara",
+        ...this.defaultPayload,
+    }
+
+    const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
+
+/**
+ * ### Solves MTCaptcha
+ * 
+ * @param {{ pageurl, sitekey, userAgent, pingback, proxy, proxytype}} params Parameters MTCaptcha as an object.
+ * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+ * @param {string} params.sitekey TThe value of `sitekey` parameter found on the page.  
+ * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+ * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+ * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * 
+ * @example 
+ * solver.mtCaptcha({
+ *   pageurl: "https://service.mtcaptcha.com/mtcv1/demo/index.html",
+ *   sitekey: "MTPublic-DemoKey9M"
+ * })
+ * .then((res) => {
+ *   console.log(res);
+ *  })
+ * .catch((err) => {
+ *   console.log(err);
+ * })
+ */
+public async mtCaptcha(params: paramsMTCaptcha): Promise<CaptchaAnswer> {
+    checkCaptchaParams(params, "mt_captcha")
+
+    const payload = {
+        ...params,
+        method: "mt_captcha",
         ...this.defaultPayload,
     }
 
