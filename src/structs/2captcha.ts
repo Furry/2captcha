@@ -190,6 +190,16 @@ export interface paramsDataDome {
     proxy: string,
     proxytype: string,
 }
+
+export interface paramsCyberSiARA {
+    pageurl: string,
+    master_url_id: string,
+    userAgent: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -1011,6 +1021,7 @@ export class Solver {
             throw new APIError(data.request)
         }
     }
+
     /**
      * ### Solves DataDome captcha
      * 
@@ -1062,6 +1073,46 @@ export class Solver {
             throw new APIError(data.request)
         }
     }
+
+/**
+ * ### Solves CyberSiARA captcha
+ * 
+ * @param {{ pageurl, master_url_id, userAgent, pingback, proxy, proxytype}} params Parameters CyberSiARA Captcha as an object.
+ * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+ * @param {string} params.master_url_id The value of `MasterUrlId` parameter obtained from the request to the endpoint `API/CyberSiara/GetCyberSiara`.  
+ * @param {string} params.userAgent ser-Agent of your MODERN browser
+ * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+ * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+ * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * 
+ * @example 
+ * 
+ */
+public async cyberSiARA(params: paramsCyberSiARA): Promise<CaptchaAnswer> {
+    checkCaptchaParams(params, "cybersiara")
+
+    const payload = {
+        ...params,
+        method: "cybersiara",
+        ...this.defaultPayload,
+    }
+
+    const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
 
     /**
      * Reports a captcha as correctly solved.

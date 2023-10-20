@@ -1,5 +1,6 @@
 // Captcha methods for which parameter checking is available
-const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf","turnstile", "base64", "capy","datadome"]
+const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf",
+"turnstile", "base64", "capy","datadome", "cybersiara"]
 
 // Names of required fields that must be contained in the parameters captcha
 const recaptchaRequiredFields =   ['pageurl','googlekey']
@@ -13,8 +14,9 @@ const amazonWafRequiredFields =   ['pageurl','context','iv','sitekey']
 const turnstileRequiredFields =   ['pageurl','sitekey']
 // `base64RequiredFields` for Normal Captcha and Coordinates captcha
 const base64RequiredFields =      ['body'] 
-const capyPuzzleRequiredFields =      ['captchakey']
-const dataDomeRequiredFields =      ['pageurl', 'captcha_url', 'userAgent', 'proxy', 'proxytype']
+const capyPuzzleRequiredFields =  ['captchakey']
+const dataDomeRequiredFields =    ['pageurl', 'captcha_url', 'userAgent', 'proxy', 'proxytype']
+const сyberSiARARequiredFields =  ['pageurl', 'master_url_id', 'userAgent']
 
 /**
  * Getting required arguments for a captcha.
@@ -61,6 +63,9 @@ const getRequiredFildsArr = (method: string):Array<string> => {
       break;
     case "datadome":
       requiredFieldsArr = dataDomeRequiredFields
+      break;
+    case "cybersiara":
+      requiredFieldsArr = сyberSiARARequiredFields
       break;
   }
   return requiredFieldsArr

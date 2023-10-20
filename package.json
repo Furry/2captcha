@@ -41,7 +41,7 @@
     "dev": "tsc && node ./issues/dev",
     "jsdoc": "jsdoc",
     "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r",
-    "test": "tsc && node ./tests/dataDome.js"
+    "test": "tsc && node ./tests/cyberSiARA.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
