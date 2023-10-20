@@ -182,6 +182,14 @@ export interface paramsCoordinates {
     imginstrucation?: string
 }
 
+export interface paramsDataDome {
+    pageurl: string,
+    captcha_url: string,
+    userAgent: string,
+    pingback?: string,
+    proxy: string,
+    proxytype: string,
+}
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -984,6 +992,57 @@ export class Solver {
         const payload = {
             ...params,
             method: "capy",
+            ...this.defaultPayload,
+        }
+
+        const response = await fetch(this.in + utils.objectToURI(payload))
+        const result = await response.text()
+
+        let data;
+        try {
+            data = JSON.parse(result)
+        } catch {
+            throw new APIError(result)
+        }
+
+        if (data.status == 1) {
+            return this.pollResponse(data.request)
+        } else {
+            throw new APIError(data.request)
+        }
+    }
+    /**
+     * ### Solves DataDome captcha
+     * 
+     * @param {{ pageurl, captcha_url, userAgent, pingback, proxy, proxytype}} params Parameters DataDome Captcha as an object.
+     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.captcha_url The value of the `src` parameter for the `iframe` element containing the captcha on the page.  
+     * @param {string} params.userAgent ser-Agent of your MODERN browser
+     * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+     * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+     * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+     * 
+     * @example 
+     * solver.dataDome({
+     *    pageurl: "https://rendezvousparis.hermes.com/client/register",
+     *    captcha_url: "https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAEuQtkf4k1c0ABZhYZA%3D%3D&hash=789361B674144528D0B7EE76B35826&cid=mY4z7GNmh7Nt1lAFwpbNHAOcWPhyPgjHD2K1Pm~Od1iEKYLUnK3t7N2ZGUj8OqDK65cnwJHtHwd~t902vlwpSBA5l4ZHbS1Qszv~jEuEUJNQ_jMAjar2Kj3kq20MRJYh&t=fe&referer=https%3A%2F%2Frendezvousparis.hermes.com%2Fclient%2Fregister&s=40119&e=67fef144ac1a54dbd7507776367d2f9d5e36ec3add17fa22f3cb881db8385838",
+     *    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+     *    proxy: "1.2.3.4:8888:user:password",
+     *    proxytype: "http"
+     * })
+     * .then((res) => {
+     *   console.log(res);
+     * })
+     * .catch((err) => {
+     *   console.log(err);
+     * })
+     */
+    public async dataDome(params: paramsDataDome): Promise<CaptchaAnswer> {
+        checkCaptchaParams(params, "datadome")
+
+        const payload = {
+            ...params,
+            method: "datadome",
             ...this.defaultPayload,
         }
 
