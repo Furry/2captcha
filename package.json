@@ -1,7 +1,7 @@
 {
   "name": "2captcha-ts",
   "version": "2.0.1",
-  "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome, CyberSiARA.",
+  "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome, CyberSiARA, MTCaptcha.",
   "main": "dist/index.js",
   "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
   "license": "MIT",
@@ -35,7 +35,8 @@
     "行为验证4.0",
     "行为验证",
     "DataDome CAPTCHA",
-    "CyberSiARA"
+    "CyberSiARA",
+    "MTCaptcha"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
