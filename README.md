@@ -9,7 +9,7 @@
 
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle.
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA.
 
 [2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
@@ -36,6 +36,7 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ Capy Puzzle
 - ✅ Сoordinates (Click Captcha)
 - ⬜ Audio Recogntion
+- ✅ DataDome CAPTCHA
 <!-- ⬜ -->
 
 ## Install
@@ -254,6 +255,27 @@ solver.capyPuzzle({
 })
 ```
 
+### DataDome CAPTCHA
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+
+solver.dataDome({
+    pageurl: "https://rendezvousparis.hermes.com/client/register",
+    captcha_url: "https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAEuQtkf4k1c0ABZhYZA%3D%3D&hash=789361B674144528D0B7EE76B35826&cid=mY4z7GNmh7Nt1lAFwpbNHAOcWPhyPgjHD2K1Pm~Od1iEKYLUnK3t7N2ZGUj8OqDK65cnwJHtHwd~t902vlwpSBA5l4ZHbS1Qszv~jEuEUJNQ_jMAjar2Kj3kq20MRJYh&t=fe&referer=https%3A%2F%2Frendezvousparis.hermes.com%2Fclient%2Fregister&s=40119&e=67fef144ac1a54dbd7507776367d2f9d5e36ec3add17fa22f3cb881db8385838",
+    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+    proxy: "login:password@1.2.3.4:8888", // The (Username : Password @ Address : Port) of our chosen proxy
+    proxytype: "http" // The 'Type' of proxy, http, https, socks, ect.
+})
+.then((res) => {
+console.log(res);
+})
+.catch((err) => {
+console.log(err);
+})
+```
+
 ### Сoordinates (Click Captcha):
 ```js
 const Captcha = require("2captcha-ts")
@@ -280,8 +302,8 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 solver.recaptcha({
   pageurl: 'https://2captcha.com/demo/recaptcha-v2',
   googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
-  proxy: "login:password@21.214.43.26", // The (Username : Password @ Address) of our chosen proxy
-  proxytype: "HTTP" // The 'Type' of proxy, http, https, socks, ect.
+  proxy: "login:password@1.2.3.4:8888", // The (Username : Password @ Address : Port) of our chosen proxy
+  proxytype: "http" // The 'Type' of proxy, http, https, socks, ect.
 })
 .then((res) => {
   console.log(res)
