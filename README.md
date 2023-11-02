@@ -1,6 +1,6 @@
 <b>[English](README.md)</b> | [Spanish](README.es.md) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/38065632/217352869-1f156919-1ab9-4ea2-9bbb-f4a8dcf2a9e1.jpg">
+  <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
 </p>
 
 ![](https://img.shields.io/npm/v/2captcha-ts)
