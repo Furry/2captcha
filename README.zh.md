@@ -7,6 +7,7 @@
 ![](https://img.shields.io/npm/l/2captcha-ts)
 ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
 
+# 2captcha API的JavaScript模块
 
 ## 资料描述
 提供[2captcha](https://2captcha.com/?from=16653706)服务的API的包装器.

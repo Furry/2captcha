@@ -7,6 +7,7 @@
 ![](https://img.shields.io/npm/l/2captcha-ts)
 ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
 
+# Módulo JavaScript para API 2Captcha
 
 ## Descripción
 Shell para API [2captcha](https://2captcha.com/?from=16653706) Servicio. Este shell soporta la solución de los siguientes tipos de captcha: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
