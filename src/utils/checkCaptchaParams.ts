@@ -1,6 +1,6 @@
 // Captcha methods for which parameter checking is available
 const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf",
-"turnstile", "base64", "capy","datadome", "cybersiara", "mt_captcha"]
+"turnstile", "base64", "capy","datadome", "cybersiara", "mt_captcha", "bounding_box"]
 
 // Names of required fields that must be contained in the parameters captcha
 const recaptchaRequiredFields =   ['pageurl','googlekey']
@@ -18,6 +18,7 @@ const capyPuzzleRequiredFields =  ['captchakey']
 const dataDomeRequiredFields =    ['pageurl', 'captcha_url', 'userAgent', 'proxy', 'proxytype']
 const сyberSiARARequiredFields =  ['pageurl', 'master_url_id', 'userAgent']
 const mtСaptchaRequiredFields =  ['pageurl', 'sitekey']
+const boundingBoxRequiredFields =  ['image'] // and textinstructions or imginstructions
 
 /**
  * Getting required arguments for a captcha.
@@ -71,6 +72,9 @@ const getRequiredFildsArr = (method: string):Array<string> => {
     case "mt_captcha":
       requiredFieldsArr = mtСaptchaRequiredFields
       break;
+    case "bounding_box":
+      requiredFieldsArr = boundingBoxRequiredFields
+      break;
   }
   return requiredFieldsArr
 }
@@ -102,6 +106,14 @@ export default function checkCaptchaParams(params: Object, method: string) {
       isCorrectCaptchaParams = true
     }
   })
+
+  if(method === "bounding_box") {
+    if(params.hasOwnProperty('textinstructions') || params.hasOwnProperty('imginstructions'))
+    isCorrectCaptchaParams = true
+  } else {
+    isCorrectCaptchaParams = false
+    throw new Error(`Error when check params captcha.\nNot found "textinstructions" or "imginstructions" field in the Object. One of this field is required for "bounding_box" method. Please add field "textinstructions" or "imginstructions" in object and try again.\nPlease correct your code for the "bounding_box" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
+  }
 
   return isCorrectCaptchaParams
 }

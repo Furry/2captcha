@@ -32,6 +32,7 @@
 - ✅ DataDome CAPTCHA
 - ✅ СyberSiARA
 - ✅ MTCaptcha
+- ✅ Bounding Box Method
 
 ## 安装/安装
 
@@ -317,6 +318,23 @@ solver.coordinates({
     body: imageBase64,
     textinstructions: 'Select all photos containing the boat'
  })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Bounding Box Method:
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.boundingBox({ 
+  image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR4AAACwCAIAAAB...",
+  textinstructions: "Circle all the cars in the image.",
+})
 .then((res) => {
     console.log(res);
 })

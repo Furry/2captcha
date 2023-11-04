@@ -209,6 +209,12 @@ export interface paramsMTCaptcha {
     proxytype?: string,
 }
 
+export interface paramsBoundingBox {
+    image: string,
+    textinstructions?: string,
+    imginstructions?: string,
+}
+
 /**
  * An object containing properties of the captcha solution.
  * @typedef {Object} CaptchaAnswer
@@ -1165,6 +1171,57 @@ public async mtCaptcha(params: paramsMTCaptcha): Promise<CaptchaAnswer> {
     }
 
     const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
+
+/**
+ * ### Bounding Box Method
+ * 
+ * @param {{ image, textinstructions, imginstructions }} params Parameters Bounding Box Method as an object.
+ * @param {image} params.image 	Image containing data for markup. The image must be encoded in `Base64` format.
+ * @param {textinstructions} params.textinstructions Text will be shown to worker to help him to select object on the image correctly. For example: "*Select cars in the image*". **Optional parameter**, if the instruction already exists in the form of the `imginstructions`. 
+ * @param {imginstructions} params.imginstructions Image with instruction for worker to help him to select object on the image correctly. The image must be encoded in `Base64` format. **Optional parameter**, if the instruction already exists in the form of the `textinstructions`.
+ * 
+ * @example 
+ * solver.boundingBox({
+ *   image: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgG...",
+ *   textinstructions: "Select cars in the image"
+ * })
+ * .then((res) => {
+ *   console.log(res);
+ *  })
+ * .catch((err) => {
+ *   console.log(err);
+ * })
+ */
+public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
+    checkCaptchaParams(params, "bounding_box")
+
+    const payload = {
+        ...params,
+        method: "bounding_box",
+        ...this.defaultPayload,
+    }
+
+    const URL = this.in
+    const response = await fetch(URL, {
+        body: JSON.stringify( payload ),
+        method: "post",
+        headers: {'Content-Type': 'application/json'}
+    })
     const result = await response.text()
 
     let data;

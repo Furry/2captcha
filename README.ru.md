@@ -12,7 +12,9 @@
 ## Описание
 Оболочка вокруг API сервиса [2captcha](https://2captcha.com/?from=16653706). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
 
-[2captcha](https://2captcha.com/?from=16653706) это сервис, который решает множество различных типов капч. Эта библиотека служит оболочкой для их API, чтобы предоставить NodeJS простую функциональность, основанную на `promise`.
+Также добавлена поддержка метода `bounding_box`. Метод ограничивающей рамки позволяет размечать данные на изображении. Этот метод можно использовать для разметки наборов данных или выделения любых объектов на изображении в соответствии с заданными инструкциями. Подробнее об использовании *Bounding Box Method* читайте в [документации](https://2captcha.com/2captcha-api#bounding_box).
+
+[2captcha](https://2captcha.com/?from=16653706) это сервис, который решает множество различных типов капч. Эта библиотека служит оболочкой для API 2captcha, чтобы предоставить NodeJS простую функциональность, основанную на `promise`.
 
 ## Поддерживаемые типы капч:
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
@@ -31,6 +33,7 @@
 - ✅ DataDome CAPTCHA
 - ✅ СyberSiARA
 - ✅ MTCaptcha
+- ✅ Bounding Box Method
 
 ## Установка
 
@@ -316,6 +319,25 @@ solver.coordinates({
     body: imageBase64,
     textinstructions: 'Select all photos containing the boat'
  })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Bounding Box Method:
+*Bounding Box Method* позволяет выбирать объекты, указанные на изображении. Для этого вам необходимо передать инструкции по разметке. Инструкции могут быть отправлены в виде текста или изображения, закодированного в формате `base64`. Обязательно необходимо передать хотя бы одну инструкцию `imginstructions` или `textinstructions`.
+
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.boundingBox({ 
+  image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR4AAACwCAIAAAB...",
+  textinstructions: "Обведите все машины на изображении.",
+})
 .then((res) => {
     console.log(res);
 })

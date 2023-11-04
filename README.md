@@ -10,9 +10,11 @@
 # JavaScript Module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha. 
 
-[2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around their API to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
+Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
+
+[2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
 ### Features
 - Promise based 2captcha solving
@@ -40,6 +42,7 @@ A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This w
 - ✅ DataDome CAPTCHA
 - ✅ СyberSiARA
 - ✅ MTCaptcha
+- ✅ Bounding Box Method
 <!-- ⬜ -->
 
 ## Install
@@ -326,6 +329,24 @@ solver.coordinates({
     body: imageBase64,
     textinstructions: 'Select all photos containing the boat'
  })
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+})
+```
+
+### Bounding Box Method:
+Bounding Box Method allows you to select objects specified in the image. To do this, you need to pass markup instructions. The instructions can be sent as text or as an image encoded in base64 format. It is mandatory to pass at least one instruction `imginstructions` or `textinstructions`.
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.boundingBox({ 
+  image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR4AAACwCAIAAAB...",
+  textinstructions: "Circle all the cars in the image.",
+})
 .then((res) => {
     console.log(res);
 })
