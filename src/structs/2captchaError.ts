@@ -58,7 +58,7 @@ export class APIError extends Error {
             }; break;
             case "ERROR_UPLOAD": {
                 this.code = 14
-                this.message = "The Solve Request was malformed. Please make sure the image is valid. If it is, please open up a github issue detailing this event. https://github.com/furry/2captcha"
+                this.message = "The Solve Request was malformed. Please make sure the image is valid. If it is, please open up a github issue detailing this event. https://github.com/dzmitry-duboyski/2captcha-ts"
             }; break;
             case "ERROR_IP_NOT_ALLOWED": {
                 this.code = 15
@@ -94,7 +94,7 @@ export class APIError extends Error {
             }; break;
             case "ERROR_BAD_PARAMETERS": {
                 this.code = 23
-                this.message = "Some parameters are missing in this request. If you're using a pre-provided function, please open up an issue on the GitHub (https://github.com/furry/2captcha)"
+                this.message = "Some parameters are missing in this request. If you're using a pre-provided function, please open up an issue on the GitHub (https://github.com/dzmitry-duboyski/2captcha-ts)"
             }; break;
             case "ERROR_BAD_PROXY": {
                 this.code = 24
@@ -108,7 +108,7 @@ export class APIError extends Error {
             // Start for Res.php errors
             case "CAPCHA_NOT_READY": {
                 this.code = 25
-                this.message = "The captcha is not solved yet. If you see this error, Please open up an issue on the GitHub (https://github.com/furry/2captcha)"
+                this.message = "The captcha is not solved yet. If you see this error, Please open up an issue on the GitHub (https://github.com/dzmitry-duboyski/2captcha-ts)"
             }; break;
             case "ERROR_WRONG_ID_FORMAT": {
                 this.code = 26
@@ -140,7 +140,7 @@ export class APIError extends Error {
             }; break;
             case "ERROR_EMPTY_ACTION": {
                 this.code = 33
-                this.message = "The ACtion parameter is missing. Please open an issue in the GitHub (https://github.com/furry/2captcha)"
+                this.message = "The ACtion parameter is missing. Please open an issue in the GitHub (https://github.com/dzmitry-duboyski/2captcha-ts)"
             }; break;
             case "ERROR_PROXY_CONNECTION_FAILED": {
                 this.code = 34
