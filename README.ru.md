@@ -10,11 +10,11 @@
 # JavaScript модуль для 2Captcha API
 
 ## Описание
-Оболочка вокруг API сервиса [2captcha](https://2captcha.com/?from=16653706). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
 
 Также добавлена поддержка метода `bounding_box`. Метод ограничивающей рамки позволяет размечать данные на изображении. Этот метод можно использовать для разметки наборов данных или выделения любых объектов на изображении в соответствии с заданными инструкциями. Подробнее об использовании *Bounding Box Method* читайте в [документации](https://2captcha.com/2captcha-api#bounding_box).
 
-[2captcha](https://2captcha.com/?from=16653706) это сервис, который решает множество различных типов капч. Эта библиотека служит оболочкой для API 2captcha, чтобы предоставить NodeJS простую функциональность, основанную на `promise`.
+[2captcha](https://2captcha.com/) это сервис, который решает множество различных типов капч. Эта библиотека служит оболочкой для API 2captcha, чтобы предоставить NodeJS простую функциональность, основанную на `promise`.
 
 ## Поддерживаемые типы капч:
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
@@ -366,8 +366,8 @@ solver.recaptcha({
 ```
 
 ## Полезные статьи
-* [Как решать капчу Geetest v4](https://2captcha.com/ru/blog/geetest-v4-obkhod?from=16653706)
-* [Автоматическое решение reCAPTCHA V3 - инструкция для разработчиков и заказчиков](https://2captcha.com/ru/blog/avtomaticheskoe-reshenie-recaptcha-v3?from=16653706)
+* [Как решать капчу Geetest v4](https://2captcha.com/ru/blog/geetest-v4-obkhod)
+* [Автоматическое решение reCAPTCHA V3 - инструкция для разработчиков и заказчиков](https://2captcha.com/ru/blog/avtomaticheskoe-reshenie-recaptcha-v3)
 * <a href="./docs/hcaptcha.md">Поиск значения `sitekey` для hCaptcha</a>
 
 ## Примеры использования с исходным кодом и описанием

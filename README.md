@@ -10,11 +10,11 @@
 # JavaScript Module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/?from=16653706) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha. 
+A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha. 
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
-[2captcha](https://2captcha.com/?from=16653706) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
+[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
 ### Features
 - Promise based 2captcha solving
@@ -385,8 +385,8 @@ The latest version of the code base will always be under the '**next**' branch!
 -->
 
 ## Useful articles
-* [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support?from=16653706)
-* [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution?from=16653706)
+* [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
+* [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
 * Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
 
 ## Usage examples with source code and description

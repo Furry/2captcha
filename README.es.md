@@ -10,9 +10,9 @@
 # Módulo JavaScript para API 2Captcha
 
 ## Descripción
-Shell para API [2captcha](https://2captcha.com/?from=16653706) Servicio. Este shell soporta la solución de los siguientes tipos de captcha: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+Shell para API [2captcha](https://2captcha.com) Servicio. Este shell soporta la solución de los siguientes tipos de captcha: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
 
-[2captcha](https://2captcha.com/?from=16653706) es un Servicio que le permite resolver muchos tipos diferentes de captcha.
+[2captcha](https://2captcha.com) es un Servicio que le permite resolver muchos tipos diferentes de captcha.
 Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para proporcionar a NodeJS una funcionalidad simple basada en `promise`.
 
 ## Tipos de captcha admitidos:
@@ -361,8 +361,8 @@ solver.recaptcha({
 ```
 
 ## Artículos útiles
-* [Cómo resolver el captcha Geetest v4](https://2captcha.com/es/blog/geetest-v4-support?from=16653706)
-* [Solución automática reCAPTCHA V3-instrucciones para desarrolladores y clientes](https://2captcha.com/es/blog/recaptcha-v3-automatic-resolution?from=16653706)
+* [Cómo resolver el captcha Geetest v4](https://2captcha.com/es/blog/geetest-v4-support)
+* [Solución automática reCAPTCHA V3-instrucciones para desarrolladores y clientes](https://2captcha.com/es/blog/recaptcha-v3-automatic-resolution)
 * <a href="./docs/hcaptcha.md">Buscar el valor de `sitekey` para hCaptcha</a>
 
 ## Ejemplos de uso con código fuente y descripción

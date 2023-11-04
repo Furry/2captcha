@@ -10,10 +10,10 @@
 # 2captcha API的JavaScript模块
 
 ## 资料描述
-提供[2captcha](https://2captcha.com/?from=16653706)服务的API的包装器.
+提供[2captcha](https://2captcha.com/)服务的API的包装器.
  這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
 
-[2captcha](https://2captcha.com/?from=16653706)是一項服務，可讓您解決許多不同類型的驗證碼。這個 npm 包包裝了[2captcha](https://2captcha.com/?from=16653706)API 來為 NodeJS 提供簡單的基於`promise`的功能。
+[2captcha](https://2captcha.com/)是一項服務，可讓您解決許多不同類型的驗證碼。這個 npm 包包裝了[2captcha](https://2captcha.com/)API 來為 NodeJS 提供簡單的基於`promise`的功能。
 
 ## 支持的驗證碼
 - ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
@@ -363,8 +363,8 @@ solver.recaptcha({
 ```
 
 ## 有用的文章
-* [如何解决Geetest v4 captcha](https://2captcha.com/zh/blog/geetest-v4-support?from=16653706)
-* [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/zh/blog/recaptcha-v3-automatic-resolution?from=16653706)
+* [如何解决Geetest v4 captcha](https://2captcha.com/zh/blog/geetest-v4-support)
+* [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/zh/blog/recaptcha-v3-automatic-resolution)
 * <a href="./docs/hcaptcha.md">搜索hCaptcha的`sitekey`值</a>
 
 ## 带有源代码和描述的使用示例
