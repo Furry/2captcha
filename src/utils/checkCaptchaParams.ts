@@ -108,11 +108,12 @@ export default function checkCaptchaParams(params: Object, method: string) {
   })
 
   if(method === "bounding_box") {
-    if(params.hasOwnProperty('textinstructions') || params.hasOwnProperty('imginstructions'))
-    isCorrectCaptchaParams = true
-  } else {
-    isCorrectCaptchaParams = false
-    throw new Error(`Error when check params captcha.\nNot found "textinstructions" or "imginstructions" field in the Object. One of this field is required for "bounding_box" method. Please add field "textinstructions" or "imginstructions" in object and try again.\nPlease correct your code for the "bounding_box" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
+    if(params.hasOwnProperty('textinstructions') || params.hasOwnProperty('imginstructions')) {
+      isCorrectCaptchaParams = true
+    } else {
+      isCorrectCaptchaParams = false
+      throw new Error(`Error when check params captcha.\nNot found "textinstructions" or "imginstructions" field in the Object. One of this field is required for "bounding_box" method. Please add field "textinstructions" or "imginstructions" in object and try again.\nPlease correct your code for the "bounding_box" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
+    }
   }
 
   return isCorrectCaptchaParams
