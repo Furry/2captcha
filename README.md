@@ -3,6 +3,7 @@
   <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
 </p>
 
+![](https://img.shields.io/npm/dt/2captcha-ts?color=00bd79)
 ![](https://img.shields.io/npm/v/2captcha-ts)
 ![](https://img.shields.io/npm/l/2captcha-ts)
 ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
@@ -26,24 +27,31 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
 - Proxy Support
 
 ## Supported captchas:
-- ✅ google-recaptcha (reCAPTCHA v2 / reCAPTCHA v3)
-- ✅ hCaptcha
-- ✅ Arkose Labs FunCaptcha
-- ✅ Image captchas. (`base64` format)
-- ✅ Geetest
-- ✅ Geetest v4
-- ✅ Yandex Smart Captcha
-- ✅ Lemin Cropped Captcha
-- ✅ Cloudflare Turnstile
-- ✅ Amazon WAF Captcha
-- ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ google-recaptcha ([reCAPTCHA v2](#recaptcha-v2) / [reCAPTCHA v3](#recaptcha-v3))
+- ✅ [hCaptcha](#hCaptcha)
+- ✅ [Arkose Labs FunCaptcha](#arkose-labs-funcaptcha)
+- ✅ [Image captchas](#image-captcha) (`base64` format)
+- ✅ [GeeTest](#geetest-captcha)
+- ✅ [GeeTest V4](#geetest-v4-captcha)
+- ✅ [Yandex Smart Captcha](#yandex-smart-captcha)
+- ✅ [Lemin Cropped Captcha](#lemin-captcha)
+- ✅ [Cloudflare Turnstile](#cloudflare-turnstile)
+- ✅ [Amazon WAF Captcha](#amazon-waf-captcha)
+- ✅ [Capy Puzzle](#capy-puzzle)
+- ✅ [Сoordinates (Click Captcha)](#coordinates-captcha)
 - ⬜ Audio Recogntion
-- ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
-- ✅ MTCaptcha
-- ✅ Bounding Box Method
+- ✅ [DataDome CAPTCHA](#datadome-captcha)
+- ✅ [CyberSiARA](#cybersiara)
+- ✅ [MTCaptcha](#mtcaptcha)
+- ✅ [Bounding Box Method](#bounding-box-method)
 <!-- ⬜ -->
+
+## Other methods:
+- [Proxy](#proxy)
+- [badReport](#badreport)
+- [goodReport](#goodreport)
+- [balance](#balance)
+
 
 ## Install
 
@@ -56,8 +64,12 @@ yarn add 2captcha-ts
 
 ## Usage
 
+### reCAPTCHA V2
 
-### reCAPTCHA:
+Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 // A new 'solver' instance with your API key
@@ -76,7 +88,38 @@ solver.recaptcha({
 })
 ```
 
-### hCaptcha:
+### reCAPTCHA V3
+
+This method provides ReCaptcha V3 solver and returns a token.
+
+Code example:
+
+```js
+const Captcha = require("2captcha-ts")
+const solver = new Captcha.Solver("<Your 2captcha api key>")
+
+solver.recaptcha({
+    pageurl: 'https://2captcha.com/demo/recaptcha-v3',
+    googlekey: '6Lcyqq8oAAAAAJE7eVJ3aZp_hnJcI6LgGdYD8lge',
+    version: "v3",
+    min_score: "0.4",
+    action: 'demo_action'
+})
+.then((res) => {
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err);
+})
+```
+
+
+### hCaptcha
+
+Use this method to solve hCaptcha challenge. Returns a token to bypass captcha.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -93,7 +136,12 @@ solver.hcaptcha({
 })
 ```
 
-### Arkose Labs FunCaptcha:
+### Arkose Labs FunCaptcha
+
+FunCaptcha (Arkoselabs) solving method. Returns a token.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -110,7 +158,12 @@ solver.funCaptcha({
 })
 ```
 
-### Image captcha:
+### Image captcha
+
+To bypass a normal captcha (distorted text on image) use this method. This method also can be used to recognize any text on the image.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const fs = require("fs")
@@ -135,7 +188,12 @@ solver.imageCaptcha({
 ```
 
 
-### GeeTest Captcha:
+### GeeTest Captcha
+
+Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -154,7 +212,12 @@ solver.geetest({
 })
 ```
 
-### GeeTest V4 Captcha:
+### GeeTest V4 Captcha
+
+Method to solve GeeTest V4 puzzle captcha. Returns a set of tokens as JSON.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -171,7 +234,12 @@ solver.geetestV4({
 })
 ```
 
-### Yandex Smart Captcha:
+### Yandex Smart Captcha
+
+Use this method to solve Yandex and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -188,7 +256,12 @@ solver.yandexSmart({
 })
 ```
 
-### Lemin captcha:
+### Lemin captcha
+
+Use this method to solve Lemin and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -207,7 +280,12 @@ solver.lemin({
 })
 ```
 
-### Cloudflare Turnstile:
+### Cloudflare Turnstile
+
+Use this method to solve Turnstile and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -224,7 +302,12 @@ solver.cloudflareTurnstile({
 })
 ```
 
-### Amazon WAF Captcha (AWS WAF):
+<h3 id="amazon-waf-captcha">Amazon WAF Captcha (AWS WAF):</h3>
+
+Use this method to solve AmazonWaf and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -245,6 +328,11 @@ solver.amazonWaf({
 ```
 
 ### Capy Puzzle
+
+Token-based method to bypass Capy puzzle captcha.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -262,6 +350,14 @@ solver.capyPuzzle({
 ```
 
 ### DataDome CAPTCHA
+
+Use this method to solve DataDome and obtain a token to bypass the protection. 
+
+> [!IMPORTANT]  
+> To solve the DataDome captcha, you must use a proxy. It is recommended to use mobile residential proxies.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -282,7 +378,12 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
+
+Use this method to solve CyberSiARA and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -302,6 +403,11 @@ console.log(err);
 ```
 
 ### MTCaptcha
+
+Use this method to solve MTCaptcha and obtain a token to bypass the protection.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -319,7 +425,12 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+<h3 id="coordinates-captcha">Сoordinates (Click Captcha):</h3>
+
+ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -338,7 +449,11 @@ solver.coordinates({
 ```
 
 ### Bounding Box Method:
+
 Bounding Box Method allows you to select objects specified in the image. To do this, you need to pass markup instructions. The instructions can be sent as text or as an image encoded in base64 format. It is mandatory to pass at least one instruction `imginstructions` or `textinstructions`.
+
+Code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -355,7 +470,10 @@ solver.boundingBox({
 })
 ```
 
-### Proxy:
+### Proxy
+
+Solving reCAPTCHA V2 whis a proxy, code example:
+
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -364,7 +482,7 @@ solver.recaptcha({
   pageurl: 'https://2captcha.com/demo/recaptcha-v2',
   googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
   proxy: "login:password@1.2.3.4:8888", // The (Username : Password @ Address : Port) of our chosen proxy
-  proxytype: "http" // The 'Type' of proxy, http, https, socks, ect.
+  proxytype: "http" // The 'Type' of proxy, http, https, socks4, socks5.
 })
 .then((res) => {
   console.log(res)
@@ -374,15 +492,13 @@ solver.recaptcha({
 })
 ```
 
-<!-- ## Commit Guidelines
+## Other methods
 
-The latest version of the code base will always be under the '**next**' branch!
+### goodReport 
+### badReport 
+### balance 
 
-- All pull requiests must provide a valid reason for the change or implementation
-- All **CORE CHANGES** require an issue with reasoning made before a PR will even be addressed.
-- All PR's must follow the general structure of the code base
-- If you have questions, feel free to make an issue and i'll get to it right away!
--->
+Use this method to get your account's balance
 
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
@@ -394,6 +510,5 @@ The latest version of the code base will always be under the '**next**' branch!
 * [Solving reCAPTCHA using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
 * [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
 
----
 
-This project is a fork of this [package](https://www.npmjs.com/package/2captcha). In this version, new types of captchas have been added and the method of passing captcha parameters has been changed ({ using an object }) and etc. You can read more about the changes made [here](https://github.com/dzmitry-duboyski/2captcha-ts/releases).
+<!-- This project is a fork of this [package](https://www.npmjs.com/package/2captcha). In this version, new types of captchas have been added and the method of passing captcha parameters has been changed ({ using an object }) and etc. You can read more about the changes made [here](https://github.com/dzmitry-duboyski/2captcha-ts/releases). -->
