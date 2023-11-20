@@ -384,7 +384,7 @@ solver.coordinates({
 
 ### Bounding Box Method:
 
-Bounding Box Method allows you to select objects specified in the image. To do this, you need to pass markup instructions. The instructions can be sent as text or as an image encoded in base64 format. It is mandatory to pass at least one instruction `imginstructions` or `textinstructions`.
+Bounding Box Method allows you to select objects specified in the image. To do this, you need to pass markup instructions. The instructions can be sent as text or as an image encoded in `base64` format. It is mandatory to pass at least one instruction `imginstructions` or `textinstructions`.
 
 ```js
 solver.boundingBox({ 
