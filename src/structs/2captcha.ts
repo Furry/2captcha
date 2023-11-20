@@ -1244,7 +1244,8 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
      * @param {string} id The ID of the captcha
      * @throws APIError
      * @example
-     * solver.goodReport("123456789")
+     * solver.goodReport("7031854546")
+     * 
      */
     public async goodReport(id: string): Promise<void> {
         const payload = {
@@ -1264,7 +1265,7 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
         }
 
         if (data.request == "OK_REPORT_RECORDED") {
-            return
+            return data.request
         } else {
             throw new APIError(data.request)
         }
@@ -1278,7 +1279,7 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
      * @returns {Promise<void>} Resolves on completion
      * @throws APIError
      * @example
-     * solver.badReport("55316")
+     * solver.badReport("7031854546")
      */
     public async badReport(id: string): Promise<void> {
         const payload = {
@@ -1297,8 +1298,8 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
             throw new APIError(result)
         }
 
-        if (data.request == "OK_REPORT_RECORDED") {
-            return
+        if (data.request == "OK_REPORT_RECORDED" || data.request == "ERROR_DUPLICATE_REPORT") {
+            return data.request
         } else {
             throw new APIError(data.request)
         }
