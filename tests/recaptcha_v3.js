@@ -3,11 +3,12 @@ require('dotenv').config();
 const APIKEY = process.env.APIKEY
 const solver = new Captcha.Solver(APIKEY);
 
-solver.lemin({
-  pageurl:'https://2captcha.com/demo/lemin', 
-  captcha_id: 'CROPPED_3dfdd5c_d1872b526b794d83ba3b365eb15a200b',
-  div_id: 'lemin-cropped-captcha',
-  api_server: 'api.leminnow.com'
+solver.recaptcha({
+    pageurl: 'https://2captcha.com/demo/recaptcha-v3',
+    googlekey: '6Lcyqq8oAAAAAJE7eVJ3aZp_hnJcI6LgGdYD8lge',
+    version: "v3",
+    min_score: "0.4",
+    action: 'demo_action'
 })
 .then((res) => {
     console.log(res);

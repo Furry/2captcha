@@ -773,10 +773,10 @@ export class Solver {
      * 
      * @example
      * solver.lemin({
-     *   pageurl:'https://dashboard.leminnow.com/auth/login', 
-     *   captcha_id: 'CROPPED_099216d_34698cb7b8574265925f493cbcb3df4d',
+     *   pageurl:'https://2captcha.com/demo/lemin', 
+     *   captcha_id: 'CROPPED_3dfdd5c_d1872b526b794d83ba3b365eb15a200b',
      *   div_id: 'lemin-cropped-captcha',
-     *   api_server: 'https://api.leminnow.com/captcha/v1/cropped'
+     *   api_server: 'api.leminnow.com'
      * })
      * .then((res) => {
      *     console.log(res);
@@ -1244,7 +1244,8 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
      * @param {string} id The ID of the captcha
      * @throws APIError
      * @example
-     * solver.goodReport("123456789")
+     * solver.goodReport("7031854546")
+     * 
      */
     public async goodReport(id: string): Promise<void> {
         const payload = {
@@ -1264,7 +1265,7 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
         }
 
         if (data.request == "OK_REPORT_RECORDED") {
-            return
+            return data.request
         } else {
             throw new APIError(data.request)
         }
@@ -1278,7 +1279,7 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
      * @returns {Promise<void>} Resolves on completion
      * @throws APIError
      * @example
-     * solver.badReport("55316")
+     * solver.badReport("7031854546")
      */
     public async badReport(id: string): Promise<void> {
         const payload = {
@@ -1297,8 +1298,8 @@ public async boundingBox(params: paramsBoundingBox): Promise<CaptchaAnswer> {
             throw new APIError(result)
         }
 
-        if (data.request == "OK_REPORT_RECORDED") {
-            return
+        if (data.request == "OK_REPORT_RECORDED" || data.request == "ERROR_DUPLICATE_REPORT") {
+            return data.request
         } else {
             throw new APIError(data.request)
         }
