@@ -234,10 +234,10 @@ Use this method to solve Lemin and obtain a token to bypass the protection.
 
 ```js
 solver.lemin({
-  pageurl:'https://dashboard.leminnow.com/auth/login', 
-  captcha_id: 'CROPPED_099216d_34698cb7b8574265925f493cbcb3df4d',
+  pageurl:'https://2captcha.com/demo/lemin', 
+  captcha_id: 'CROPPED_3dfdd5c_d1872b526b794d83ba3b365eb15a200b',
   div_id: 'lemin-cropped-captcha',
-  api_server: 'https://api.leminnow.com/captcha/v1/cropped'
+  api_server: 'api.leminnow.com'
 })
 .then((res) => {
   console.log(res);
