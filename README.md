@@ -17,18 +17,6 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
 
 [2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
 
-<!-- ### Features
-- Promise based 2captcha solving
-- Browser & NodeJS Support
-- Uses node-fetch, a light weight http library
-- Fluent typings & TS support
-- Account Interaction
-- Invalid Captcha reporting
-- Proxy Support -->
-
----
-<!-- ## Supported captchas: -->
-
 - [Install](#install)
 - [Configuration](#configuration)
 - [Solve captcha](#solve-captcha)
