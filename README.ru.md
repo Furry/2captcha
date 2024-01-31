@@ -10,7 +10,7 @@
 # JavaScript модуль для 2Captcha API
 
 ## Описание
-Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha.
 
 Также добавлена поддержка метода `bounding_box`. Метод ограничивающей рамки позволяет размечать данные на изображении. Этот метод можно использовать для разметки наборов данных или выделения любых объектов на изображении в соответствии с заданными инструкциями. Подробнее об использовании *Bounding Box Method* читайте в [документации](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -33,7 +33,9 @@
 - ✅ DataDome CAPTCHA
 - ✅ СyberSiARA
 - ✅ MTCaptcha
+- ✅ Friendly Captcha
 - ✅ Bounding Box Method
+
 
 ## Установка
 
@@ -300,6 +302,25 @@ const solver = new Captcha.Solver("<Your 2captcha api key>")
 solver.mtCaptcha({
     pageurl: "https://service.mtcaptcha.com/mtcv1/demo/index.html",
     sitekey: "MTPublic-DemoKey9M"
+})
+.then((res) => {
+console.log(res);
+})
+.catch((err) => {
+console.log(err);
+})
+```
+
+### Friendly Captcha
+
+Используйте этот метод, чтобы решить Friendly Captcha и получить токен для обхода защиты.
+
+> **Важно:**Для успешного использования полученного токена, на странице не должен быть загружен виджет капчи. Для этого вам нужно прервать запрос к `/friendcaptcha/...module.min.js` на странице. Когда виджет капчи уже загружен на страницу, велика вероятность, что полученный токен не сработает.
+
+```js
+solver.friendlyCaptcha({
+    pageurl: "https://geizhals.de/?liftban=1&from=/455973138?fsean=5901747021356",
+    sitekey: "FCMST5VUMCBOCGQ9"
 })
 .then((res) => {
 console.log(res);

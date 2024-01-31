@@ -11,7 +11,7 @@
 # JavaScript Module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha. 
+A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha. 
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -36,6 +36,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [DataDome CAPTCHA](#datadome-captcha)
   - [CyberSiARA](#cybersiara)
   - [MTCaptcha](#mtcaptcha)
+  - [Friendly Captcha](#friendly-captcha)
   - [Bounding Box Method](#bounding-box-method)
   - [Usage of proxy](#usage-of-proxy)
 - [Other methods](#other-methods)
@@ -354,6 +355,24 @@ Use this method to solve MTCaptcha and obtain a token to bypass the protection.
 solver.mtCaptcha({
     pageurl: "https://service.mtcaptcha.com/mtcv1/demo/index.html",
     sitekey: "MTPublic-DemoKey9M"
+})
+.then((res) => {
+console.log(res);
+})
+.catch((err) => {
+console.log(err);
+})
+```
+
+### Friendly Captcha
+
+Use this method to solve Friendly Captcha and obtain a token to bypass the protection.
+> **Important:** To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
+
+```js
+solver.friendlyCaptcha({
+    pageurl: "https://geizhals.de/?liftban=1&from=/455973138?fsean=5901747021356",
+    sitekey: "FCMST5VUMCBOCGQ9"
 })
 .then((res) => {
 console.log(res);
