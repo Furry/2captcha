@@ -209,6 +209,14 @@ export interface paramsMTCaptcha {
     proxytype?: string,
 }
 
+export interface friendlyCaptcha {
+    pageurl: string,
+    sitekey: string,
+    pingback?: string,
+    proxy?: string,
+    proxytype?: string,
+}
+
 export interface paramsBoundingBox {
     image: string,
     textinstructions?: string,
@@ -872,7 +880,7 @@ export class Solver {
      * [Read more about Cloudflare Turnstile captcha](https://2captcha.com/2captcha-api#turnstile).
      * 
      * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
-     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
      * @param {string} params.sitekey Is a value of `sitekey` parameter in the page source.
      * @param {string} params.action Value of optional `action` parameter you found on page.
      * @param {string} params.data  Value of optional `data` parameter you found on page.
@@ -991,7 +999,7 @@ export class Solver {
      * ### Solves Capy Puzzle captcha
      * 
      * @param {{ pageurl, captchakey, api_server, version, pingback, proxy, proxytype}} params Parameters Capy Puzzle Captcha as an object.
-     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.pageurl 	Full `URL`of the page where you see the captcha.
      * @param {string} params.captchakey Value of `captchakey` parameter you found on page.
      * @param {string} params.api_server The domain part of script URL you found on page. Default value: `https://jp.api.capy.me/`.
      * @param {string} params.version  The version of captcha task: `puzzle` (assemble a puzzle) or `avatar` (drag an object)..
@@ -1041,7 +1049,7 @@ export class Solver {
      * ### Solves DataDome captcha
      * 
      * @param {{ pageurl, captcha_url, userAgent, pingback, proxy, proxytype}} params Parameters DataDome Captcha as an object.
-     * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+     * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
      * @param {string} params.captcha_url The value of the `src` parameter for the `iframe` element containing the captcha on the page.  
      * @param {string} params.userAgent ser-Agent of your MODERN browser
      * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
@@ -1093,7 +1101,7 @@ export class Solver {
  * ### Solves CyberSiARA captcha
  * 
  * @param {{ pageurl, master_url_id, userAgent, pingback, proxy, proxytype}} params Parameters CyberSiARA Captcha as an object.
- * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+ * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
  * @param {string} params.master_url_id The value of `MasterUrlId` parameter obtained from the request to the endpoint `API/CyberSiara/GetCyberSiara`.  
  * @param {string} params.userAgent ser-Agent of your MODERN browser
  * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
@@ -1143,7 +1151,7 @@ public async cyberSiARA(params: paramsCyberSiARA): Promise<CaptchaAnswer> {
  * ### Solves MTCaptcha
  * 
  * @param {{ pageurl, sitekey, userAgent, pingback, proxy, proxytype}} params Parameters MTCaptcha as an object.
- * @param {string} params.pageurl 	Full `URL of the page where you see the captcha.
+ * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
  * @param {string} params.sitekey TThe value of `sitekey` parameter found on the page.  
  * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
  * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
@@ -1167,6 +1175,102 @@ public async mtCaptcha(params: paramsMTCaptcha): Promise<CaptchaAnswer> {
     const payload = {
         ...params,
         method: "mt_captcha",
+        ...this.defaultPayload,
+    }
+
+    const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
+
+/**
+ * ### Solves Cutcaptcha
+ * 
+ * @param {{ pageurl, sitekey, userAgent, pingback, proxy, proxytype}} params Parameters MTCaptcha as an object.
+ * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
+ * @param {string} params.sitekey TThe value of `sitekey` parameter found on the page.  
+ * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+ * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+ * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * 
+ * @example 
+ * solver.cutCaptcha({
+ *   pageurl: "https://service.mtcaptcha.com/mtcv1/demo/index.html",
+ *   sitekey: "MTPublic-DemoKey9M"
+ * })
+ * .then((res) => {
+ *   console.log(res);
+ *  })
+ * .catch((err) => {
+ *   console.log(err);
+ * })
+ */
+public async cutCaptcha(params: paramsMTCaptcha): Promise<CaptchaAnswer> {
+    checkCaptchaParams(params, "mt_captcha")
+
+    const payload = {
+        ...params,
+        method: "mt_captcha",
+        ...this.defaultPayload,
+    }
+
+    const response = await fetch(this.in + utils.objectToURI(payload))
+    const result = await response.text()
+
+    let data;
+    try {
+        data = JSON.parse(result)
+    } catch {
+        throw new APIError(result)
+    }
+
+    if (data.status == 1) {
+        return this.pollResponse(data.request)
+    } else {
+        throw new APIError(data.request)
+    }
+}
+
+/**
+ * ### Solves Friendly Captcha
+ * 
+ * @param {{ pageurl, sitekey, pingback, proxy, proxytype}} params Parameters Friendly Captcha as an object.
+ * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
+ * @param {string} params.sitekey The value of `data-apikey` or `data-sitekey` parameter found on the page.  
+ * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
+ * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
+ * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
+ * 
+ * @example 
+ * solver.friendlyCaptcha({
+ *   pageurl: "https://geizhals.de/?liftban=1&from=/455973138?fsean=5901747021356",
+ *   sitekey: "FCMST5VUMCBOCGQ9"
+ * })
+ * .then((res) => {
+ *   console.log(res);
+ *  })
+ * .catch((err) => {
+ *   console.log(err);
+ * })
+ */
+public async friendlyCaptcha(params: friendlyCaptcha): Promise<CaptchaAnswer> {
+    checkCaptchaParams(params, "friendly_captcha")
+
+    const payload = {
+        ...params,
+        method: "friendly_captcha",
         ...this.defaultPayload,
     }
 

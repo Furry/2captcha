@@ -1,6 +1,6 @@
 // Captcha methods for which parameter checking is available
 const supportedMethods = ["userrecaptcha", "hcaptcha", "geetest", "geetest_v4","yandex","funcaptcha","lemin","amazon_waf",
-"turnstile", "base64", "capy","datadome", "cybersiara", "mt_captcha", "bounding_box"]
+"turnstile", "base64", "capy","datadome", "cybersiara", "mt_captcha", "bounding_box", 'friendly_captcha']
 
 // Names of required fields that must be contained in the parameters captcha
 const recaptchaRequiredFields =   ['pageurl','googlekey']
@@ -17,8 +17,9 @@ const base64RequiredFields =      ['body']
 const capyPuzzleRequiredFields =  ['captchakey']
 const dataDomeRequiredFields =    ['pageurl', 'captcha_url', 'userAgent', 'proxy', 'proxytype']
 const сyberSiARARequiredFields =  ['pageurl', 'master_url_id', 'userAgent']
-const mtСaptchaRequiredFields =  ['pageurl', 'sitekey']
-const boundingBoxRequiredFields =  ['image'] // and textinstructions or imginstructions
+const mtСaptchaRequiredFields =   ['pageurl', 'sitekey']
+const boundingBoxRequiredFields = ['image'] // and textinstructions or imginstructions
+const friendlyCaptchaFields =     ['pageurl','sitekey']
 
 /**
  * Getting required arguments for a captcha.
@@ -74,6 +75,9 @@ const getRequiredFildsArr = (method: string):Array<string> => {
       break;
     case "bounding_box":
       requiredFieldsArr = boundingBoxRequiredFields
+      break;
+    case "friendly_captcha":
+      requiredFieldsArr = friendlyCaptchaFields
       break;
   }
   return requiredFieldsArr

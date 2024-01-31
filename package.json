@@ -37,7 +37,8 @@
     "DataDome CAPTCHA",
     "CyberSiARA",
     "MTCaptcha",
-    "Bounding Box Method"
+    "Bounding Box Method",
+    "Friendly Captcha"
   ],
   "scripts": {
     "go": "tsc && node ./dist/index.js",
