@@ -179,7 +179,7 @@ export interface paramsCoordinates {
     lang?: string,
     pingback?: string,
     textinstructions?: string,
-    imginstrucation?: string
+    imginstructions?: string
 }
 
 export interface paramsDataDome {
@@ -928,9 +928,9 @@ export class Solver {
    /**
     * ### Solves a Coordinates captcha. 
     * 
-    * @param {{ body, imginstrucation, textinstructions, language, lang, pingback }} params parameters Сoordinates Captcha as an object.
+    * @param {{ body, imginstructions, textinstructions, language, lang, pingback }} params parameters Сoordinates Captcha as an object.
     * @param {string} params.body Base64-encoded captcha image.
-    * @param {string} params.imginstrucation Base64-encoded image with instruction for solving captcha.
+    * @param {string} params.imginstructions Base64-encoded image with instruction for solving captcha.
     * @param {string} params.textinstructions Text will be shown to worker to help him to solve the captcha correctly. For example: click on all objects in red color.
     * @param {number} params.language `0` - not specified. `1` - Cyrillic captcha. `2` - Latin captcha
     * @param {string} params.lang Language code. [See the list of supported languages](https://2captcha.com/2captcha-api#language).
