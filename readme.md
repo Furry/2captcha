@@ -17,20 +17,6 @@
 <center>A wrapper around the 2captcha API</center>
 
 <hr>
-<center>
-<h2> Captcha Solvers
-</center>
-<h3>
-    <center>
-        <b>CapSolver.com</b>
-        <br>
-        <a href="https://capsolver.com">
-            <img src="https://i.imgur.com/YaRmSt4.gif" alt="Capsolver's Banner">
-        </a>
-    </center>
-</h3>
-Supporting all common and well known captcha types and a success rate of over 99%, CapSolver allows for affordable AI-based captcha solving with JS/TS clients as well as HTTP support. Their packages are extremely affordable for projects of any size, offering a free trial to test out their service.
-<hr>
 
 ## Motive
 
