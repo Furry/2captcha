@@ -1,12 +1,14 @@
 import {
     Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras,
+    GeetestV4Result,
     GenericObject, HCaptchaExtras, ImageCaptchaExtras,
     KeyCaptchaExtras,
     PendingCaptcha,
     PendingCaptchaStorage,
     RecaptchaV2Extras,
     RecaptchaV3Extras,
-    RotateCaptchaExtras
+    RotateCaptchaExtras,
+    TurnstileExtras
 } from "../types.js";
 
 import { toBase64, toQueryString } from "../utils/conversions.js";
@@ -53,6 +55,7 @@ export class Solver {
     // Utility Methods //
     /////////////////////
     private async get(url: string, query: GenericObject) {
+        console.log(url + toQueryString(query));
         const response = await fetch(url + toQueryString(query), {
             method: "GET",
             headers: {
@@ -188,7 +191,13 @@ export class Solver {
                 default:
                     captcha.resolve({
                         id: id,
-                        data: state
+                        // Parse the JSON if it's valid, otherwise return the string.
+                        data: (() => {
+                            try {
+                                return JSON.parse(state)
+                            } catch (_) {
+                                return state; }
+                        })()
                     });
                     delete this._pending[id];
                     break;
@@ -202,14 +211,15 @@ export class Solver {
      * @param captchaId The captcha ID to get the solution of.
      * @returns The resulting captcha promise.
      */
-    private async registerPollEntry(captchaId: string): Promise<CaptchaResult> {
+    private async registerPollEntry<T>(captchaId: string): Promise<CaptchaResult<T>> {
         const captchaPromiseObject: PendingCaptchaStorage = {
             startTime: Date.now(),
             captchaId: captchaId,
             polls: 0
         } as any;
 
-        captchaPromiseObject.promise = new Promise<CaptchaResult>((resolve, reject) => {
+        captchaPromiseObject.promise = new Promise<CaptchaResult<T>>((resolve, reject) => {
+            // @ts-ignore
             captchaPromiseObject.resolve = resolve;
             captchaPromiseObject.reject = reject;
         });
@@ -223,6 +233,7 @@ export class Solver {
             }, 1000) as unknown as number;
         }
 
+        // @ts-ignore
         return captchaPromiseObject.promise;
     }
 
@@ -235,7 +246,7 @@ export class Solver {
      * @param extra  The extra data to send to the solver.
      * @returns Captcha result.
      */
-    public async imageCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
+    public async imageCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult<String>> {
         const data = toBase64(image);
 
         const c = await this.post(this.in, {
@@ -248,11 +259,18 @@ export class Solver {
     }
 
     // An alias for ImageCaptcha
-    public async textCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult> {
+    public async textCaptcha(image: Base64String | Buffer, extra: ImageCaptchaExtras = {}): Promise<CaptchaResult<String>> {
         return this.imageCaptcha(image, extra);
     }
 
-    public async recaptchaV2(googlekey: string, pageurl: string, extra: RecaptchaV2Extras = {}): Promise<CaptchaResult> {
+    /**
+     * Solves a recaptchaV2 captcha.
+     * @param googlekey The google key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    public async recaptchaV2(googlekey: string, pageurl: string, extra: RecaptchaV2Extras = {}): Promise<CaptchaResult<String>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -264,7 +282,14 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    public async hcaptcha(sitekey: string, pageurl: string, extra: HCaptchaExtras = {}): Promise<CaptchaResult> {
+    /**
+     * Solves a hCaptcha captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    public async hcaptcha(sitekey: string, pageurl: string, extra: HCaptchaExtras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -276,7 +301,15 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    public async geetest(gt: string, challenge: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult> {
+    /**
+     * Solves a GeeTest captcha.
+     * @param gt The gt key to solve.
+     * @param challenge The challenge key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    public async geetest(gt: string, challenge: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -289,6 +322,31 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
+    /**
+     * Solves a GeeTest captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    public async geetestv4(sitekey: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult<GeetestV4Result>> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            captcha_id: sitekey,
+            pageurl: pageurl,
+            method: "geetest_v4"
+        })
+
+        return this.registerPollEntry(c.request);
+    }
+
+    /**
+     * Solves a funCaptcha captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     public async funCaptcha(publickey: string, pageurl: string, serviceurl?: string, extra: FunCaptchaExtras = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -303,7 +361,13 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    public async rotateCaptcha(image: Base64String | Buffer, angle: number = 40, extra: RotateCaptchaExtras): Promise<CaptchaResult> {
+    /**
+     * Solves a rotate captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    public async rotateCaptcha(image: Base64String | Buffer, angle: number = 40, extra: RotateCaptchaExtras): Promise<CaptchaResult<any>> {
         const data = toBase64(image);
         const c = await this.post(this.in, {
             ...extra,
@@ -318,7 +382,7 @@ export class Solver {
     public async keyCaptcha(
         sscUserId: string, sscSessionId: string,
         sscWebserverSign: string, sscWebserverSign2: string,
-        pageurl: string, extra: KeyCaptchaExtras = {}): Promise<CaptchaResult> {
+        pageurl: string, extra: KeyCaptchaExtras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -333,7 +397,7 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    public async recaptchaV3(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult> {
+    public async recaptchaV3(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -346,7 +410,7 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    public async recaptchaEnterprise(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult> {
+    public async recaptchaEnterprise(sitekey: string, pageurl: string, extra: RecaptchaV3Extras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -356,6 +420,18 @@ export class Solver {
             sitekey: sitekey,
             pageurl: pageurl
         });
+
+        return this.registerPollEntry(c.request);
+    }
+
+    
+    public async turnstile(sitekey: string, extra: TurnstileExtras): Promise<CaptchaResult<any>> {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "turnstile",
+            sitekey: sitekey
+        })
 
         return this.registerPollEntry(c.request);
     }

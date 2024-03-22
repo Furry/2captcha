@@ -1,7 +1,7 @@
 import { Solver } from "./solver.js";
 import { Locale } from "../utils/locale.js";
 import { CaptchaTypes, GenericObject } from "../types.js";
-export declare type PingbackEvents = "solve" | "error" | "info";
+export type PingbackEvents = "solve" | "error" | "info";
 export declare class PingbackClient {
     private _solver;
     private _rest;

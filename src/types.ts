@@ -7,9 +7,9 @@ export interface PendingCaptcha {
 }
 
 export interface PendingCaptchaStorage extends PendingCaptcha {
-    resolve: (value: CaptchaResult) => void;
+    resolve: (value: CaptchaResult<unknown>) => void;
     reject: (error: SolverError) => void;
-    promise: Promise<CaptchaResult>;
+    promise: Promise<CaptchaResult<unknown>>;
 }
 
 export type GenericObject = { [key: string | number]: string | number | any[] | GenericObject };
@@ -31,8 +31,8 @@ export type CaptchaType =
 export type AbsoluteFilePathString = string;
 export type Base64String = string;
 
-export interface CaptchaResult {
-    data: string,
+export interface CaptchaResult<T> {
+    data: T,
     id: string
 }
 
@@ -82,4 +82,19 @@ export interface KeyCaptchaExtras extends GenericObject {
 
 export interface RecaptchaV3Extras extends GenericObject {
 
+}
+
+// Specialized results //
+export interface GeetestV4Result {
+    captcha_id: string,
+    lot_number: string,
+    pass_token: string,
+    gen_time: string,
+    captcha_output: string
+}
+
+export interface GeetestResult {
+    geetest_challenge: string,
+    geetest_validate: string,
+    geetest_seccode: string
 }

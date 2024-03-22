@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, PendingCaptcha, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
+import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, GeetestV4Result, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, PendingCaptcha, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
 import { Locale } from "../utils/locale.js";
 export declare class Solver {
     private _token;
@@ -64,6 +64,7 @@ export declare class Solver {
     recaptchaV2(googlekey: string, pageurl: string, extra?: RecaptchaV2Extras): Promise<CaptchaResult>;
     hcaptcha(sitekey: string, pageurl: string, extra?: HCaptchaExtras): Promise<CaptchaResult>;
     geetest(gt: string, challenge: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult>;
+    geetestv4(sitekey: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult | GeetestV4Result>;
     funCaptcha(publickey: string, pageurl: string, serviceurl?: string, extra?: FunCaptchaExtras): Promise<CaptchaResult>;
     rotateCaptcha(image: Base64String | Buffer, angle: number | undefined, extra: RotateCaptchaExtras): Promise<CaptchaResult>;
     keyCaptcha(sscUserId: string, sscSessionId: string, sscWebserverSign: string, sscWebserverSign2: string, pageurl: string, extra?: KeyCaptchaExtras): Promise<CaptchaResult>;

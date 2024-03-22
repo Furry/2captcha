@@ -1,6 +1,5 @@
 import * as Captcha from "../dist/index.js";
 import dotenv from "dotenv";
-import fs from "fs";
 import chai from "chai";
 
 const { expect } = chai;
@@ -17,9 +16,9 @@ describe("hCaptcha Test", () => {
 
     it("Should error for invalid key", async () => {
         try {
-            await solver.hcaptcha("Invalid Key","https://vastus.github.io/login");
+            await solver.hcaptcha("Invalid Key", "https://vastus.github.io/login");
         } catch (e) {
-            expect(e.message).to.equal("ERROR_WRONG_GOOGLEKEY");
+            expect(e.message).to.equal("ERROR_SITEKEY");
         }
     });
 });

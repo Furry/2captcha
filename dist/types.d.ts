@@ -9,10 +9,10 @@ export interface PendingCaptchaStorage extends PendingCaptcha {
     reject: (error: SolverError) => void;
     promise: Promise<CaptchaResult>;
 }
-export declare type GenericObject = {
+export type GenericObject = {
     [key: string | number]: string | number | any[] | GenericObject;
 };
-export declare type CaptchaType = "GridMethodCoordnates" | "reCaptchaEnterprise" | //
+export type CaptchaType = "GridMethodCoordnates" | "reCaptchaEnterprise" | //
 "rotateCaptcha" | //
 "imageCaptcha" | //
 "reCaptchav2" | //
@@ -23,8 +23,8 @@ export declare type CaptchaType = "GridMethodCoordnates" | "reCaptchaEnterprise"
 "hCaptcha" | // 
 "GeeTest" | // 
 "tiktok" | "capy";
-export declare type AbsoluteFilePathString = string;
-export declare type Base64String = string;
+export type AbsoluteFilePathString = string;
+export type Base64String = string;
 export interface CaptchaResult {
     data: string;
     id: string;
@@ -59,5 +59,12 @@ export interface RotateCaptchaExtras extends GenericObject {
 export interface KeyCaptchaExtras extends GenericObject {
 }
 export interface RecaptchaV3Extras extends GenericObject {
+}
+export interface GeetestV4Result {
+    captcha_id: string;
+    lot_number: string;
+    pass_token: string;
+    gen_time: string;
+    captcha_output: string;
 }
 //# sourceMappingURL=types.d.ts.map

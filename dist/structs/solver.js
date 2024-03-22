@@ -1,7 +1,7 @@
 import { toBase64, toQueryString } from "../utils/conversions.js";
 import L from "../utils/locale.js";
 import fetch from "../utils/platform.js";
-import { SolverError } from "./error.js";
+import { NetError, SolverError } from "./error.js";
 export class Solver {
     _token;
     _locale;
@@ -34,12 +34,15 @@ export class Solver {
     // Utility Methods //
     /////////////////////
     async get(url, query) {
+        console.log(url + toQueryString(query));
         const response = await fetch(url + toQueryString(query), {
             method: "GET",
             headers: {
                 "User-Agent": this._userAgent,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
+        }).catch(err => {
+            throw new NetError(err, this._locale);
         });
         const json = await response.json();
         if (json.status == "0") {
@@ -56,6 +59,8 @@ export class Solver {
                 "User-Agent": this._userAgent,
             },
             body: body
+        }).catch(err => {
+            throw new NetError(err, this._locale);
         });
         const json = await response.json();
         if (json.status == "0") {
@@ -234,6 +239,16 @@ export class Solver {
             gt: gt,
             challenge: challenge,
             pageurl: pageurl
+        });
+        return this.registerPollEntry(c.request);
+    }
+    async geetestv4(sitekey, pageurl, extra = {}) {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            captcha_id: sitekey,
+            pageurl: pageurl,
+            method: "geetest_v4"
         });
         return this.registerPollEntry(c.request);
     }

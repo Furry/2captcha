@@ -1,4 +1,4 @@
-export declare type Locale = "en" | "ru";
+export type Locale = "en" | "ru";
 declare const _default: {
     en: {
         domain: string;
