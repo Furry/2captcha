@@ -6,8 +6,9 @@ import { CaptchaType } from "../types.js";
 export type BindingMap = { [key: string]: CallableFunction };
 
 export function genFunctionBindings(solver: Solver): BindingMap {
-    return {
-        "textCaptcha": solver.imageCaptcha,
-        "imageCaptcha": solver.imageCaptcha,
-    }
+    return {}
+    // return {
+    //     "textCaptcha": solver.imageCaptcha,
+    //     "imageCaptcha": solver.imageCaptcha,
+    // }
 }
