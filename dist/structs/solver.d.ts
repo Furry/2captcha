@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, GeetestV4Result, HCaptchaExtras, ImageCaptchaExtras, KeyCaptchaExtras, PendingCaptcha, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras } from "../types.js";
+import { Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras, GeetestV4Result, HCaptchaExtras, HCaptchaResult, ImageCaptchaExtras, KeyCaptchaExtras, PendingCaptcha, RecaptchaV2Extras, RecaptchaV3Extras, RotateCaptchaExtras, TurnstileExtras } from "../types.js";
 import { Locale } from "../utils/locale.js";
 export declare class Solver {
     private _token;
@@ -59,16 +59,58 @@ export declare class Solver {
      * @param extra  The extra data to send to the solver.
      * @returns Captcha result.
      */
-    imageCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult>;
-    textCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult>;
-    recaptchaV2(googlekey: string, pageurl: string, extra?: RecaptchaV2Extras): Promise<CaptchaResult>;
-    hcaptcha(sitekey: string, pageurl: string, extra?: HCaptchaExtras): Promise<CaptchaResult>;
-    geetest(gt: string, challenge: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult>;
-    geetestv4(sitekey: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult | GeetestV4Result>;
-    funCaptcha(publickey: string, pageurl: string, serviceurl?: string, extra?: FunCaptchaExtras): Promise<CaptchaResult>;
-    rotateCaptcha(image: Base64String | Buffer, angle: number | undefined, extra: RotateCaptchaExtras): Promise<CaptchaResult>;
-    keyCaptcha(sscUserId: string, sscSessionId: string, sscWebserverSign: string, sscWebserverSign2: string, pageurl: string, extra?: KeyCaptchaExtras): Promise<CaptchaResult>;
-    recaptchaV3(sitekey: string, pageurl: string, extra?: RecaptchaV3Extras): Promise<CaptchaResult>;
-    recaptchaEnterprise(sitekey: string, pageurl: string, extra?: RecaptchaV3Extras): Promise<CaptchaResult>;
+    imageCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult<String>>;
+    textCaptcha(image: Base64String | Buffer, extra?: ImageCaptchaExtras): Promise<CaptchaResult<String>>;
+    /**
+     * Solves a recaptchaV2 captcha.
+     * @param googlekey The google key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    recaptchaV2(googlekey: string, pageurl: string, extra?: RecaptchaV2Extras): Promise<CaptchaResult<String>>;
+    /**
+     * Solves a hCaptcha captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    hcaptcha(sitekey: string, pageurl: string, extra?: HCaptchaExtras): Promise<CaptchaResult<HCaptchaResult>>;
+    /**
+     * Solves a GeeTest captcha.
+     * @param gt The gt key to solve.
+     * @param challenge The challenge key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    geetest(gt: string, challenge: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult<any>>;
+    /**
+     * Solves a GeeTest captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    geetestv4(sitekey: string, pageurl: string, extra?: GeetestExtras): Promise<CaptchaResult<GeetestV4Result>>;
+    /**
+     * Solves a funCaptcha captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    funCaptcha(publickey: string, pageurl: string, serviceurl?: string, extra?: FunCaptchaExtras): Promise<CaptchaResult<unknown>>;
+    /**
+     * Solves a rotate captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
+    rotateCaptcha(image: Base64String | Buffer, angle: number | undefined, extra: RotateCaptchaExtras): Promise<CaptchaResult<any>>;
+    keyCaptcha(sscUserId: string, sscSessionId: string, sscWebserverSign: string, sscWebserverSign2: string, pageurl: string, extra?: KeyCaptchaExtras): Promise<CaptchaResult<any>>;
+    recaptchaV3(sitekey: string, pageurl: string, extra?: RecaptchaV3Extras): Promise<CaptchaResult<any>>;
+    recaptchaEnterprise(sitekey: string, pageurl: string, extra?: RecaptchaV3Extras): Promise<CaptchaResult<any>>;
+    turnstile(sitekey: string, extra?: TurnstileExtras): Promise<CaptchaResult<any>>;
 }
 //# sourceMappingURL=solver.d.ts.map

@@ -84,6 +84,14 @@ export interface RecaptchaV3Extras extends GenericObject {
 
 }
 
+export interface TurnstileExtras {
+    cloudflare?: {
+        action: string,
+        data: string,
+        pagedata: string
+    }
+}
+
 // Specialized results //
 export interface GeetestV4Result {
     captcha_id: string,
@@ -97,4 +105,10 @@ export interface GeetestResult {
     geetest_challenge: string,
     geetest_validate: string,
     geetest_seccode: string
+}
+
+export interface HCaptchaResult {
+    token: string,
+    respKey: string,
+    useragent: string
 }

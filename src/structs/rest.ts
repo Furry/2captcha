@@ -1,3 +1,9 @@
+/* rest.ts
+   * This file contains the Rest class, which is used to create a RESTful API to facilitate pingback requests.
+   * Ideally this will be an optional, plug and play feature for use with services like NGROK, or if the server
+   * running the code has a public IP address.
+*/
+
 import * as http from "http";
 import * as https from "https";
 import { Pingback } from "../index.js";

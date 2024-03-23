@@ -17,10 +17,10 @@ dotenv.config();
 //     });
 // })
 
-(async () => {
-    const solver = new Captcha.Solver(process.env.TOKEN);
+// (async () => {
+//     const solver = new Captcha.Solver(process.env.TOKEN);
 
-    const result = await solver.turnstile("0x4AAAAAAAC3DHQFLr1GavRN");
+//     const result = await solver.turnstile("0x4AAAAAAAC3DHQFLr1GavRN");
 
-    console.log(result)
-})()
+//     console.log(result)
+// })()

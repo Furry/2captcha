@@ -18,16 +18,16 @@ function createUUID() {
     });
 }
 
-(async () => {
-    const solver = new Captcha.Solver(process.env.TOKEN);
+// (async () => {
+//     const solver = new Captcha.Solver(process.env.TOKEN);
 
-    const data = await fetch("https://2captcha.com/demo/geetest").then((res) => res.json());
+//     const data = await fetch("https://2captcha.com/demo/geetest").then((res) => res.json());
 
-    // Using geetest's official demo (https://geetest.com/en/demo)
-    const result = await solver.geetest(data.gt, data.challenge, "https://2captcha.com/demo/geetest")
-    console.log(result);
-    // const result = await solver.geetestv4("050cffef4ae57b5d5e529fea9540b0d1", "https://www.geetest.com/en/demo");
-})()
+//     // Using geetest's official demo (https://geetest.com/en/demo)
+//     const result = await solver.geetest(data.gt, data.challenge, "https://2captcha.com/demo/geetest")
+//     console.log(result);
+//     // const result = await solver.geetestv4("050cffef4ae57b5d5e529fea9540b0d1", "https://www.geetest.com/en/demo");
+// })()
 
 // describe("geetest", async () => {
 //     const solver = new Captcha.Solver(process.env.TOKEN);

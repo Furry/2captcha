@@ -1,7 +1,8 @@
 import {
     Base64String, CaptchaResult, FunCaptchaExtras, GeetestExtras,
+    GeetestResult,
     GeetestV4Result,
-    GenericObject, HCaptchaExtras, ImageCaptchaExtras,
+    GenericObject, HCaptchaExtras, HCaptchaResult, ImageCaptchaExtras,
     KeyCaptchaExtras,
     PendingCaptcha,
     PendingCaptchaStorage,
@@ -55,7 +56,6 @@ export class Solver {
     // Utility Methods //
     /////////////////////
     private async get(url: string, query: GenericObject) {
-        console.log(url + toQueryString(query));
         const response = await fetch(url + toQueryString(query), {
             method: "GET",
             headers: {
@@ -289,7 +289,7 @@ export class Solver {
      * @param extra Any extra parameters to send to the solver.
      * @returns Captcha result.
      */
-    public async hcaptcha(sitekey: string, pageurl: string, extra: HCaptchaExtras = {}): Promise<CaptchaResult<any>> {
+    public async hcaptcha(sitekey: string, pageurl: string, extra: HCaptchaExtras = {}): Promise<CaptchaResult<HCaptchaResult>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -309,7 +309,7 @@ export class Solver {
      * @param extra Any extra parameters to send to the solver.
      * @returns Captcha result.
      */
-    public async geetest(gt: string, challenge: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult<any>> {
+    public async geetest(gt: string, challenge: string, pageurl: string, extra: GeetestExtras = {}): Promise<CaptchaResult<GeetestResult>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
@@ -424,12 +424,12 @@ export class Solver {
         return this.registerPollEntry(c.request);
     }
 
-    
-    public async turnstile(sitekey: string, extra: TurnstileExtras): Promise<CaptchaResult<any>> {
+
+    public async turnstile(sitekey: string, proxied: boolean, extra: TurnstileExtras = {}): Promise<CaptchaResult<any>> {
         const c = await this.get(this.in, {
             ...extra,
             ...this.defaults,
-            method: "turnstile",
+            method: proxied ? "TurnstileTask" : "TurnstileTaskProxyless",
             sitekey: sitekey
         })
 

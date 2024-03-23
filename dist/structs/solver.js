@@ -34,7 +34,6 @@ export class Solver {
     // Utility Methods //
     /////////////////////
     async get(url, query) {
-        console.log(url + toQueryString(query));
         const response = await fetch(url + toQueryString(query), {
             method: "GET",
             headers: {
@@ -156,7 +155,15 @@ export class Solver {
                 default:
                     captcha.resolve({
                         id: id,
-                        data: state
+                        // Parse the JSON if it's valid, otherwise return the string.
+                        data: (() => {
+                            try {
+                                return JSON.parse(state);
+                            }
+                            catch (_) {
+                                return state;
+                            }
+                        })()
                     });
                     delete this._pending[id];
                     break;
@@ -177,6 +184,7 @@ export class Solver {
             polls: 0
         };
         captchaPromiseObject.promise = new Promise((resolve, reject) => {
+            // @ts-ignore
             captchaPromiseObject.resolve = resolve;
             captchaPromiseObject.reject = reject;
         });
@@ -187,6 +195,7 @@ export class Solver {
                 this.getSolutions();
             }, 1000);
         }
+        // @ts-ignore
         return captchaPromiseObject.promise;
     }
     //////////////////////
@@ -211,6 +220,13 @@ export class Solver {
     async textCaptcha(image, extra = {}) {
         return this.imageCaptcha(image, extra);
     }
+    /**
+     * Solves a recaptchaV2 captcha.
+     * @param googlekey The google key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async recaptchaV2(googlekey, pageurl, extra = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -221,6 +237,13 @@ export class Solver {
         });
         return this.registerPollEntry(c.request);
     }
+    /**
+     * Solves a hCaptcha captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async hcaptcha(sitekey, pageurl, extra = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -231,6 +254,14 @@ export class Solver {
         });
         return this.registerPollEntry(c.request);
     }
+    /**
+     * Solves a GeeTest captcha.
+     * @param gt The gt key to solve.
+     * @param challenge The challenge key to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async geetest(gt, challenge, pageurl, extra = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -242,6 +273,13 @@ export class Solver {
         });
         return this.registerPollEntry(c.request);
     }
+    /**
+     * Solves a GeeTest captcha.
+     * @param sitekey The sitekey to solve.
+     * @param pageurl URL of the page the captcha appears on.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async geetestv4(sitekey, pageurl, extra = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -252,6 +290,12 @@ export class Solver {
         });
         return this.registerPollEntry(c.request);
     }
+    /**
+     * Solves a funCaptcha captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async funCaptcha(publickey, pageurl, serviceurl, extra = {}) {
         const c = await this.get(this.in, {
             ...extra,
@@ -264,6 +308,12 @@ export class Solver {
         });
         return this.registerPollEntry(c.request);
     }
+    /**
+     * Solves a rotate captcha.
+     * @param url The URL to solve.
+     * @param extra Any extra parameters to send to the solver.
+     * @returns Captcha result.
+     */
     async rotateCaptcha(image, angle = 40, extra) {
         const data = toBase64(image);
         const c = await this.post(this.in, {
@@ -307,6 +357,15 @@ export class Solver {
             enterprise: "1",
             sitekey: sitekey,
             pageurl: pageurl
+        });
+        return this.registerPollEntry(c.request);
+    }
+    async turnstile(sitekey, extra = {}) {
+        const c = await this.get(this.in, {
+            ...extra,
+            ...this.defaults,
+            method: "turnstile",
+            sitekey: sitekey
         });
         return this.registerPollEntry(c.request);
     }

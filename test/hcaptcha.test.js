@@ -11,7 +11,7 @@ describe("hCaptcha Test", () => {
     it("Should return a solve for the hcaptcha", async () => {
         // Using https://vastus.github.io/login for HCaptcha
         const captcha = await solver.hcaptcha("e1715201-770b-4f61-87da-523133844aec", "https://vastus.github.io/login");
-        expect(captcha.data.length).to.greaterThan(256);
+        expect(captcha.data.respKey.length).to.greaterThan(256);
     });
 
     it("Should error for invalid key", async () => {
