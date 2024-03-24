@@ -233,7 +233,8 @@ export class Solver {
      * Solves an image based captcha
      * @param image The image to solve.
      * @param extra  The extra data to send to the solver.
-     * @returns Captcha result.
+     * @returns {Promise<CaptchaResult<{text: string}>>}
+     * @throws {SolverError}
      */
     public async imageCaptcha(image: Base64String | Buffer, extras: ImageCaptchaExtras = {}): Promise<CaptchaResult<{text: string}>> {
         const cid = await this.newTask({
@@ -252,6 +253,8 @@ export class Solver {
      * @param comment {String} The comment to solve.
      * @param language {LanguagePool} The locale to solve the captcha in.
      * @returns {CaptchaResult<DefaultCaptcha>}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<{text: string}>>}
      * @example
      * <Solver>.textCaptcha("What is the color of the sky?", "en").then((res) => {
      *   console.log(res.data);
@@ -273,6 +276,8 @@ export class Solver {
      * Solves a rotate captcha where you are required to rotate an image to align it.
      * @param image The image to rotate.
      * @param extras {RotateCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<RotateCaptchaResult>>}
      */
     public async rotateCaptcha(image: Base64String | Buffer, extras: RotateCaptchaExtras = {}): Promise<CaptchaResult<RotateCaptchaResult>> {
         const cid = await this.newTask({
@@ -289,6 +294,8 @@ export class Solver {
     /**
      * Solve a captcha where you have to click on points inside an image.
      * @param image
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<CoordinateCaptchaResult>>}
      */
     public async CoordinatesCaptcha(image: Base64String | Buffer, extras: CoordinatesTaskExtras = {}): Promise<CaptchaResult<CoordinateCaptchaResult>> {
         const cid = await this.newTask({
@@ -307,6 +314,8 @@ export class Solver {
      * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
      * @param image The image to solve for.
      * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<GridCaptchaResult>>}
      */
     public async gridCaptcha(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<GridCaptchaResult>> {
         const cid = await this.newTask({
@@ -325,6 +334,8 @@ export class Solver {
      * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
      * @param image The image to solve for.
      * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<DrawAroundResult>>}
      */
     public async drawAround(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<DrawAroundResult>> {
         const cid = await this.newTask({
@@ -343,6 +354,8 @@ export class Solver {
      * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
      * @param image The image to solve for.
      * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<BoundingBoxResult>>}
      */
     public async boundingBox(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<BoundingBoxResult>> {
         const cid = await this.newTask({
@@ -361,6 +374,9 @@ export class Solver {
      * Max of 1MB file size, MP3 format only.
      * @param image The image to solve for.
      * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<{token: string}>>}
+     * 
      */
     public async audioTask(
         audio: Base64String | Buffer,
@@ -383,7 +399,8 @@ export class Solver {
      * @param pageurl {String} URL of the page the captcha appears on.
      * @param proxied {Boolean} Whether to use a proxy to solve the captcha.
      * @param extra {RecaptchaV2Extras | ProxiedCaptchaExtras?} Any extra parameters to send to the solver.
-     * @returns Captcha result.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<RecaptchaResult>>}
      */
     public async recaptchaV2<T extends boolean>(
         sitekey: string, pageurl: string, 
@@ -410,7 +427,8 @@ export class Solver {
      * @param sitekey {String} The google key to solve.
      * @param pageurl {String} URL of the page the captcha appears on.
      * @param extra {RecaptchaV3Extras} Any extra parameters to send to the solver.
-     * @returns Captcha result.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<RecaptchaResult>>}
      */
     public async recaptchaV3(sitekey: string, pageurl: string, extras: RecaptchaV3Extras): Promise<CaptchaResult<RecaptchaResult>> {
         const cid = await this.newTask({
@@ -431,6 +449,8 @@ export class Solver {
      * @param pageurl URL of the page the captcha appears on.
      * @param extra Any extra parameters to send to the solver.
      * @returns Captcha result.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<HCaptchaResult>>}
      */
     public async hcaptcha<T extends boolean>(
         sitekey: string, pageurl: string, 
@@ -457,7 +477,8 @@ export class Solver {
      * @param challenge The challenge key to solve.
      * @param proxied Whether to use a proxy to solve the captcha.
      * @param extra Any extra parameters to send to the solver.
-     * @returns Captcha result.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<GeetestResult>>}
      */
     public async geetest(pageurl: string, gt: string, challenge: string, proxied = false, extra: GeetestExtrasV3 | GeetestExtrasV4): Promise<CaptchaResult<GeetestResult>> {
         const cid = await this.newTask({
@@ -480,6 +501,8 @@ export class Solver {
      * @param cloudflare {Boolean} If the captcha apperas on a cloudflare page.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extra {TurnstileDefault | CloudflareTurnstile? | ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<TurnstileResult>>}
      */
     public async turnstile<T extends boolean>(
         pageurl: string, 
@@ -505,6 +528,8 @@ export class Solver {
      * @param sitekey {String} The key of the captcha
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {CloudflareTurnstile | TurnstileDefault | ProxiedCaptchaExtras}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<TurnstileResult>>}
      */
     public async cloudflareTurnstile<T extends boolean>(
         pageurl: string, sitekey: string, 
@@ -529,6 +554,8 @@ export class Solver {
      * @param sitekey {String} The key of the captcha.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {CapyTaskExtras | ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<CapyTaskResult>>}
      */
     public async capypuzzle<T extends boolean>(
         pageurl: string, sitekey: string,
@@ -551,6 +578,8 @@ export class Solver {
      * Solves a KeyCaptcha.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {KeyCaptcha | ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<KeyCaptcha>>}
      */
     public async keycaptcha<T extends boolean>(
         proxied: T = false as T,
@@ -570,6 +599,8 @@ export class Solver {
      * Solves a Lemin Puzzle Captcha.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {LeminTaskExtras | ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<LeminCaptchaResult>>}
      */
     public async leminPuzzle<T extends boolean>(
         siteurl: string, captchaId: string, divId: string,
@@ -597,6 +628,8 @@ export class Solver {
      * @param context {String} The context of the captcha.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {AmazonTaskExtras | ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<AmazonCaptchaResult>>}
      */
     public async amazonCaptcha<T extends boolean>(
         siteurl: string, sitekey: string,
@@ -625,6 +658,8 @@ export class Solver {
      * @param userAgent {String} The user agent to use when solving the captcha.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<SingleTokenResult>>}
      */
     public async cyberSiARA<T extends boolean>(
         siteurl: string, masterurlid: string, userAgent: string, 
@@ -651,6 +686,8 @@ export class Solver {
      * @param surl {String} The sitekey value found in the page's code.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<SingleTokenResult>>}
      */
     public async mtCaptcha<T extends boolean>(
         siteurl: string, sitekey: string, 
@@ -675,13 +712,14 @@ export class Solver {
      * @param miserykey {String} The value of `CUTCAPTCHA_MISERY_KEY` variable defined on page. Ironic.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {ProxiedCaptchaExtras?}
-     * @returns 
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<SingleTokenResult>>}
      */
     public async cutCaptcha<T extends boolean>(
         siteurl: string, miserykey: string,
         proxied: T = false as T,
         extras: T extends true ? ProxiedCaptchaExtras : {}
-    ) {
+    ): Promise<CaptchaResult<SingleTokenResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "CutCaptchaTask" : "CutCaptchaTaskProxyless",
@@ -700,6 +738,7 @@ export class Solver {
      * @param siteurl The full URL of the target page where the captcha is shown.
      * @param captchaurl The value of the src pramater for the iframe element containing the captcha.
      * @param extras {DataDomeExtras}
+     * @throws {SolverError}
      * @returns {Promise<CaptchaResult<DataDomeCaptchaResult>>}
      */
     public async datadome(siteurl: string, captchaurl: string, extras: DataDomeExtras): Promise<CaptchaResult<DataDomeCaptchaResult>> {
@@ -721,12 +760,14 @@ export class Solver {
      * @param sitekey {String} The value of `data-sitekey` attribute on a captcha's div element.
      * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
      * @param extras {ProxiedCaptchaExtras?}
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<SingleTokenResult>>}
      */
     public async friendlyCaptcha<T extends boolean>(
         siteurl: string, sitekey: string,
         proxied: T = false as T,
         extras: T extends true ? ProxiedCaptchaExtras : {} = {} as any
-    ) {
+    ): Promise<CaptchaResult<SingleTokenResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "FriendlyCaptchaTask" : "FriendlyCaptchaTaskProxyless",

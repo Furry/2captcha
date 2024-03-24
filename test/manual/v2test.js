@@ -8,8 +8,12 @@ dotenv.config();
 (async () => {
     const solver = new Captcha.Solver(process.env.TOKEN);
 
-    const result = await solver.recaptchaV2("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/");
+    try {
+        await solver.recaptchaV2("Invalid Key", "https://patrickhlauke.github.io/recaptcha/");
+    } catch (e) {
+        console.log(e)
+        // expect(e.message).to.equal("ERROR_WRONG_GOOGLEKEY");
+    }
 
-
-    console.log(result)
+    // console.log(result)
 })()
