@@ -8,10 +8,8 @@ dotenv.config();
 (async () => {
     const solver = new Captcha.Solver(process.env.TOKEN);
 
-    const imageBase64 = fs.readFileSync("./test/resources/doughnut.png", "base64");
-    const result = await solver.drawAround(imageBase64, {
-        comment: "Draw a circle around what does not fit in."
-    });
+    const result = await solver.recaptchaV2("6Ld2sf4SAAAAAKSgzs0Q13IZhY02Pyo31S2jgOB5", "https://patrickhlauke.github.io/recaptcha/");
+
 
     console.log(result)
 })()

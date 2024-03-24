@@ -27,6 +27,7 @@ import {
     PollResult,
     ProxiedCaptchaExtras,
     RecaptchaV2Extras,
+    RecaptchaResult,
     RecaptchaV3Extras,
     RotateCaptchaExtras,
     RotateCaptchaResult,
@@ -389,7 +390,7 @@ export class Solver {
         proxied: T = false as T,
         enterprise: boolean = false,
         extras: T extends false ? RecaptchaV2Extras : RecaptchaV2Extras | ProxiedCaptchaExtras)
-        : Promise<CaptchaResult<String>> {
+        : Promise<CaptchaResult<RecaptchaResult>> {
 
         const cid = await this.newTask({
             task: {
@@ -411,7 +412,7 @@ export class Solver {
      * @param extra {RecaptchaV3Extras} Any extra parameters to send to the solver.
      * @returns Captcha result.
      */
-    public async recaptchaV3(sitekey: string, pageurl: string, extras: RecaptchaV3Extras): Promise<CaptchaResult<RecaptchaV3Extras>> {
+    public async recaptchaV3(sitekey: string, pageurl: string, extras: RecaptchaV3Extras): Promise<CaptchaResult<RecaptchaResult>> {
         const cid = await this.newTask({
             task: {
                 type: "RecaptchaV3TaskProxyless",

@@ -314,3 +314,8 @@ export interface BoundingBoxResult {
         "yMax": number
     }[]
 }
+
+export interface RecaptchaResult {
+    gRecaptchaResponse: string
+    token: string
+}
