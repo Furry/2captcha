@@ -1,18 +1,16 @@
 import { Locale } from "../utils/locale.js";
 
 export class SolverError extends Error {
-    constructor(message: string, locale: Locale) {
+    constructor(message: string, public id?: number, public code?: string, locale?: Locale) {
         super(message);
         this.name = "Solver Error";
     }
 
-    public get message(): string {
-        return this.message;
-    }
-
-    public static from(err: string, locale: Locale) {
-        return new SolverError(err, locale);
-    }
+    // public get message(): string {
+    //     console.log("HIIIII")
+    //     console.log(this.message)
+    //     return this.message;
+    // }
 }
 
 export class NetError extends Error {

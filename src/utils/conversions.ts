@@ -26,18 +26,19 @@ export function fromQueryString(query: string): GenericObject {
     }
 }
 
-export function toBase64(object: any): string {
+
+export function toBase64(object: any, type: "base64" | "base64url" = "base64"): string {
     if (!isNode) {
         // If the platform isn't NodeJS, we'll assume this is a b64 string already.
         return object;
     } else if (!!Buffer && Buffer.isBuffer(object)) {
         // We know it's a buffer, so convert to b64.
-        return object.toString("base64");
+        return object.toString(type);
     } else if (existsSync(object)) {
         // Only option left is a file. Read it into a buffer, and convert to b64.
         // I'm reading it to a buffer first to make sure there's no encoding issues.
         return Buffer.from(readFileSync(object, "utf8"))
-            .toString("base64");
+            .toString(type);
     } else {
         // Hopefully it's already base64
         return object;

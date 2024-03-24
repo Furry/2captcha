@@ -1,12 +1,13 @@
 import {
     AmazonCaptchaResult,
     AmazonTaskExtras,
-    Base64String, CaptchaResult,
+    Base64String, BoundingBoxResult, CaptchaResult,
     CapyTaskExtras,
     CapyTaskResult,
     CloudflareTurnstile,
     CoordinateCaptchaResult,
     CoordinatesTaskExtras,
+    CreatedTaskResponse,
     DataDomeCaptchaResult,
     DataDomeExtras,
     DrawAroundResult,
@@ -22,6 +23,8 @@ import {
     LeminTaskExtras,
     PendingCaptcha,
     PendingCaptchaStorage,
+    PollError,
+    PollResult,
     ProxiedCaptchaExtras,
     RecaptchaV2Extras,
     RecaptchaV3Extras,
@@ -34,6 +37,7 @@ import {
 } from "../types.js";
 
 import { toBase64, toQueryString } from "../utils/conversions.js";
+import locale from "../utils/locale.js";
 import L, { Locale } from "../utils/locale.js";
 import fetch, { isNode } from "../utils/platform.js";
 import { NetError, SolverError } from "./error.js";
@@ -58,7 +62,7 @@ export class Solver {
     }
 
     private get api(): string {
-        return "https://api.2captcha.com/createTask"
+        return "https://api.2captcha.com/"
     }
 
     private get in(): string { 
@@ -80,33 +84,63 @@ export class Solver {
     /////////////////////
     // Utility Methods //
     /////////////////////
-    private async get(url: string, query: GenericObject) {
-        const response = await fetch(url + toQueryString(query), {
+    private async poll(captcha: PendingCaptchaStorage) {
+        try {
+            const response = await fetch(this.api + "/getTaskResult", {
+                method: "POST",
+                headers: {
+                    "User-Agent": this._userAgent,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    clientKey: this._token,
+                    taskId: captcha.captchaId
+                })
+            }).then(res => res.json() as Promise<PollResult | PollError>);
+
+            if (response.errorId != 0) {
+                return captcha.reject(new SolverError(response.errorCode, response.errorId, response.errorCode, this._locale))
+            }
+
+            switch (response.status) {
+                case "ready":
+                    return captcha.resolve(response as unknown as CaptchaResult<any>)
+                    break;
+                case "processing":
+                    captcha.polls++;
+                default:
+                    captcha["interval"] = setTimeout(() => {
+                        this.poll(captcha);
+                    }, 5000)
+            }
+        } catch (err) { // Likely server or API error if no code was received.
+            captcha["interval"] = setTimeout(() => {
+                this.poll(captcha);
+            }, 10000)
+        }
+    }
+
+    private async get(endpoint: string) {
+        return await fetch(this.api, {
             method: "GET",
             headers: {
                 "User-Agent": this._userAgent,
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+                "Content-Type": "application/json"
+            }, 
         }).catch(err => {
             throw new NetError(err, this._locale);
-        })
+        });
 
-        const json = await response.json();
-
-        if (json.status == "0") {
-            throw new SolverError(json.request, this._locale);
-        } else {
-            return json;
-        }
     }
 
     /**
      * Registers a new task to the 2captcha API, queuing it for automatic polling.
      * @param body The v2 task to send to 2captcha. (https://2captcha.com/api-docs/text)
-     * @returns none
      */
     protected async newTask(body: Task) {
-        const response = await fetch(this.api, {
+        (body as any)["soft_id"] = 3316;
+
+        const response = await fetch(this.api + "/createTask", {
             method: "POST",
             headers: {
                 "User-Agent": this._userAgent,
@@ -114,8 +148,8 @@ export class Solver {
             },
             body: JSON.stringify({
                 clientKey: this._token,
-                ...body
-                // afil token here
+                ...body,
+                soft_id: 3316
             })
         }).catch(err => {
             throw new NetError(err, this._locale);
@@ -126,10 +160,9 @@ export class Solver {
         if (json.errorId == 0) {
             return json.taskId;
         } else {
-            throw new SolverError(json.request, this._locale);
+            throw new SolverError(json.errorDescription, json.id, json.errorCode, this._locale);
         }
     }
-
 
     /**
      * Gets a list of all pending captchas.
@@ -157,88 +190,9 @@ export class Solver {
      * @returns {Promise<number>} The current balance.
      */
     public async balance(): Promise<number> {
-        return await this.get(this.out, {
-            ...this.defaults, action: "getbalance"
-        }).then(res => res.request) as number;
-    }
-
-    /**
-     * Gets all registered Pingback Domains
-     * @returns {Promise<PingbackDomain[]>} The domains
-     */
-    public async getPingbackDomains(): Promise<string[]> {
-        return await this.get(this.out, {
-            ...this.defaults, action: "get_pingback"
-        }).then(res => res.request ? res.request : []);
-    }
-
-    /**
-     * Registers a new pingback domain to the account.
-     * @param domain The domain to add
-     * @returns {Promise<boolean>} Whether the domain was added. 
-     */
-    public async addPingbackDomain(domain: string): Promise<boolean> {
-        return await this.get(this.out, {
-            ...this.defaults, action: "add_pingback", addr: domain
-        }).then(res => res.request);
-    }
-
-    /**
-     * Determines the current price of a solved captcha.
-     * @param captchaId The captcha ID to find the fee of.
-     * @returns {Promise<number>} The fee of the captcha type.
-     */
-    public async priceOfCaptcha(captchaId: string): Promise<number> {
-        return await this.get(this.out, {
-            ...this.defaults, action: "get2", id: captchaId
-        }).then(res => res.request);
-    }
-
-    /**
-     * Resolves all possible promises for outstanding captchas.
-     */
-    private async getSolutions(): Promise<void> {
-        const pendingIds = Object.keys(this._pending);
-        if (pendingIds.length == 0) {
-            // remove the interval.
-            clearInterval(this._interval as number);
-            return;
-        }
-
-        // Captcha solutions from this endpoint are returned as a string seperated by a vertical bar. 
-        // Eg. "263s2v|CAPCHA_NOT_READY|365312" and so on.
-        const solutions = await this.get(this.out, {
-            ...this.defaults, action: "get", ids: pendingIds.join(",")
-        }).then((res) => res.request);
-
-        solutions.split("|").forEach((state: string, index: number) => {
-            const id = pendingIds[index];
-            const captcha = this._pending[id];
-
-            switch (state) {
-                case "CAPCHA_NOT_READY":
-                    // Increment the polls for the captcha by one.
-                    captcha.polls++;
-                    break;
-                case "ERROR_CAPTCHA_UNSOLVABLE":
-                    captcha.reject(new SolverError(state, this._locale));
-                    delete this._pending[id];
-                    break;
-                default:
-                    captcha.resolve({
-                        id: id,
-                        // Parse the JSON if it's valid, otherwise return the string.
-                        data: (() => {
-                            try {
-                                return JSON.parse(state)
-                            } catch (_) {
-                                return state; }
-                        })()
-                    });
-                    delete this._pending[id];
-                    break;
-            };
-        });
+        return await this.get("/getBalance")
+            .then(res => res.json())
+            .then(res => res.balance);
     }
 
     /**
@@ -247,10 +201,10 @@ export class Solver {
      * @param captchaId The captcha ID to get the solution of.
      * @returns The resulting captcha promise.
      */
-    private async registerPollEntry<T>(captchaId: string): Promise<CaptchaResult<T>> {
+    private async registerPollEntry<T>(task: number, delay = 5000): Promise<CaptchaResult<T>> {
         const captchaPromiseObject: PendingCaptchaStorage = {
             startTime: Date.now(),
-            captchaId: captchaId,
+            captchaId: task,
             polls: 0
         } as any;
 
@@ -261,14 +215,12 @@ export class Solver {
         });
 
         // Add the captcha to the pending list.
-        this._pending[captchaId] = captchaPromiseObject;
+        this._pending[task] = captchaPromiseObject;
 
-        if (this._interval == null) {
-            this._interval = setInterval(() => {
-                this.getSolutions();
-            }, 1000) as unknown as number;
-        }
-
+        captchaPromiseObject["interval"] = setTimeout(() => {
+            this.poll(captchaPromiseObject)
+        }, delay) as unknown as number;
+     
         // @ts-ignore
         return captchaPromiseObject.promise;
     }
@@ -282,7 +234,7 @@ export class Solver {
      * @param extra  The extra data to send to the solver.
      * @returns Captcha result.
      */
-    public async imageCaptcha(image: Base64String | Buffer, extras: ImageCaptchaExtras = {}): Promise<CaptchaResult<String>> {
+    public async imageCaptcha(image: Base64String | Buffer, extras: ImageCaptchaExtras = {}): Promise<CaptchaResult<{text: string}>> {
         const cid = await this.newTask({
             task: {
                 type: "ImageToTextTask",
@@ -304,7 +256,7 @@ export class Solver {
      *   console.log(res.data);
      * })
      */
-    public async textCaptcha(comment: string, language: LanguagePool = "en"): Promise<CaptchaResult<any>> {
+    public async textCaptcha(comment: string, language: LanguagePool = "en"): Promise<CaptchaResult<{text: string}>> {
         const cid = await this.newTask({
             task: {
                 type: "TextCaptchaTask",
@@ -391,11 +343,11 @@ export class Solver {
      * @param image The image to solve for.
      * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
      */
-    public async boundingBox(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<DrawAroundResult>> {
+    public async boundingBox(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<BoundingBoxResult>> {
         const cid = await this.newTask({
             task: {
                 type: "BoundingBoxTask",
-                body: toBase64(image),
+                body: image,
                 ...extras
             }
         })
@@ -412,7 +364,7 @@ export class Solver {
     public async audioTask(
         audio: Base64String | Buffer,
         lang: "en" | "fr" | "de" | "el" | "pt" | "ru" = "en"
-    ): Promise<CaptchaResult<{text: string}>> {
+    ): Promise<CaptchaResult<{token: string}>> {
         const cid = await this.newTask({
             task: {
                 type: "AudioTask",

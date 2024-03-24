@@ -10,6 +10,7 @@ export interface PendingCaptchaStorage extends PendingCaptcha {
     resolve: (value: CaptchaResult<unknown>) => void;
     reject: (error: SolverError) => void;
     promise: Promise<CaptchaResult<unknown>>;
+    interval: any;
 }
 
 export type GenericObject = { [key: string | number]: string | number | any[] | GenericObject };
@@ -35,6 +36,23 @@ export type Base64String = string;
 export type LanguagePool =
 "en"|"ru"|"es"|"pt"|"uk"|"vi"|"fr"|"id"|"ar"|"ja"|"tr"|"de"|"zh"|"fil"|"pl"|"th"|"it"|"nl"|"sk"|"bg"|"ro"|"hu"|"ko"|"cs"|"az"|"fa"|"bn"|"el"|"lt"|"lv"|"sv"|"sr"|"hr"|"he"|"hi"|"nb"|"sl"|"da"|"uz"|"fi"|"ca"|"ka"|"ms"|"te"|"et"|"ml"|"be"|"kk"|"mr"|"ne"|"my"|"bs"|"hy"|"mk"| "pa"
 
+export interface PollResult {
+    errorId: 0,
+    status: string,
+    solution?: GenericObject
+}
+
+export interface PollError {
+    errorId: 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15,
+    errorCode: string,
+    errorDescription: string
+}
+
+export interface CreatedTaskResponse {
+    errorId: 0,
+    taskId: number
+}
+
 export interface Task {
     task: {
         "type": string;
@@ -44,8 +62,14 @@ export interface Task {
 }
 
 export interface CaptchaResult<T> {
-    data: T,
-    id: string
+    errorId: 0,
+    status: "ready",
+    solution: T,
+    cost: string,
+    ip: string,
+    createTime: number,
+    endTime: number,
+    solveCount: number
 }
 
 export interface CaptchaTypes {
@@ -282,8 +306,8 @@ export interface DrawAroundResult {
     "canvas": Coordinates[]
 }
 
-export interface BoundingBoxResut {
-    "bounding_boxes": {
+export interface BoundingBoxResult {
+    bounding_boxes: {
         "xMin": number,
         "xMax": number,
         "yMin": number,

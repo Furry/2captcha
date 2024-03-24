@@ -8,6 +8,10 @@ dotenv.config();
 (async () => {
     const solver = new Captcha.Solver(process.env.TOKEN);
 
-    const result = await solver.textCaptcha("If tomorrow is Saturday, what day is today? (Case Sensitive)");
-    console.log(result);
+    const imageBase64 = fs.readFileSync("./test/resources/doughnut.png", "base64");
+    const result = await solver.drawAround(imageBase64, {
+        comment: "Draw a circle around what does not fit in."
+    });
+
+    console.log(result)
 })()

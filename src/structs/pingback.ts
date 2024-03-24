@@ -64,8 +64,8 @@ export class PingbackClient {
     ////////////////////////
     private async addDomain() {
         // const domains = await this._solver.getPingbackDomains();
-        let x = await this.solver.addPingbackDomain(this._pingbackAddress);
-        console.log(x)
+        // let x = await this.solver.addPingbackDomain(this._pingbackAddress);
+        // console.log(x)
     }
 
     public async listen(port: number) {
