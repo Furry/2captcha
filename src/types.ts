@@ -86,6 +86,31 @@ export interface ImageCaptchaExtras {
     imgInstructions?: string
 }
 
+export interface RotateCaptchaExtras {
+    /** One step rotation angel. */
+    angle?: number,
+    /** A comment shown to workers to help them solve the captcha. */
+    comment?: string,
+    /** An optional image with instructions that will be shown to the worker */
+    imgInstructions?: Base64String
+}
+
+// This is for requiring either a comment or image instruction. //
+export interface GCExtrasBase {
+    rows?: number,
+    columns: number
+}
+export interface GCImageInstruction extends GCExtrasBase {
+    comment?: string,
+    imgInstructions: Base64String
+}
+export interface GCTextInstruction extends GCExtrasBase {
+    imgInstruction?: Base64String,
+    comment: string
+}
+
+
+
 export type RecaptchaApiDomain = "google.com" | "recaptcha.net";
 export interface RecaptchaV2Extras {
     recaptchaDataSValue?: string,
@@ -174,6 +199,13 @@ export interface DataDomeExtras extends ProxiedCaptchaExtras {
     userAgent: string
 }
 
+export interface CoordinatesTaskExtras {
+    /** A comment shown to the workers to assist in solving the captcha. */
+    comment?: string
+    /** An optional image with instructions that will be shown to the workers. */
+    imgInstructions?: Base64String
+}
+
 /////////////////////////
 // Specialized results //
 export interface SingleTokenResult {
@@ -231,4 +263,30 @@ export interface AmazonCaptchaResult {
 
 export interface DataDomeCaptchaResult {
     cookie: string
+}
+
+export interface RotateCaptchaResult {
+    rotate: number
+}
+
+
+export interface GridCaptchaResult {
+    "click": number[]
+}
+
+type Coordinates = {x: number, y: number}[]
+export interface CoordinateCaptchaResult {
+    coordinates: Coordinates 
+}
+export interface DrawAroundResult {
+    "canvas": Coordinates[]
+}
+
+export interface BoundingBoxResut {
+    "bounding_boxes": {
+        "xMin": number,
+        "xMax": number,
+        "yMin": number,
+        "yMax": number
+    }[]
 }

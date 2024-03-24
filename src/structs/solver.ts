@@ -5,12 +5,17 @@ import {
     CapyTaskExtras,
     CapyTaskResult,
     CloudflareTurnstile,
+    CoordinateCaptchaResult,
+    CoordinatesTaskExtras,
     DataDomeCaptchaResult,
     DataDomeExtras,
+    DrawAroundResult,
+    GCImageInstruction,
+    GCTextInstruction,
     GeetestExtrasV3,
     GeetestExtrasV4,
     GeetestResult,
-    GenericObject, HCaptchaExtras, HCaptchaResult, ImageCaptchaExtras,
+    GenericObject, GridCaptchaResult, HCaptchaExtras, HCaptchaResult, ImageCaptchaExtras,
     KeyCaptcha,
     LanguagePool,
     LeminCaptchaResult,
@@ -20,6 +25,8 @@ import {
     ProxiedCaptchaExtras,
     RecaptchaV2Extras,
     RecaptchaV3Extras,
+    RotateCaptchaExtras,
+    RotateCaptchaResult,
     SingleTokenResult,
     Task,
     TurnstileDefault,
@@ -279,7 +286,8 @@ export class Solver {
         const cid = await this.newTask({
             task: {
                 type: "ImageToTextTask",
-                body: toBase64(image)
+                body: toBase64(image),
+                ...extras
             }
         })
 
@@ -303,6 +311,114 @@ export class Solver {
                 comment: comment
             },
             languagePool: language
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a rotate captcha where you are required to rotate an image to align it.
+     * @param image The image to rotate.
+     * @param extras {RotateCaptchaExtras?}
+     */
+    public async rotateCaptcha(image: Base64String | Buffer, extras: RotateCaptchaExtras = {}): Promise<CaptchaResult<RotateCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "RotateTask",
+                body: toBase64(image),
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solve a captcha where you have to click on points inside an image.
+     * @param image
+     */
+    public async CoordinatesCaptcha(image: Base64String | Buffer, extras: CoordinatesTaskExtras = {}): Promise<CaptchaResult<CoordinateCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "CoordinatesTask",
+                body: toBase64(image),
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a grid captcha where you have to click on a grid of images.
+     * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
+     * @param image The image to solve for.
+     * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     */
+    public async gridCaptcha(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<GridCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "GridTask",
+                body: toBase64(image),
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a captcha where you need to draw around an object in an image.
+     * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
+     * @param image The image to solve for.
+     * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     */
+    public async drawAround(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<DrawAroundResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "DrawAroundTask",
+                body: toBase64(image),
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a captcha where you need to draw form a box around an object in an image.
+     * Either a 'imgInstructions' image or a 'comment' in the extras field is required, and inforced by typings.
+     * @param image The image to solve for.
+     * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     */
+    public async boundingBox(image: Base64String | Buffer, extras: GCImageInstruction | GCTextInstruction): Promise<CaptchaResult<DrawAroundResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "BoundingBoxTask",
+                body: toBase64(image),
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Convert recorded audio to text.
+     * Max of 1MB file size, MP3 format only.
+     * @param image The image to solve for.
+     * @param extras {GCImageInstruction | GCTextInstruction} Extra parameters to send to the solver.
+     */
+    public async audioTask(
+        audio: Base64String | Buffer,
+        lang: "en" | "fr" | "de" | "el" | "pt" | "ru" = "en"
+    ): Promise<CaptchaResult<{text: string}>> {
+        const cid = await this.newTask({
+            task: {
+                type: "AudioTask",
+                body: toBase64(audio),
+                language: lang
+            }
         })
 
         return this.registerPollEntry(cid);
