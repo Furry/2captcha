@@ -1,17 +1,29 @@
 import {
+    AmazonCaptchaResult,
+    AmazonTaskExtras,
     Base64String, CaptchaResult,
+    CapyTaskExtras,
+    CapyTaskResult,
     CloudflareTurnstile,
+    DataDomeCaptchaResult,
+    DataDomeExtras,
     GeetestExtrasV3,
     GeetestExtrasV4,
+    GeetestResult,
     GenericObject, HCaptchaExtras, HCaptchaResult, ImageCaptchaExtras,
+    KeyCaptcha,
     LanguagePool,
+    LeminCaptchaResult,
+    LeminTaskExtras,
     PendingCaptcha,
     PendingCaptchaStorage,
     ProxiedCaptchaExtras,
     RecaptchaV2Extras,
     RecaptchaV3Extras,
+    SingleTokenResult,
     Task,
     TurnstileDefault,
+    TurnstileResult,
 } from "../types.js";
 
 import { toBase64, toQueryString } from "../utils/conversions.js";
@@ -378,7 +390,7 @@ export class Solver {
      * @param extra Any extra parameters to send to the solver.
      * @returns Captcha result.
      */
-    public async geetest(pageurl: string, gt: string, challenge: string, proxied = false, extra: GeetestExtrasV3 | GeetestExtrasV4) {
+    public async geetest(pageurl: string, gt: string, challenge: string, proxied = false, extra: GeetestExtrasV3 | GeetestExtrasV4): Promise<CaptchaResult<GeetestResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "GeeTestTask" : "GeeTestTaskProxyless",
@@ -405,7 +417,7 @@ export class Solver {
         sitekey: string, 
         proxied: T = false as T,
         extra: T extends false ? TurnstileDefault : TurnstileDefault | ProxiedCaptchaExtras
-    ) {
+    ): Promise<CaptchaResult<TurnstileResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "TurnstileTask" : "TurnstileTaskProxyless",
@@ -429,11 +441,227 @@ export class Solver {
         pageurl: string, sitekey: string, 
         proxied: T = false as T, 
         extras: T extends true ? (CloudflareTurnstile | TurnstileDefault | ProxiedCaptchaExtras) : (CloudflareTurnstile | TurnstileDefault)
-    ) {
+    ): Promise<CaptchaResult<TurnstileResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "TurnstileTask" : "TurnstileTaskProxyless",
                 websiteURL: pageurl,
+                websiteKey: sitekey,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a Capy Puzzle Captcha.
+     * @param pageurl {String} The URL of the page the captcha appears on.
+     * @param sitekey {String} The key of the captcha.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {CapyTaskExtras | ProxiedCaptchaExtras?}
+     */
+    public async capypuzzle<T extends boolean>(
+        pageurl: string, sitekey: string,
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras | CapyTaskExtras : CapyTaskExtras 
+    ): Promise<CaptchaResult<CapyTaskResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "CapyTask" : "CapyTaskProxyless",
+                websiteURL: pageurl,
+                websiteKey: sitekey,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a KeyCaptcha.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {KeyCaptcha | ProxiedCaptchaExtras?}
+     */
+    public async keycaptcha<T extends boolean>(
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras | KeyCaptcha : KeyCaptcha
+    ): Promise<CaptchaResult<KeyCaptcha>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "KeyCaptchaTask" : "KeyCaptchaTaskProxyless",
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a Lemin Puzzle Captcha.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {LeminTaskExtras | ProxiedCaptchaExtras?}
+     */
+    public async leminPuzzle<T extends boolean>(
+        siteurl: string, captchaId: string, divId: string,
+        proxied: T = false as T,
+        extras: T extends true ? LeminTaskExtras | ProxiedCaptchaExtras : LeminTaskExtras
+    ): Promise<CaptchaResult<LeminCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                websiteURL: siteurl,
+                captchaId: captchaId,
+                divId: divId,
+                type: proxied ? "LeminTask" : "LeminTaskProxyless",
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves an Amazon Captcha.
+     * @param siteurl {String} The full URL of the target web page.
+     * @param sitekey {String} The key paramater found on the page.
+     * @param iv {String} The value of iv paramater found on the page.
+     * @param context {String} The context of the captcha.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {AmazonTaskExtras | ProxiedCaptchaExtras?}
+     */
+    public async amazonCaptcha<T extends boolean>(
+        siteurl: string, sitekey: string,
+        iv: string, context: string,
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras : AmazonTaskExtras | AmazonTaskExtras
+    ): Promise<CaptchaResult<AmazonCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "AmazonTask" : "AmazonTaskProxyless",
+                websiteURL: siteurl,
+                websiteKey: sitekey,
+                iv: iv,
+                context: context,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a CyberSiARA captcha.
+     * @param siteurl {String} The full URL of the target web page.
+     * @param masterurlid {String} The SlideMasterUrlId found on the page.
+     * @param userAgent {String} The user agent to use when solving the captcha.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {ProxiedCaptchaExtras?}
+     */
+    public async cyberSiARA<T extends boolean>(
+        siteurl: string, masterurlid: string, userAgent: string, 
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras : {}
+    ): Promise<CaptchaResult<SingleTokenResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "AntiCyberSiAraTask" : "AntiCyberSiAraTaskProxyless",
+                websiteURL: siteurl,
+                SlideMasterUrlId: masterurlid,
+                userAgent: userAgent,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a MTCaptcha.
+     * @param siteurl {String} The full URL of target page where the captcha is shown..
+     * @param sitekey {String} The sitekey found  found on the page.
+     * @param surl {String} The sitekey value found in the page's code.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {ProxiedCaptchaExtras?}
+     */
+    public async mtCaptcha<T extends boolean>(
+        siteurl: string, sitekey: string, 
+        proxed: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras : {}
+    ): Promise<CaptchaResult<SingleTokenResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxed ? "MTCaptchaTask" : "MTCaptchaTaskProxyless",
+                websiteURL: siteurl,
+                websiteKey: sitekey,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a CutCaptcha
+     * @param siteurl {String} The full URL of the target page where the captcha is shown.
+     * @param miserykey {String} The value of `CUTCAPTCHA_MISERY_KEY` variable defined on page. Ironic.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {ProxiedCaptchaExtras?}
+     * @returns 
+     */
+    public async cutCaptcha<T extends boolean>(
+        siteurl: string, miserykey: string,
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras : {}
+    ) {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "CutCaptchaTask" : "CutCaptchaTaskProxyless",
+                websiteURL: siteurl,
+                miseryKey: miserykey,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a DataDome captcha using a provided proxy.
+     * This captcha has many several things to be aware of, check out https://2captcha.com/api-docs/datadome-slider-captcha for more information.
+     * @param siteurl The full URL of the target page where the captcha is shown.
+     * @param captchaurl The value of the src pramater for the iframe element containing the captcha.
+     * @param extras {DataDomeExtras}
+     * @returns {Promise<CaptchaResult<DataDomeCaptchaResult>>}
+     */
+    public async datadome(siteurl: string, captchaurl: string, extras: DataDomeExtras): Promise<CaptchaResult<DataDomeCaptchaResult>> {
+        const cid = await this.newTask({
+            task: {
+                type: "DataDomeTask",
+                websiteURL: siteurl,
+                captchaUrl: captchaurl,
+                ...extras
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
+    /**
+     * Solves a FriendlyCaptcha.
+     * @param siteurl {String} The full URL of the target page where the captcha is shown.
+     * @param sitekey {String} The value of `data-sitekey` attribute on a captcha's div element.
+     * @param proxied {Boolean} If the captcha should be solved with a user provided proxy.
+     * @param extras {ProxiedCaptchaExtras?}
+     */
+    public async friendlyCaptcha<T extends boolean>(
+        siteurl: string, sitekey: string,
+        proxied: T = false as T,
+        extras: T extends true ? ProxiedCaptchaExtras : {} = {} as any
+    ) {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "FriendlyCaptchaTask" : "FriendlyCaptchaTaskProxyless",
+                websiteURL: siteurl,
                 websiteKey: sitekey,
                 ...extras
             }

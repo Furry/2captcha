@@ -148,7 +148,38 @@ export interface CloudflareTurnstile {
     pagedata: string
 }
 
+export interface CapyTaskExtras {
+    userAgent: string
+}
+
+export interface KeyCaptcha {
+    websiteURL: string,
+    s_s_c_user_id: string,
+    s_s_c_session_id: string,
+    s_s_c_web_server_sign: string,
+    s_s_c_web_server_sign2: string
+}
+
+export interface LeminTaskExtras {
+    leminApiServerSubdomain: string,
+    userAgent: string
+}
+
+export interface AmazonTaskExtras {
+    challengeScript: string,
+    captchaScript: string
+}
+
+export interface DataDomeExtras extends ProxiedCaptchaExtras {
+    userAgent: string
+}
+
+/////////////////////////
 // Specialized results //
+export interface SingleTokenResult {
+    token: string
+}
+
 export interface GeetestV4Result {
     captcha_id: string,
     lot_number: string,
@@ -158,9 +189,11 @@ export interface GeetestV4Result {
 }
 
 export interface GeetestResult {
-    geetest_challenge: string,
-    geetest_validate: string,
-    geetest_seccode: string
+    captcha_id: string,
+    lot_number: string,
+    pass_token: string,
+    gen_time: string,
+    captcha_output: string
 }
 
 export interface HCaptchaResult {
@@ -172,4 +205,30 @@ export interface HCaptchaResult {
 export interface RecaptchaV3Result {
     gRecaptchaResponse: string,
     token: string
+}
+
+export interface TurnstileResult {
+    token: string,
+    userAgent: string
+}
+
+export interface CapyTaskResult {
+    captchakey: string,
+    challengekey: string,
+    answer: string,
+    respKey: string
+}
+
+export interface LeminCaptchaResult {
+    answer: string,
+    challenge_id: string
+}
+
+export interface AmazonCaptchaResult {
+    captcha_voucher: string,
+    existing_token: string
+}
+
+export interface DataDomeCaptchaResult {
+    cookie: string
 }
