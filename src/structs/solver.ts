@@ -7,7 +7,6 @@ import {
     CloudflareTurnstile,
     CoordinateCaptchaResult,
     CoordinatesTaskExtras,
-    CreatedTaskResponse,
     DataDomeCaptchaResult,
     DataDomeExtras,
     DrawAroundResult,
@@ -156,7 +155,13 @@ export class Solver {
             throw new NetError(err, this._locale);
         })
 
-        const json = await response.json();
+        let json;
+        try {
+            json = await response.json();
+        } catch (e) {
+            let t = await response.text()
+            throw new NetError("UnexpectedHTMLResponse", this._locale);
+        }
 
         if (json.errorId == 0) {
             return json.taskId;
@@ -202,7 +207,7 @@ export class Solver {
      * @param captchaId The captcha ID to get the solution of.
      * @returns The resulting captcha promise.
      */
-    private async registerPollEntry<T>(task: number, delay = 5000): Promise<CaptchaResult<T>> {
+    protected async registerPollEntry<T>(task: number, delay = 5000): Promise<CaptchaResult<T>> {
         const captchaPromiseObject: PendingCaptchaStorage = {
             startTime: Date.now(),
             captchaId: task,

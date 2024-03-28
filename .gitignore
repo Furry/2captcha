@@ -5,3 +5,4 @@ dist/
 # Files
 yarn.lock
 .env
+package-lock.json

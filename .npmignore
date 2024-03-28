@@ -1,0 +1,10 @@
+# Folders
+node_modules/
+src/
+test/
+
+# Files
+.env
+.gitignore
+package-lock.json
+yarn.lock
