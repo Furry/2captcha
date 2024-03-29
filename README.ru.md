@@ -1,16 +1,9 @@
-[English](README.md) | [Spanish](README.es.md) | [中国语文科](README.zh.md) | <b>[Русский](README.ru.md)</b>
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
-</p>
-
-![](https://img.shields.io/npm/v/2captcha-ts)
-![](https://img.shields.io/npm/l/2captcha-ts)
-![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
+[English](README.md) | [中国语文科](README.zh.md) | <b>[Русский](README.ru.md)</b>
 
 # JavaScript модуль для 2Captcha API
 
 ## Описание
-Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha.
+Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha.
 
 Также добавлена поддержка метода `bounding_box`. Метод ограничивающей рамки позволяет размечать данные на изображении. Этот метод можно использовать для разметки наборов данных или выделения любых объектов на изображении в соответствии с заданными инструкциями. Подробнее об использовании *Bounding Box Method* читайте в [документации](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -28,10 +21,10 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ Coordinates (Click Captcha)
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
+- ✅ CyberSiARA
 - ✅ MTCaptcha
 - ✅ Friendly Captcha
 - ✅ Bounding Box Method
@@ -40,10 +33,10 @@
 ## Установка
 
 ```sh
-npm install 2captcha-ts
+npm install @2captcha/captcha-solver
 ```
 ```sh
-yarn add 2captcha-ts
+yarn add @2captcha/captcha-solver
 ```
 
 ## Примеры использования
@@ -51,7 +44,7 @@ yarn add 2captcha-ts
 
 ### reCAPTCHA:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 // Новый экземпляр "solver" со значением вашего ключа 2captcha API
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -70,7 +63,7 @@ solver.recaptcha({
 
 ### hCaptcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.hcaptcha({
@@ -87,7 +80,7 @@ solver.hcaptcha({
 
 ### Arkose Labs FunCaptcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.funCaptcha({
@@ -104,7 +97,7 @@ solver.funCaptcha({
 
 ### Image captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const fs = require("fs")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -128,7 +121,7 @@ solver.imageCaptcha({
 
 ### GeeTest Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // Значение `challenge` является динамическим
@@ -148,7 +141,7 @@ solver.geetest({
 
 ### GeeTest V4 Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.geetestV4({
@@ -165,7 +158,7 @@ solver.geetestV4({
 
 ### Yandex Smart Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.yandexSmart({ 
@@ -182,7 +175,7 @@ solver.yandexSmart({
 
 ### Lemin captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.lemin({
@@ -201,7 +194,7 @@ solver.lemin({
 
 ### Cloudflare Turnstile:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.cloudflareTurnstile({
@@ -218,7 +211,7 @@ solver.cloudflareTurnstile({
 
 ### Amazon WAF Captcha (AWS WAF):
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // INFO: Значение `context` является динамическим, необходимо каждый раз брать фактическое значение со страницы с капчей.
@@ -238,7 +231,7 @@ solver.amazonWaf({
 
 ### Capy Puzzle
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.capyPuzzle({
@@ -255,7 +248,7 @@ solver.capyPuzzle({
 
 ### DataDome CAPTCHA
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -274,9 +267,9 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -295,7 +288,7 @@ console.log(err);
 
 ### MTCaptcha
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -330,9 +323,9 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+### Coordinates (Click Captcha):
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
 
@@ -352,7 +345,7 @@ solver.coordinates({
 *Bounding Box Method* позволяет выбирать объекты, указанные на изображении. Для этого вам необходимо передать инструкции по разметке. Инструкции могут быть отправлены в виде текста или изображения, закодированного в формате `base64`. Обязательно необходимо передать хотя бы одну инструкцию `imginstructions` или `textinstructions`.
 
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.boundingBox({ 
@@ -369,7 +362,7 @@ solver.boundingBox({
 
 ### Proxy:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.recaptcha({
@@ -390,11 +383,3 @@ solver.recaptcha({
 * [Как решать капчу Geetest v4](https://2captcha.com/ru/blog/geetest-v4-obkhod)
 * [Автоматическое решение reCAPTCHA V3 - инструкция для разработчиков и заказчиков](https://2captcha.com/ru/blog/avtomaticheskoe-reshenie-recaptcha-v3)
 * <a href="./docs/hcaptcha.md">Поиск значения `sitekey` для hCaptcha</a>
-
-## Примеры использования с исходным кодом и описанием
-* [Решение капчи GeeTest используя Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
-* [Решение капчи reCAPTCHA используя Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-* [Решение Yandex Smart Captcha используя Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
----
-
-Этот проект является форком [этого пакета](https://www.npmjs.com/package/2captcha). В эту версию пакета, добавлена поддержка новых типов капч и изменен способ передачи параметров капчи. Параметры капчи теперь передаются в виде объекта ({параметр: значение}). А также другие косметические изменения.  Подробнее о сделанных изменениях можно прочитать [тут](https://github.com/dzmitry-duboyski/2captcha-ts/releases).

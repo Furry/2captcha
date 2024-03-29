@@ -1,21 +1,14 @@
-<b>[English](README.md)</b> (recommended) | [Spanish](README.es.md) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
-</p>
+<b>[English](README.md)</b> (recommended) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 
-![](https://img.shields.io/npm/dt/2captcha-ts?color=00bd79)
-![](https://img.shields.io/npm/v/2captcha-ts)
-![](https://img.shields.io/npm/l/2captcha-ts)
-![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
 
 # JavaScript Module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha. 
+A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
-[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
+[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This library specializes in concurrent solves, and bulk-api usage.
 
 - [Install](#install)
 - [Configuration](#configuration)
@@ -32,7 +25,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [Cloudflare Turnstile](#cloudflare-turnstile)
   - [Amazon WAF Captcha](#amazon-waf-captcha)
   - [Capy Puzzle](#capy-puzzle)
-  - [Сoordinates (Click Captcha)](#coordinates-captcha)
+  - [Coordinates (Click Captcha)](#coordinates-captcha)
   - [DataDome CAPTCHA](#datadome-captcha)
   - [CyberSiARA](#cybersiara)
   - [MTCaptcha](#mtcaptcha)
@@ -43,30 +36,20 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [badReport](#badreport)
   - [goodReport](#goodreport)
   - [balance](#balance)
-- [Demo](#demo)
-  - [Puppeteer](#puppeteer)
-    - [Solving Image captchas using Puppeteer](https://github.com/dzmitry-duboyski/normal-captcha-example)
-    - [Solving reCAPTCHA V2 using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-    - [Solving hCaptcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-hCaptcha-using-puppeteer)
-    - [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
-    - [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
-    - [Solving MTcaptcha using Puppeteer](https://github.com/dzmitry-duboyski/MTCaptcha-solving-example)
 - [Useful articles](#useful-articles)
   - [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
   - [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
   - Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
 
 
-<!-- ✅ ⬜ -->
-
 ## Install
 
 ```sh
-npm install 2captcha-ts
+npm install @2captcha/captcha-solver
 ```
 or
 ```sh
-yarn add 2captcha-ts
+yarn add @2captcha/captcha-solver
 ```
 
 ## Configuration
@@ -74,7 +57,7 @@ yarn add 2captcha-ts
 Instance can be created like this:
 
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 ```
 
@@ -330,10 +313,6 @@ console.log(err);
 Use this method to solve CyberSiARA and obtain a token to bypass the protection.
 
 ```js
-const Captcha = require("2captcha-ts")
-const solver = new Captcha.Solver("<Your 2captcha api key>")
-
-
 solver.cyberSiARA({
     pageurl: "https://www.cybersiara.com/book-a-demo",
     master_url_id: "OXR2LVNvCuXykkZbB8KZIfh162sNT8S2",
@@ -382,7 +361,7 @@ console.log(err);
 })
 ```
 
-<h3 id="coordinates-captcha">Сoordinates (Click Captcha):</h3>
+<h3 id="coordinates-captcha">Coordinates (Click Captcha):</h3>
 
 ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
 
@@ -465,19 +444,6 @@ solver.balance()
     console.log(res)
 })
 ```
-
-## Demo
-
-### Puppeteer
-
-Below is a list of demo examples using Puppeteer.
-
-* [Solving Image captchas using Puppeteer](https://github.com/dzmitry-duboyski/normal-captcha-example)
-* [Solving reCAPTCHA V2 using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-* [Solving hCaptcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-hCaptcha-using-puppeteer)
-* [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
-* [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
-* [Solving MTcaptcha using Puppeteer](https://github.com/dzmitry-duboyski/MTCaptcha-solving-example)
 
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)

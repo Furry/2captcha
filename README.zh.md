@@ -1,17 +1,10 @@
-[English](README.md) | [Spanish](README.es.md) | <b>[中国语文科](README.zh.md)</b> | [Русский](README.ru.md)
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
-</p>
-
-![](https://img.shields.io/npm/v/2captcha-ts)
-![](https://img.shields.io/npm/l/2captcha-ts)
-![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
+[English](README.md) | <b>[中国语文科](README.zh.md)</b> | [Русский](README.ru.md)
 
 # 2captcha API的JavaScript模块
 
 ## 资料描述
 提供[2captcha](https://2captcha.com/)服务的API的包装器.
- 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+ 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha.
 
 [2captcha](https://2captcha.com/)是一項服務，可讓您解決許多不同類型的驗證碼。這個 npm 包包裝了[2captcha](https://2captcha.com/)API 來為 NodeJS 提供簡單的基於`promise`的功能。
 
@@ -27,20 +20,20 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ Coordinates (Click Captcha)
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
+- ✅ CyberSiARA
 - ✅ MTCaptcha
 - ✅ Bounding Box Method
 
 ## 安装/安装
 
 ```sh
-npm install 2captcha-ts
+npm install @2captcha/captcha-solver
 ```
 ```sh
-yarn add 2captcha-ts
+yarn add @2captcha/captcha-solver
 ```
 
 ## 使用示例
@@ -48,7 +41,7 @@ yarn add 2captcha-ts
 
 ### reCAPTCHA:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 // 具有 2CAPTCHA API 密鑰值的新“求解器”實例。
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -67,7 +60,7 @@ solver.recaptcha({
 
 ### hCaptcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.hcaptcha({
@@ -84,7 +77,7 @@ solver.hcaptcha({
 
 ### Arkose Labs FunCaptcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.funCaptcha({
@@ -101,7 +94,7 @@ solver.funCaptcha({
 
 ### Image captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const fs = require("fs")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
@@ -125,7 +118,7 @@ solver.imageCaptcha({
 
 ### GeeTest Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // `challenge` 值是動態的
@@ -145,7 +138,7 @@ solver.geetest({
 
 ### GeeTest V4 Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.geetestV4({
@@ -162,7 +155,7 @@ solver.geetestV4({
 
 ### Yandex Smart Captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.yandexSmart({ 
@@ -179,7 +172,7 @@ solver.yandexSmart({
 
 ### Lemin captcha:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.lemin({
@@ -198,7 +191,7 @@ solver.lemin({
 
 ### Cloudflare Turnstile:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.cloudflareTurnstile({
@@ -215,7 +208,7 @@ solver.cloudflareTurnstile({
 
 ### Amazon WAF Captcha (AWS WAF):
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 // INFO: 'Context'值是动态的，每次都需要从captcha页面获取新的`context`值。
@@ -235,7 +228,7 @@ solver.amazonWaf({
 
 ### Capy Puzzle
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.capyPuzzle({
@@ -252,7 +245,7 @@ solver.capyPuzzle({
 
 ### DataDome CAPTCHA
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -271,9 +264,9 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -292,7 +285,7 @@ console.log(err);
 
 ### MTCaptcha
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 
@@ -308,9 +301,9 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+### Coordinates (Click Captcha):
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
 
@@ -328,7 +321,7 @@ solver.coordinates({
 
 ### Bounding Box Method:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.boundingBox({ 
@@ -345,7 +338,7 @@ solver.boundingBox({
 
 ### Proxy:
 ```js
-const Captcha = require("2captcha-ts")
+const Captcha = require("@2captcha/captcha-solver")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
 
 solver.recaptcha({
@@ -366,11 +359,3 @@ solver.recaptcha({
 * [如何解决Geetest v4 captcha](https://2captcha.com/zh/blog/geetest-v4-support)
 * [自动reCAPTCHA V3解决方案-开发人员和客户的说明](https://2captcha.com/zh/blog/recaptcha-v3-automatic-resolution)
 * <a href="./docs/hcaptcha.md">搜索hCaptcha的`sitekey`值</a>
-
-## 带有源代码和描述的使用示例
-* [使用`puppeteer`测试Captcha解决方案](https://github.com/dzmitry-duboyski/GeeTest-demo)
-* [reCAPTCHA + Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-* [Yandex Smart Captcha + Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
-
----
-这个项目是这个包的一个分支https://www.npmjs.com/package/2captcha. 在此版本的软件包中，添加了对新类型captcha的支持，并更改了传输captcha参数的方法。 Captcha参数现在作为对象（{parameter:value}）传递。 以及其他化妆品的变化。  您可以阅读有关所做更改的更多信息  这里 https://github.com/dzmitry-duboyski/2captcha-ts/releases.
