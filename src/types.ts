@@ -174,7 +174,6 @@ export interface TurnstileExtras {
 }
 
 export interface GeetestExtrasV4 {
-    version: 4
     initParameters?: {
         captcha_id: string
     }
@@ -183,7 +182,6 @@ export interface GeetestExtrasV4 {
 export interface GeetestExtrasV3 {
     geetestApiServerSubdomain: string,
     useragent: string,
-    version: 3
 }
 
 

@@ -34,6 +34,7 @@ import {
     Task,
     TurnstileDefault,
     TurnstileResult,
+    GeetestV4Result,
 } from "../types.js";
 
 import { toBase64, toQueryString } from "../utils/conversions.js";
@@ -475,6 +476,31 @@ export class Solver {
         return this.registerPollEntry(cid);
     }
 
+
+    /**
+     * Solves a GeeTest v4 captcha
+     * @param pageurl The URL of the page the captcha appears on.
+     * @param proxied Whether to use a user provied proxy to solve this captcha.
+     * @param extra Any extra parameters to send to the solver.
+     * @throws {SolverError}
+     * @returns {Promise<CaptchaResult<GeetestV4Result>>}
+     */
+    public async geetestV4<T extends boolean>(
+        pageurl: string, proxied: T = false as T,
+        extra: T extends false ? GeetestExtrasV4 : GeetestExtrasV4 | ProxiedCaptchaExtras
+    ): Promise<CaptchaResult<GeetestV4Result>> {
+        const cid = await this.newTask({
+            task: {
+                type: proxied ? "GeeTestTask" : "GeeTestTaskProxyless",
+                websiteURL: pageurl,
+                version: 4,
+                ...extra
+            }
+        })
+
+        return this.registerPollEntry(cid);
+    }
+
     /**
      * Solves a GeeTest captcha.
      * @param pageurl URL of the page the captcha appears on.
@@ -485,7 +511,10 @@ export class Solver {
      * @throws {SolverError}
      * @returns {Promise<CaptchaResult<GeetestResult>>}
      */
-    public async geetest(pageurl: string, gt: string, challenge: string, proxied = false, extra: GeetestExtrasV3 | GeetestExtrasV4): Promise<CaptchaResult<GeetestResult>> {
+    public async geetest<T extends boolean>(
+        pageurl: string, gt: string, challenge: string, 
+        proxied: T = false as T,
+        extra: T extends false ?  GeetestExtrasV3 : GeetestExtrasV3 | ProxiedCaptchaExtras): Promise<CaptchaResult<GeetestResult>> {
         const cid = await this.newTask({
             task: {
                 type: proxied ? "GeeTestTask" : "GeeTestTaskProxyless",
