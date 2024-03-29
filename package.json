@@ -3,13 +3,13 @@
   "version": "2.3.3",
   "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome, CyberSiARA, MTCaptcha.",
   "main": "dist/index.js",
-  "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
+  "repository": "https://github.com/2captcha/2captcha-javascript",
   "license": "MIT",
-  "author": "Dima Dub",
+  "author": "2Captcha",
   "bugs": {
-    "url": "https://github.com/dzmitry-duboyski/2captcha-ts/issues"
+    "url": "https://github.com/2captcha/2captcha-javascript/issues"
   },
-  "homepage": "https://github.com/dzmitry-duboyski/2captcha-ts",
+  "homepage": "https://github.com/2captcha/2captcha-javascript",
   "types": "dist/index.d.ts",
   "keywords": [
     "2captcha",
