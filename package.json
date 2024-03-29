@@ -1,7 +1,7 @@
 {
   "name": "@2captcha/captcha-solver",
   "version": "1.0.0",
-  "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome, CyberSiARA, MTCaptcha.",
+  "description": "JavaScript library for easy integration with the API of 2captcha captcha solving service to bypass reCAPTCHA, hCaptcha, funcaptcha, geetest and solve any other captchas.",
   "main": "dist/index.js",
   "repository": "https://github.com/2captcha/2captcha-javascript",
   "license": "MIT",
