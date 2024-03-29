@@ -11,7 +11,7 @@
 
 ## 资料描述
 提供[2captcha](https://2captcha.com/)服务的API的包装器.
- 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+ 這個 npm 包包括對以下驗證碼類型的支持：reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha.
 
 [2captcha](https://2captcha.com/)是一項服務，可讓您解決許多不同類型的驗證碼。這個 npm 包包裝了[2captcha](https://2captcha.com/)API 來為 NodeJS 提供簡單的基於`promise`的功能。
 
@@ -27,10 +27,10 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ Coordinates (Click Captcha)
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
+- ✅ CyberSiARA
 - ✅ MTCaptcha
 - ✅ Bounding Box Method
 
@@ -271,7 +271,7 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -308,7 +308,7 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+### Coordinates (Click Captcha):
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")

@@ -10,7 +10,7 @@
 # Módulo JavaScript para API 2Captcha
 
 ## Descripción
-Shell para API [2captcha](https://2captcha.com) Servicio. Este shell soporta la solución de los siguientes tipos de captcha: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha.
+Shell para API [2captcha](https://2captcha.com) Servicio. Este shell soporta la solución de los siguientes tipos de captcha: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha.
 
 [2captcha](https://2captcha.com) es un Servicio que le permite resolver muchos tipos diferentes de captcha.
 Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para proporcionar a NodeJS una funcionalidad simple basada en `promise`.
@@ -27,10 +27,10 @@ Esta biblioteca sirve como un contenedor para la API del Servicio 2captcha para 
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ Coordinates (Click Captcha)
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
+- ✅ CyberSiARA
 - ✅ MTCaptcha
 - ✅ Bounding Box Method
 
@@ -269,7 +269,7 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -306,7 +306,7 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+### Coordinates (Click Captcha):
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")

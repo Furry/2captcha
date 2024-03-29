@@ -10,7 +10,7 @@
 # JavaScript модуль для 2Captcha API
 
 ## Описание
-Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha.
+Оболочка вокруг API сервиса [2captcha](https://2captcha.com/). Эта оболочка поддерживает решение следующих типов капч: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha.
 
 Также добавлена поддержка метода `bounding_box`. Метод ограничивающей рамки позволяет размечать данные на изображении. Этот метод можно использовать для разметки наборов данных или выделения любых объектов на изображении в соответствии с заданными инструкциями. Подробнее об использовании *Bounding Box Method* читайте в [документации](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -28,10 +28,10 @@
 - ✅ Cloudflare Turnstile
 - ✅ Amazon WAF Captcha
 - ✅ Capy Puzzle
-- ✅ Сoordinates (Click Captcha)
+- ✅ Coordinates (Click Captcha)
 - ⬜ Audio Recogntion
 - ✅ DataDome CAPTCHA
-- ✅ СyberSiARA
+- ✅ CyberSiARA
 - ✅ MTCaptcha
 - ✅ Friendly Captcha
 - ✅ Bounding Box Method
@@ -274,7 +274,7 @@ console.log(err);
 })
 ```
 
-### СyberSiARA
+### CyberSiARA
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")
@@ -330,7 +330,7 @@ console.log(err);
 })
 ```
 
-### Сoordinates (Click Captcha):
+### Coordinates (Click Captcha):
 ```js
 const Captcha = require("2captcha-ts")
 const solver = new Captcha.Solver("<Your 2captcha api key>")

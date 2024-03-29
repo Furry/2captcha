@@ -11,7 +11,7 @@
 # JavaScript Module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, СyberSiARA, MTCaptcha, Friendly Captcha. 
+A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -32,7 +32,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [Cloudflare Turnstile](#cloudflare-turnstile)
   - [Amazon WAF Captcha](#amazon-waf-captcha)
   - [Capy Puzzle](#capy-puzzle)
-  - [Сoordinates (Click Captcha)](#coordinates-captcha)
+  - [Coordinates (Click Captcha)](#coordinates-captcha)
   - [DataDome CAPTCHA](#datadome-captcha)
   - [CyberSiARA](#cybersiara)
   - [MTCaptcha](#mtcaptcha)
@@ -382,7 +382,7 @@ console.log(err);
 })
 ```
 
-<h3 id="coordinates-captcha">Сoordinates (Click Captcha):</h3>
+<h3 id="coordinates-captcha">Coordinates (Click Captcha):</h3>
 
 ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
 
