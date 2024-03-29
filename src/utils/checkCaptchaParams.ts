@@ -105,7 +105,7 @@ export default function checkCaptchaParams(params: Object, method: string) {
 
     if(isThisFieldNotAvailable) {
       isCorrectCaptchaParams = false
-      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.\nPlease correct your code for the "${method}" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
+      throw new Error(`Error when check params captcha.\nNot found "${fieldName}" field in the Object. Field "${fieldName}" is required for "${method}" method. Please add field "${fieldName}" in object and try again.\nPlease correct your code for the "${method}" method according to the code examples`)
     } else {
       isCorrectCaptchaParams = true
     }
@@ -116,7 +116,7 @@ export default function checkCaptchaParams(params: Object, method: string) {
       isCorrectCaptchaParams = true
     } else {
       isCorrectCaptchaParams = false
-      throw new Error(`Error when check params captcha.\nNot found "textinstructions" or "imginstructions" field in the Object. One of this field is required for "bounding_box" method. Please add field "textinstructions" or "imginstructions" in object and try again.\nPlease correct your code for the "bounding_box" method according to the code examples on page https://www.npmjs.com/package/2captcha-ts`)
+      throw new Error(`Error when check params captcha.\nNot found "textinstructions" or "imginstructions" field in the Object. One of this field is required for "bounding_box" method. Please add field "textinstructions" or "imginstructions" in object and try again.\nPlease correct your code for the "bounding_box" method according to the code examples`)
     }
   }
 

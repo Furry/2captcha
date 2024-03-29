@@ -825,7 +825,7 @@ export class Solver {
      * 
      * [Read more about "Amazon WAF" captcha](https://2captcha.com/2captcha-api#amazon-waf).
      * 
-     * @param {{ pageurl, sitekey, iv, context, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/amazonWaf.js)
+     * @param {{ pageurl, sitekey, iv, context, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory.
      * @param {string} params.pageurl Is the full `URL` of page where you were challenged by the captcha.
      * @param {string} params.sitekey Is a value of `key` parameter in the page source.
      * @param {string} params.iv Is a value of `iv` parameter in the page source.
@@ -879,7 +879,7 @@ export class Solver {
      * 
      * [Read more about Cloudflare Turnstile captcha](https://2captcha.com/2captcha-api#turnstile).
      * 
-     * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
+     * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory.
      * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
      * @param {string} params.sitekey Is a value of `sitekey` parameter in the page source.
      * @param {string} params.action Value of optional `action` parameter you found on page.
