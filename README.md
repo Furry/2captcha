@@ -36,7 +36,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [badReport](#badreport)
   - [goodReport](#goodreport)
   - [balance](#balance)
-- [Proxies](proxies)
+- [Proxies](#proxies)
 - [Useful articles](#useful-articles)
   - [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
   - [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
