@@ -36,6 +36,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [badReport](#badreport)
   - [goodReport](#goodreport)
   - [balance](#balance)
+- [Proxies](proxies)
 - [Useful articles](#useful-articles)
   - [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
   - [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
@@ -445,7 +446,28 @@ solver.balance()
 })
 ```
 
+## Proxies
+
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, keycaptcha, capy puzzle, lemin, turnstile, amazon waf, DataDome, CyberSiARA, MTCaptcha, Friendly Captcha and etc. The proxy will be forwarded to the API to solve the captcha.
+
+We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
+
+Solving reCAPTCHA V2 using proxy:
+```js
+solver.recaptcha({
+    pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+    googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
+    proxy: 'HTTPS',
+    proxytype: 'login:password@123.123.123.123:3128'
+})
+```
+
+
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
 * [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
 * Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
+
+<!-- Shared links -->
+[Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
+[Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
