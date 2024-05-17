@@ -1,10 +1,10 @@
 <b>[English](README.md)</b> (recommended) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 
 
-# JavaScript Module for 2Captcha API
+# JavaScript captcha solver module for 2Captcha API
 
 ## Description
-A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
+A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper supports any captcha bypass: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
@@ -36,6 +36,7 @@ Also added support for the `bounding_box` method. The Bounding Box Method allows
   - [badReport](#badreport)
   - [goodReport](#goodreport)
   - [balance](#balance)
+- [Proxies](#proxies)
 - [Useful articles](#useful-articles)
   - [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
   - [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
@@ -445,7 +446,28 @@ solver.balance()
 })
 ```
 
+## Proxies
+
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, keycaptcha, capy puzzle, lemin, turnstile, amazon waf, DataDome, CyberSiARA, MTCaptcha, Friendly Captcha and etc. The proxy will be forwarded to the API to solve the captcha.
+
+We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
+
+Solving reCAPTCHA V2 using proxy:
+```js
+solver.recaptcha({
+    pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+    googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
+    proxy: 'HTTPS',
+    proxytype: 'login:password@123.123.123.123:3128'
+})
+```
+
+
 ## Useful articles
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
 * [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
 * Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
+
+<!-- Shared links -->
+[Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
+[Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
