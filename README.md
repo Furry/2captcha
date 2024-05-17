@@ -1,7 +1,7 @@
 <b>[English](README.md)</b> (recommended) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 
 
-# JavaScript Module for 2Captcha API
+# JavaScript captcha solver module for 2Captcha API
 
 ## Description
 A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper supports any captcha bypass: reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
