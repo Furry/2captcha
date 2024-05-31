@@ -420,6 +420,10 @@ solver.boundingBox({
 
 ### Usage of proxy
 
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha. The proxy will be forwarded to the API to solve the captcha.
+
+For better efficiency, it is recommended to [buy residential proxy](https://2captcha.com/proxy/residential-proxies), which will provide you with a stable connection and minimal risk of being blocked.
+
 Solving reCAPTCHA V2 whis a proxy, code example:
 
 ```js
