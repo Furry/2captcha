@@ -8,11 +8,7 @@ import checkCaptchaParams from "../utils/checkCaptchaParams"
 
 const provider = getProviderData ()
 
-interface BaseSolve {
-
-}
-
-export interface paramsRecaptcha extends BaseSolve {
+export interface paramsRecaptcha {
     pageurl: string,
     googlekey: string,
     invisible?: boolean,
@@ -32,7 +28,7 @@ export interface paramsRecaptcha extends BaseSolve {
 }
 
 
-export interface paramsHCaptcha extends BaseSolve {
+export interface paramsHCaptcha {
     sitekey: string,
     pageurl: string,
     header_acao?: boolean,
@@ -47,7 +43,7 @@ export interface paramsHCaptcha extends BaseSolve {
 }
 
 // FixMe:data[key] - how to send this parameter
-export interface paramsFunCaptcha extends BaseSolve {
+export interface paramsFunCaptcha {
   publickey: string,
   pageurl: string,
   surl?: string,
