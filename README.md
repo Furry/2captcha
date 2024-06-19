@@ -1,6 +1,3 @@
-<b>[English](README.md)</b> (recommended) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
-
-
 # JavaScript captcha solver module for 2Captcha API
 
 ## Description
@@ -8,7 +5,7 @@ A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support
 
 Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
 
-[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This library specializes in concurrent solves, and bulk-api usage.
+[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to Node.js. This library specializes in concurrent solves, and Bulk API usage.
 
 - [Install](#install)
 - [Configuration](#configuration)
@@ -198,7 +195,7 @@ solver.geetestV4({
 
 ### Yandex Smart Captcha
 
-Use this method to solve Yandex and obtain a token to bypass the protection.
+Use this method to solve Yandex Smart Captcha and obtain a token to bypass the protection.
 
 ```js
 solver.yandexSmart({ 
@@ -215,7 +212,7 @@ solver.yandexSmart({
 
 ### Lemin captcha
 
-Use this method to solve Lemin and obtain a token to bypass the protection.
+Use this method to solve Lemin captcha and obtain a token to bypass the protection.
 
 ```js
 solver.lemin({
