@@ -1,6 +1,3 @@
-<b>[English](README.md)</b> (recommended) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
-
-
 # JavaScript captcha solver module for 2Captcha API
 
 ## Description
