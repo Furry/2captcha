@@ -47,7 +47,7 @@ export interface paramsHCaptcha extends BaseSolve {
 }
 
 // FixMe:data[key] - how to send this parameter
-export interface paramsFunCapthca extends BaseSolve {
+export interface paramsFunCaptcha extends BaseSolve {
   publickey: string,
   pageurl: string,
   surl?: string,
@@ -738,7 +738,7 @@ export class Solver {
      *      console.log(err);
      *  })
      */
-    public async funCaptcha(params: paramsFunCapthca): Promise<CaptchaAnswer> {
+    public async funCaptcha(params: paramsFunCaptcha): Promise<CaptchaAnswer> {
         checkCaptchaParams(params, "funcaptcha")
         const payload = {
             ...params,
