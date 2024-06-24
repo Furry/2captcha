@@ -5,7 +5,7 @@ const APIKEY = process.env.APIKEY
 const solver = new Captcha.Solver(APIKEY);
 
 
-const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
+const imageBase64 = fs.readFileSync("./media/hCaptchaImage.jpg", "base64")
 
 solver.coordinates({
     body: imageBase64,
