@@ -1,8 +1,8 @@
 const fs = require('fs')
-const Captcha = require("../dist/index.js");
+const TwoCaptcha = require("../dist/index.js");
 require('dotenv').config();
 const APIKEY = process.env.APIKEY
-const solver = new Captcha.Solver(APIKEY);
+const solver = new TwoCaptcha.Solver(APIKEY);
 
 const imageBase64 = fs.readFileSync("./media/imageCaptcha_6e584.png", "base64")
 
