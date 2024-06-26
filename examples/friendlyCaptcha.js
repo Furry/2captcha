@@ -1,7 +1,7 @@
-const Captcha = require("../dist/index.js");
+const TwoCaptcha = require("../dist/index.js");
 require('dotenv').config();
 const APIKEY = process.env.APIKEY
-const solver = new Captcha.Solver(APIKEY);
+const solver = new TwoCaptcha.Solver(APIKEY);
 
 solver.friendlyCaptcha({
     pageurl: "https://geizhals.de/?liftban=1&from=/455973138?fsean=5901747021356",

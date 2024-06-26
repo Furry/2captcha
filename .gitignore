@@ -1,8 +1,7 @@
+# Directories
 /dist
 /node_modules
 /out
 
-issues/
-
-download.jpg
+# Files
 .env

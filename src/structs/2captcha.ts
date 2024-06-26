@@ -140,6 +140,8 @@ export interface paramsAmazonWAF {
     sitekey: string,
     iv: string
     context: string,
+    challenge_script?: string,
+    captcha_script?: string,
     header_acao?: boolean,
     pingback?: string,
     soft_id?: number,
@@ -821,11 +823,13 @@ export class Solver {
      * 
      * [Read more about "Amazon WAF" captcha](https://2captcha.com/2captcha-api#amazon-waf).
      * 
-     * @param {{ pageurl, sitekey, iv, context, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory.
+     * @param {{ pageurl, sitekey, iv, context, challenge_script, captcha_script, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory.
      * @param {string} params.pageurl Is the full `URL` of page where you were challenged by the captcha.
      * @param {string} params.sitekey Is a value of `key` parameter in the page source.
      * @param {string} params.iv Is a value of `iv` parameter in the page source.
      * @param {string} params.context  Is a value of `context` parameter in the page source.
+     * @param {string} params.challenge_script The source URL of `challenge.js` script on the page.
+     * @param {string} params.captcha_script The source URL of `captcha.js` script on the page.
      * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
      * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
      * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.

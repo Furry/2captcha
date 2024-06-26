@@ -44,11 +44,10 @@
     "Friendly Captcha"
   ],
   "scripts": {
-    "go": "tsc && node ./dist/index.js",
-    "dev": "tsc && node ./issues/dev",
+    "build": "tsc && node ./dist/index.js",
     "jsdoc": "jsdoc",
     "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r",
-    "test": "tsc && node ./tests/mtCaptcha.js"
+    "example": "tsc && node ./tests/mtCaptcha.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
