@@ -1,9 +1,12 @@
 {
   "name": "2captcha-ts",
   "version": "2.3.4",
-  "description": "A wrapper around the 2captcha API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha,Сoordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome, CyberSiARA, MTCaptcha.",
+  "description": "JavaScript library for easy integration with the API of 2captcha captcha solving service to bypass reCAPTCHA, hCaptcha, funcaptcha, geetest and solve any other captchas.",
   "main": "dist/index.js",
-  "repository": "https://github.com/dzmitry-duboyski/2captcha-ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dzmitry-duboyski/2captcha-ts.git"
+  },
   "license": "MIT",
   "author": "Dima Dub",
   "bugs": {
@@ -22,7 +25,7 @@
     "FunCaptcha",
     "Geetest",
     "image captcha",
-    "Сoordinates",
+    "Coordinates",
     "Click Captcha",
     "Geetest V4",
     "Yandex Smart Captcha",
@@ -41,11 +44,10 @@
     "Friendly Captcha"
   ],
   "scripts": {
-    "go": "tsc && node ./dist/index.js",
-    "dev": "tsc && node ./issues/dev",
+    "build": "tsc && node ./dist/index.js",
     "jsdoc": "jsdoc",
     "docgen": "tsc && yarn jsdoc ./dist -R \"./readme.md\" -P \"./package.json\" -t \"./node_modules/jaguarjs-jsdoc\" -d \"./docs\" -r",
-    "test": "tsc && node ./tests/mtCaptcha.js"
+    "example": "tsc && node ./tests/mtCaptcha.js"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"

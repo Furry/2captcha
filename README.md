@@ -1,4 +1,3 @@
-<b>[English](README.md)</b> (recommended) | [Spanish](README.es.md) | [中国语文科](README.zh.md) | [Русский](README.ru.md)
 <p align="center">
   <img src="https://user-images.githubusercontent.com/38065632/280106746-36b3ccc1-b720-458d-9887-88d87b7dd66e.jpg">
 </p>
@@ -8,81 +7,125 @@
 ![](https://img.shields.io/npm/l/2captcha-ts)
 ![](https://img.shields.io/github/last-commit/dzmitry-duboyski/2captcha-ts)
 
-# JavaScript Module for 2Captcha API
+# JavaScript captcha solver module for 2Captcha API
 
-## Description
-A wrapper around the [2captcha](https://2captcha.com/) API. This wrapper support reCAPTCHA V2, reCAPTCHA V3, hCaptcha, Arkose Labs FunCaptcha, image captcha, Coordinates (Click Captcha), Geetest, Geetest V4, Yandex Smart Captcha, Lemin captcha, Amazon WAF, Cloudflare Turnstile, Capy Puzzle, DataDome CAPTCHA, CyberSiARA, MTCaptcha, Friendly Captcha. 
+The easiest way to quickly integrate the [2Captcha](https://2captcha.com/) captcha-solving service into your code and automate the solving of any type of captcha.
 
-Also added support for the `bounding_box` method. The Bounding Box Method allows you to mark data on the image. This method can be used to mark up datasets or highlight any objects in an image according to the given instructions. Read more about using *Bounding Box Method* on [documentation](https://2captcha.com/2captcha-api#bounding_box).
+- [JavaScript captcha solver module for 2Captcha API](#javascript-captcha-solver-module-for-2captcha-api)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+    - [TwoCaptcha instance options](#twocaptcha-instance-options)
+  - [Solve captcha](#solve-captcha)
+    - [Image captchas](#image-captcha)
+    - [reCAPTCHA v2](#recaptcha-v2)
+    - [reCAPTCHA v3](#recaptcha-v3)
+    - [hCaptcha](#hcaptcha)
+    - [FunCaptcha](#funcaptcha)
+    - [GeeTest](#geetest-captcha)
+    - [GeeTest V4](#geetest-v4-captcha)
+    - [Yandex Smart Captcha](#yandex-smart-captcha)
+    - [Lemin Cropped Captcha](#lemin-cropped-captcha)
+    - [Cloudflare Turnstile](#cloudflare-turnstile)
+    - [Amazon WAF](#amazon-waf)
+    - [Capy](#capy)
+    - [ClickCaptcha](#clickcaptcha)
+    - [DataDome CAPTCHA](#datadome-captcha)
+    - [CyberSiARA](#cybersiara)
+    - [MTCaptcha](#mtcaptcha)
+    - [Friendly Captcha](#friendly-captcha)
+    - [Bounding Box Method](#bounding-box-method)
+  - [Other methods](#other-methods)
+    - [goodReport](#goodreport)
+    - [badReport](#badreport)
+    - [balance](#balance)
+  - [Proxies](#proxies)
+  - [Examples](#examples)
+  - [Useful articles](#useful-articles)
 
-[2captcha](https://2captcha.com/) is a service that solves many different types of captchas, this library serves as a wrapper around API 2captcha to bring easy, promise-based functionality to NodeJS. This libary specilizes in concurrent solves, and bulk-api usage.
-
-- [Install](#install)
-- [Configuration](#configuration)
-- [Solve captcha](#solve-captcha)
-  - [reCAPTCHA v2](#recaptcha-v2)
-  - [reCAPTCHA v3](#recaptcha-v3)
-  - [hCaptcha](#hcaptcha)
-  - [Arkose Labs FunCaptcha](#arkose-labs-funcaptcha)
-  - [Image captchas](#image-captcha) (`base64` format)
-  - [GeeTest](#geetest-captcha)
-  - [GeeTest V4](#geetest-v4-captcha)
-  - [Yandex Smart Captcha](#yandex-smart-captcha)
-  - [Lemin Cropped Captcha](#lemin-captcha)
-  - [Cloudflare Turnstile](#cloudflare-turnstile)
-  - [Amazon WAF Captcha](#amazon-waf-captcha)
-  - [Capy Puzzle](#capy-puzzle)
-  - [Coordinates (Click Captcha)](#coordinates-captcha)
-  - [DataDome CAPTCHA](#datadome-captcha)
-  - [CyberSiARA](#cybersiara)
-  - [MTCaptcha](#mtcaptcha)
-  - [Friendly Captcha](#friendly-captcha)
-  - [Bounding Box Method](#bounding-box-method)
-  - [Usage of proxy](#usage-of-proxy)
-- [Other methods](#other-methods)
-  - [badReport](#badreport)
-  - [goodReport](#goodreport)
-  - [balance](#balance)
-- [Demo](#demo)
-  - [Puppeteer](#puppeteer)
-    - [Solving Image captchas using Puppeteer](https://github.com/dzmitry-duboyski/normal-captcha-example)
-    - [Solving reCAPTCHA V2 using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-    - [Solving hCaptcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-hCaptcha-using-puppeteer)
-    - [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
-    - [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
-    - [Solving MTcaptcha using Puppeteer](https://github.com/dzmitry-duboyski/MTCaptcha-solving-example)
-- [Useful articles](#useful-articles)
-  - [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
-  - [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
-  - Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
-
-
-<!-- ✅ ⬜ -->
-
-## Install
+## Installation
+This package can be installed with NPM:
 
 ```sh
-npm install 2captcha-ts
+npm install @2captcha/captcha-solver
 ```
-or
+or Yarn:
 ```sh
-yarn add 2captcha-ts
+yarn add @2captcha/captcha-solver
 ```
 
 ## Configuration
 
-Instance can be created like this:
+TwoCaptcha instance can be created like this:
 
 ```js
-const Captcha = require("2captcha-ts")
-const solver = new Captcha.Solver("<Your 2captcha api key>")
+const TwoCaptcha = require("@2captcha/captcha-solver")
+const solver = new TwoCaptcha.Solver("<Your 2captcha api key>")
 ```
+
+Also, there are a few options that can be configured:
+
+```javascript
+const apiKey = 'YOUR_API_KEY'
+const pollingInterval = 10
+
+const solver = new TwoCaptcha.Solver(apiKey, pollingInterval)
+```
+### TwoCaptcha instance options
+
+| Option           | Default value  | Description                                                                                  |
+| ---------------- | -------------- | -------------------------------------------------------------------------------------------- |
+| apiKey           | -              | Your API key                                                                                 |
+| pollingInterval  | 5000           | Interval in milliseconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended |
 
 ## Solve captcha
 
+When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
+
+### Captcha options
+
+| Option        | Default Value | Description                                                                                        |
+| ------------- | ------------- | -------------------------------------------------------------------------------------------------- |
+| numeric       | 0             | Defines if the captcha contains numeric or other symbols [see more info in the API docs][post options] |
+| min_len       | 0             | minimal answer length                                                                              |
+| max_len       | 0             | maximum answer length                                                                              |
+| phrase        | 0             | defines if the answer contains multiple words or not                                               |
+| regsense      | 0             | defines if the answer is case sensitive                                                            |
+| calc          | 0             | defines captcha requires calculation                                                               |
+| lang          | -             | defines the captcha language; see the [list of supported languages]                                |
+| textinstructions| -           | hint or task text shown to workers with the captcha                                                |
+
+Below you can find basic examples for every captcha type, check out the code below.
+
+### Image captcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_normal_captcha)</sup>
+
+To bypass a normal captcha (distorted text on an image) use the following method. This method can also be used to recognize any text in an image.
+
+```js
+// Read from a file as base64 text
+const imageBase64 = fs.readFileSync("./examples/media/imageCaptcha_6e584.png", "base64")
+
+solver.imageCaptcha({
+    body: imageBase64,
+    numeric: 4,
+    min_len: 5,
+    max_len: 5
+})
+.then((res) => {
+  // Logs the image text
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err);
+})
+```
+
 ### reCAPTCHA V2
 
-Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_recaptchav2_new)</sup>
+
+Use the following method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
 
 ```js
 solver.recaptcha({
@@ -99,7 +142,9 @@ solver.recaptcha({
 
 ### reCAPTCHA V3
 
-This method provides reCAPTCHA V3 solver and returns a token.
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_recaptchav3)</sup>
+
+This method provides a reCAPTCHA V3 solver and returns a token.
 
 ```js
 solver.recaptcha({
@@ -120,7 +165,9 @@ solver.recaptcha({
 
 ### hCaptcha
 
-Use this method to solve hCaptcha challenge. Returns a token to bypass captcha.
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_hcaptcha)</sup>
+
+Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
 
 ```js
 solver.hcaptcha({
@@ -135,7 +182,9 @@ solver.hcaptcha({
 })
 ```
 
-### Arkose Labs FunCaptcha
+### FunCaptcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_funcaptcha_new)</sup>
 
 FunCaptcha (Arkoselabs) solving method. Returns a token.
 
@@ -152,31 +201,9 @@ solver.funCaptcha({
 })
 ```
 
-### Image captcha
-
-To bypass a normal captcha (distorted text on image) use this method. This method also can be used to recognize any text on the image.
-
-```js
-// Read from a file as base64 text
-const imageBase64 = fs.readFileSync("./tests/media/imageCaptcha_6e584.png", "base64")
-
-solver.imageCaptcha({
-    body: imageBase64,
-    numeric: 4,
-    min_len: 5,
-    max_len: 5
-})
-.then((res) => {
-  // Logs the image text
-  console.log(res);
-})
-.catch((err) => {
-  console.log(err);
-})
-```
-
-
 ### GeeTest Captcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_geetest)</sup>
 
 Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
 
@@ -197,7 +224,9 @@ solver.geetest({
 
 ### GeeTest V4 Captcha
 
-Method to solve GeeTest V4 puzzle captcha. Returns a set of tokens as JSON.
+<sup>[API method description.](https://2captcha.com/2captcha-api#geetest-v4)</sup>
+
+Use this method to solve GeeTest v4. Returns the response in JSON.
 
 ```js
 solver.geetestV4({
@@ -214,7 +243,7 @@ solver.geetestV4({
 
 ### Yandex Smart Captcha
 
-Use this method to solve Yandex and obtain a token to bypass the protection.
+Use this method to solve Yandex Smart Captcha and obtain a token to bypass the protection.
 
 ```js
 solver.yandexSmart({ 
@@ -229,7 +258,9 @@ solver.yandexSmart({
 })
 ```
 
-### Lemin captcha
+### Lemin Cropped Captcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#lemin)</sup>
 
 Use this method to solve Lemin and obtain a token to bypass the protection.
 
@@ -250,7 +281,11 @@ solver.lemin({
 
 ### Cloudflare Turnstile
 
-Use this method to solve Turnstile and obtain a token to bypass the protection.
+<sup>[API method description.](https://2captcha.com/2captcha-api#turnstile)</sup>
+
+Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
+
+Turnstile captcha has two types, one of them is Cloudflare Turnstile Challenge page. For Turnstile Challenge page cases, we have a [demo](https://github.com/2captcha/cloudflare-demo). Try this [demo](https://github.com/2captcha/cloudflare-demo) if you need to solve Cloudflare Turnstile Challenge page captcha.
 
 ```js
 solver.cloudflareTurnstile({
@@ -265,9 +300,11 @@ solver.cloudflareTurnstile({
 })
 ```
 
-<h3 id="amazon-waf-captcha">Amazon WAF Captcha (AWS WAF):</h3>
+### Amazon WAF
 
-Use this method to solve AmazonWaf and obtain a token to bypass the protection.
+<sup>[API method description.](https://2captcha.com/2captcha-api#amazon-waf)</sup>
+
+Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token.
 
 ```js
 //INFO: The `context` value is dynamic, it is necessary to take the actual value from the page each time.
@@ -285,7 +322,9 @@ solver.amazonWaf({
 })
 ```
 
-### Capy Puzzle
+### Capy
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_capy)</sup>
 
 Token-based method to bypass Capy puzzle captcha.
 
@@ -304,10 +343,12 @@ solver.capyPuzzle({
 
 ### DataDome CAPTCHA
 
+<sup>[API method description.](https://2captcha.com/2captcha-api#datadome)</sup>
+
 Use this method to solve DataDome and obtain a token to bypass the protection. 
 
 > [!IMPORTANT]  
-> To solve the DataDome captcha, you must use a proxy. It is recommended to use mobile residential proxies.
+> To solve the DataDome captcha, you must use a proxy. It is recommended to use [residential proxies][Buy residential proxies].
 
 ```js
 solver.dataDome({
@@ -327,13 +368,11 @@ console.log(err);
 
 ### CyberSiARA
 
+<sup>[API method description.](https://2captcha.com/2captcha-api#cybersiara)</sup>
+
 Use this method to solve CyberSiARA and obtain a token to bypass the protection.
 
 ```js
-const Captcha = require("2captcha-ts")
-const solver = new Captcha.Solver("<Your 2captcha api key>")
-
-
 solver.cyberSiARA({
     pageurl: "https://www.cybersiara.com/book-a-demo",
     master_url_id: "OXR2LVNvCuXykkZbB8KZIfh162sNT8S2",
@@ -348,6 +387,8 @@ console.log(err);
 ```
 
 ### MTCaptcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#mtcaptcha)</sup>
 
 Use this method to solve MTCaptcha and obtain a token to bypass the protection.
 
@@ -366,8 +407,12 @@ console.log(err);
 
 ### Friendly Captcha
 
+<sup>[API method description.](https://2captcha.com/2captcha-api#friendly-captcha)</sup>
+
 Use this method to solve Friendly Captcha and obtain a token to bypass the protection.
-> **Important:** To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
+
+> [!IMPORTANT]  
+> To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
 
 ```js
 solver.friendlyCaptcha({
@@ -382,9 +427,11 @@ console.log(err);
 })
 ```
 
-<h3 id="coordinates-captcha">Coordinates (Click Captcha):</h3>
+### ClickCaptcha
 
-ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
+<sup>[API method description.](https://2captcha.com/2captcha-api#coordinates)</sup>
+
+The ClickCaptcha method returns the coordinates of points on the captcha image. It can be used if you need to click on particular points in the image.
 
 ```js
 const imageBase64 = fs.readFileSync("./tests/media/hCaptchaImage.jpg", "base64")
@@ -403,7 +450,12 @@ solver.coordinates({
 
 ### Bounding Box Method:
 
-Bounding Box Method allows you to select objects specified in the image. To do this, you need to pass markup instructions. The instructions can be sent as text or as an image encoded in `base64` format. It is mandatory to pass at least one instruction `imginstructions` or `textinstructions`.
+<sup>[API method description.](https://2captcha.com/2captcha-api#bounding_box)</sup>
+
+
+Use Bounding Box Method when you need to select objects on the image. To do this, you need to pass the markup instructions and image for markup. The instructions can be sent as text or as an image encoded in `base64` format. 
+> [!IMPORTANT]  
+> You must to send instruction `imginstructions` or `textinstructions`.
 
 ```js
 solver.boundingBox({ 
@@ -418,32 +470,11 @@ solver.boundingBox({
 })
 ```
 
-### Usage of proxy
-
-You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha. The proxy will be forwarded to the API to solve the captcha.
-
-For better efficiency, it is recommended to [buy residential proxy](https://2captcha.com/proxy/residential-proxies), which will provide you with a stable connection and minimal risk of being blocked.
-
-Solving reCAPTCHA V2 whis a proxy, code example:
-
-```js
-solver.recaptcha({
-  pageurl: 'https://2captcha.com/demo/recaptcha-v2',
-  googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
-  proxy: "login:password@1.2.3.4:8888", // The (Username : Password @ Address : Port) of our chosen proxy
-  proxytype: "http" // The 'Type' of proxy, http, https, socks4, socks5.
-})
-.then((res) => {
-  console.log(res)
-})
-.catch((err) => {
-  console.error(err.message)
-})
-```
-
 ## Other methods
 
 ### goodReport
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#reporting-answers)</sup>
 
 Use this method to report good captcha answer.
 
@@ -453,6 +484,8 @@ solver.goodReport('7031846604')
 
 ### badReport 
 
+<sup>[API method description.](https://2captcha.com/2captcha-api#reporting-answers)</sup>
+
 Use this method to report bad captcha answer.
 
 ```js
@@ -461,7 +494,9 @@ solver.badReport('7031854546')
 
 ### balance 
 
-Use this method to get your account's balance
+<sup>[API method description.](https://2captcha.com/2captcha-api#additional-methods)</sup>
+
+Use this method to get your account's balance.
 
 ```js
 solver.balance()
@@ -470,20 +505,36 @@ solver.balance()
 })
 ```
 
-## Demo
+## Proxies
 
-### Puppeteer
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, keycaptcha, capy puzzle, lemin, turnstile, amazon waf, DataDome, CyberSiARA, MTCaptcha, Friendly Captcha and etc. The proxy will be forwarded to the API to solve the captcha.
 
-Below is a list of demo examples using Puppeteer.
+We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
 
-* [Solving Image captchas using Puppeteer](https://github.com/dzmitry-duboyski/normal-captcha-example)
-* [Solving reCAPTCHA V2 using Puppeteer](https://github.com/dzmitry-duboyski/solving-recaptcha-using-puppeteer)
-* [Solving hCaptcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-hCaptcha-using-puppeteer)
-* [Solving GeeTest Captcha using Puppeteer](https://github.com/dzmitry-duboyski/GeeTest-demo)
-* [Solving Yandex Smart Captcha using Puppeteer](https://github.com/dzmitry-duboyski/solving-yandex-smart-captcha-using-puppeteer)
-* [Solving MTcaptcha using Puppeteer](https://github.com/dzmitry-duboyski/MTCaptcha-solving-example)
+Solving reCAPTCHA V2 using proxy:
+```js
+solver.recaptcha({
+    pageurl: 'https://2captcha.com/demo/recaptcha-v2',
+    googlekey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
+    proxy: 'HTTPS',
+    proxytype: 'login:password@123.123.123.123:3128'
+})
+```
+## Examples
+
+Examples of solving all supported captcha types are located in the [examples] directory.
 
 ## Useful articles
+* [How to bypass captcha using JavaScript](https://2captcha.com/blog/how-to-use-javascript-to-bypass-captcha#how-to-solve-and-bypass-a-captcha-with-javascript-using-npm-package-2captchacaptcha-solver)
+* [Bypassing Cloudflare Challenge with Puppeteer and 2Captcha](https://2captcha.com/blog/bypassing-cloudflare-challenge-with-puppeteer-and-2captcha)
 * [How to bypass Geetest v4 CAPTCHA](https://2captcha.com/blog/geetest-v4-support)
 * [Automatic reCAPTCHA V3 resolution - a tutorial for developers and customers](https://2captcha.com/blog/recaptcha-v3-automatic-resolution)
-* Finding Sitekey <a href="./docs/hcaptcha.md">hCaptcha</a>
+* [Custom Slider Captcha Demo](https://github.com/2captcha/custom-slider-demo)
+* [Cloudflare Challenge page bypass code example](https://github.com/2captcha/cloudflare-demo)
+
+<!-- Shared links -->
+[post options]: https://2captcha.com/2captcha-api#normal_post
+[list of supported languages]: https://2captcha.com/2captcha-api#language
+[Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
+[Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
+[examples]: ./examples

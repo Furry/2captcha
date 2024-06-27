@@ -8,11 +8,7 @@ import checkCaptchaParams from "../utils/checkCaptchaParams"
 
 const provider = getProviderData ()
 
-interface BaseSolve {
-
-}
-
-export interface paramsRecaptcha extends BaseSolve {
+export interface paramsRecaptcha {
     pageurl: string,
     googlekey: string,
     invisible?: boolean,
@@ -32,7 +28,7 @@ export interface paramsRecaptcha extends BaseSolve {
 }
 
 
-export interface paramsHCaptcha extends BaseSolve {
+export interface paramsHCaptcha {
     sitekey: string,
     pageurl: string,
     header_acao?: boolean,
@@ -47,7 +43,7 @@ export interface paramsHCaptcha extends BaseSolve {
 }
 
 // FixMe:data[key] - how to send this parameter
-export interface paramsFunCapthca extends BaseSolve {
+export interface paramsFunCaptcha {
   publickey: string,
   pageurl: string,
   surl?: string,
@@ -144,6 +140,8 @@ export interface paramsAmazonWAF {
     sitekey: string,
     iv: string
     context: string,
+    challenge_script?: string,
+    captcha_script?: string,
     header_acao?: boolean,
     pingback?: string,
     soft_id?: number,
@@ -738,7 +736,7 @@ export class Solver {
      *      console.log(err);
      *  })
      */
-    public async funCaptcha(params: paramsFunCapthca): Promise<CaptchaAnswer> {
+    public async funCaptcha(params: paramsFunCaptcha): Promise<CaptchaAnswer> {
         checkCaptchaParams(params, "funcaptcha")
         const payload = {
             ...params,
@@ -825,11 +823,13 @@ export class Solver {
      * 
      * [Read more about "Amazon WAF" captcha](https://2captcha.com/2captcha-api#amazon-waf).
      * 
-     * @param {{ pageurl, sitekey, iv, context, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/amazonWaf.js)
+     * @param {{ pageurl, sitekey, iv, context, challenge_script, captcha_script, pingback, proxy, proxytype}} params The `amazonWaf` method takes arguments as an object. Thus, the `pageurl`, `sitekey`, `iv`, `context` fields in the passed object are mandatory.
      * @param {string} params.pageurl Is the full `URL` of page where you were challenged by the captcha.
      * @param {string} params.sitekey Is a value of `key` parameter in the page source.
      * @param {string} params.iv Is a value of `iv` parameter in the page source.
      * @param {string} params.context  Is a value of `context` parameter in the page source.
+     * @param {string} params.challenge_script The source URL of `challenge.js` script on the page.
+     * @param {string} params.captcha_script The source URL of `captcha.js` script on the page.
      * @param {string} params.pingback URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on the server. [More info here](https://2captcha.com/2captcha-api#pingback).
      * @param {string} params.proxy Format: `login:password@123.123.123.123:3128` You can find more info about proxies [here](https://2captcha.com/2captcha-api#proxies).
      * @param {string} params.proxytype Type of your proxy: `HTTP`, `HTTPS`, `SOCKS4`, `SOCKS5`.
@@ -879,7 +879,7 @@ export class Solver {
      * 
      * [Read more about Cloudflare Turnstile captcha](https://2captcha.com/2captcha-api#turnstile).
      * 
-     * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory. [Open example](https://github.com/dzmitry-duboyski/2captcha-ts/blob/master/tests/turnstile.js)
+     * @param {{ pageurl, sitekey, action, data, pingback, proxy, proxytype}} params The `сloudflareTurnstile` method takes arguments as an object. Thus, the `pageurl`, `sitekey` fields in the passed object are mandatory.
      * @param {string} params.pageurl 	Full `URL` of the page where you see the captcha.
      * @param {string} params.sitekey Is a value of `sitekey` parameter in the page source.
      * @param {string} params.action Value of optional `action` parameter you found on page.

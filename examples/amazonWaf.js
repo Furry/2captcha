@@ -1,7 +1,7 @@
-const Captcha = require("../dist/index.js");
+const TwoCaptcha = require("../dist/index.js");
 require('dotenv').config();
 const APIKEY = process.env.APIKEY
-const solver = new Captcha.Solver(APIKEY);
+const solver = new TwoCaptcha.Solver(APIKEY);
 
 //INFO: The `context` value is dynamic, it is necessary to take the actual value from the page each time.
 solver.amazonWaf({

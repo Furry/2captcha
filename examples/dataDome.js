@@ -1,9 +1,9 @@
-const Captcha = require("../dist/index.js");
+const TwoCaptcha = require("../dist/index.js");
 require('dotenv').config();
 const APIKEY = process.env.APIKEY
 const proxy = process.env.proxy
 const proxytype = process.env.proxytype
-const solver = new Captcha.Solver(APIKEY);
+const solver = new TwoCaptcha.Solver(APIKEY);
 
 solver.dataDome({
     pageurl: "https://rendezvousparis.hermes.com/client/register",
